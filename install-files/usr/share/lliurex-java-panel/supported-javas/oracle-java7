@@ -1,0 +1,5 @@
+[JAVA]
+pkg=oracle-java7-installer
+name=Oracle Java 7
+cmd=apt-get install -y oracle-java7-installer
+swing=/usr/lib/jvm/java-7-oracle/jre/lib/

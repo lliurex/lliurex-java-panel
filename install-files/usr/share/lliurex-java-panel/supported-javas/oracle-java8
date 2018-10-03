@@ -1,0 +1,5 @@
+[JAVA]
+pkg=oracle-java8-installer
+name=Oracle Java 8
+cmd=apt-get install -y oracle-java8-installer
+swing=/usr/lib/jvm/java-8-oracle/jre/lib/

@@ -1,0 +1,5 @@
+[JAVA]
+pkg=openjdk-8-jre
+name=OpenJDK JRE 8
+cmd=apt-get install -y openjdk-8-jre
+swing=/etc/java-8-openjdk/

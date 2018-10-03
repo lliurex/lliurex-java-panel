@@ -1,0 +1,21 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=lliurex-java-panel
+Name[en]=Lliurex Java Panel
+Name[es]=Lliurex Java Panel
+Name[qcv]=Lliurex Java Panel
+Name[ca_ES@valencia]=Lliurex Java Panel
+Name[ca_ES]=Lliurex Java Panel
+Comment=Install and configure different Java versions 
+Comment[es]=Instalador y configurador de diferentes versiones Java
+Comment[qcv]=Instal·lador i configurador de diferents versions de Java
+Comment[ca_ES@valencia]=Instal·lador i configurador de diferents versions de Java
+Comment[ca_ES]=Instal·lador i configurador de diferents versions de Java
+Exec=pe lliurex-java-panel.zmd
+Terminal=false
+Icon=java
+Type=Application
+GenericName=lliurex-java-panel
+NoDisplay=true
+Categories=System;

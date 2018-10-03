@@ -1,0 +1,5 @@
+[JAVA]
+pkg=openjdk-9-jre
+name=OpenJDK JRE 9
+cmd=apt-get install -y openjdk-9-jre
+swing=/etc/java-9-openjdk/
