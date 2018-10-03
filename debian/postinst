@@ -9,7 +9,7 @@ PACKAGE_NAME="lliurex-java-panel"
 
 case "$1" in
    configure)
-		if [ -f SWING_FILE_OPENJDK8 ];then
+		if [ -f $SWING_FILE_OPENJDK8 ];then
 			if dpkg-divert --package ${PACKAGE_NAME} --add  --rename  --divert ${SWING_FILE_OPENJDK8}.diverted ${SWING_FILE_OPENJDK8} ; then
 				ln -fs ${SWING_FILE_LLIUREX} ${SWING_FILE_OPENJDK8}
    			else
