@@ -13,6 +13,6 @@ Icon=lliurex-java-panel
 Category=Configuration
 ScriptPath=lliurex-java-panel.zmd
 Groups=adm;admins;teachers
-Using=pe
+Using=pkexec
 Locks=lliurex-java-panel
 Modal=True

@@ -415,17 +415,17 @@ class AwesomeTabs:
 		
 		#MAIN_LABEL_ENABLED{
 			color: #8297a1;
-			font: Quattrocento Sans Bold 18;
+			font: 18pt Quattrocento Sans Bold;
 		}
 		
 		#ALTERNATIVES_LABEL{
 			color: #8297a1;
-			font: Quattrocento Sans Bold 12;
+			font: 12pt Quattrocento Sans Bold;
 		}
 		
 		#MAIN_LABEL_DISABLED{
 			color: #c9d4e2;
-			font: Quattrocento Sans Bold 18;
+			font: 18pt Quattrocento Sans Bold;
 		}
 		
 		#RED_PROGRESS{
@@ -478,7 +478,7 @@ class AwesomeTabs:
 
 		GtkButton#RED GtkLabel {
 			color: #8297a1;
-			font: Quattrocento Sans 11;
+			font: 11pt Quattrocento Sans;
 		}
 
 
