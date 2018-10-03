@@ -1,0 +1,68 @@
+lliurex-java-panel (0.7.4) xenial; urgency=medium
+
+  * Fixed bug to show and install openjdk9
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Wed, 12 Sep 2018 17:40:31 +0200
+
+lliurex-java-panel (0.7.3) xenial; urgency=medium
+
+  * Updated categorization in zero-center
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Mon, 30 Apr 2018 09:22:55 +0200
+
+lliurex-java-panel (0.7.2) xenial; urgency=medium
+
+  * Changed function to get command to launch Java Control Panel
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Fri, 22 Dec 2017 09:46:15 +0100
+
+lliurex-java-panel (0.7.1) xenial; urgency=medium
+
+  * Redesign gui. Change to stock buttons
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Fri, 22 Sep 2017 12:38:06 +0200
+
+lliurex-java-panel (0.7) xenial; urgency=medium
+
+  * Forced installation of java .deb to fix bug in lliurex-meta-infantil
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Fri, 26 May 2017 11:44:15 +0200
+
+lliurex-java-panel (0.6) xenial; urgency=high
+
+  * Cosmetic changes 
+
+ -- Hector Garcia Huerta <hectorgh@gmail.com>  Tue, 18 Apr 2017 12:15:26 +0200
+
+lliurex-java-panel (0.5) xenial; urgency=medium
+
+  * Add swing.properties when new java is installed
+  * Fix bug with progressbar
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Mon, 20 Feb 2017 13:37:20 +0100
+
+lliurex-java-panel (0.4) xenial; urgency=medium
+
+  * Add desktop file
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Wed, 08 Feb 2017 12:06:26 +0100
+
+lliurex-java-panel (0.3) xenial; urgency=medium
+
+  * Add ca.po file
+  * Updated lliurex-java-panel.py to add a control for jws and firefox plugin
+  * Updated supported-javas to install openjdk versions without question
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Mon, 04 Jul 2016 14:05:16 +0200
+
+lliurex-java-panel (0.2) xenial; urgency=medium
+
+  * Updated alternatives when new java version is installed
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Thu, 30 Jun 2016 10:14:04 +0200
+
+lliurex-java-panel (0.1) xenial; urgency=high
+
+  * Initial release.
+
+ -- Hector Garcia Huerta <hectorgh@gmail.com>  Wed, 22 Jun 2016 17:31:30 +0200
