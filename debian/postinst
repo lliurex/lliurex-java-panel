@@ -3,7 +3,7 @@
 set -e
 
 #VARS
- ="/etc/java-8-openjdk/swing.properties"
+SWING_FILE_OPENJDK8="/etc/java-8-openjdk/swing.properties"
 SWING_FILE_LLIUREX="/usr/share/lliurex-java-panel/swing.properties"
 PACKAGE_NAME="lliurex-java-panel"
 
