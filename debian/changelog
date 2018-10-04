@@ -1,3 +1,9 @@
+lliurex-java-panel (0.8) bionic; urgency=medium
+
+  * Initial release for bionic
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Thu, 04 Oct 2018 08:09:04 +0200
+
 lliurex-java-panel (0.7.4) xenial; urgency=medium
 
   * Fixed bug to show and install openjdk9
