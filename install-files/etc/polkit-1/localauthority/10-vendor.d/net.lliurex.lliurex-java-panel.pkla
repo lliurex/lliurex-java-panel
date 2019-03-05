@@ -1,0 +1,7 @@
+[net.lliurex.lliurex-java-panel]
+Identity=unix-group:sudo;unix-groups:admins
+Action=net.lliurex.lliurex-java-panel.pkexec.lliurex-java-panel
+ResultAny=auth_self_keep
+ResultInactive=auth_self_keep
+ResultActive=auth_self_keep
+
