@@ -1,3 +1,9 @@
+lliurex-java-panel (0.9) bionic; urgency=medium
+
+  * Added pkexec configuration
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Tue, 05 Mar 2019 12:59:32 +0100
+
 lliurex-java-panel (0.8) bionic; urgency=medium
 
   * Initial release for bionic
