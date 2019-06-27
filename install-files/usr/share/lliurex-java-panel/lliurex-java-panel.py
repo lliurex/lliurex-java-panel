@@ -655,7 +655,7 @@ class AwesomeTabs:
 		try:
 			java_cmd='update-alternatives --list javaws | grep -v "gij"'
 			java_cmd_list=(subprocess.check_output(java_cmd, shell=True)).split("\n")
-			java_label='update-alternatives --list javaws | grep -v "gij" | cut -d"/" -f5'
+			java_label='update-alternatives --list javaws | grep -v "gij" | cut -d"/" -f6'
 			java_label_list=(subprocess.check_output(java_label, shell=True)).split("\n")
 			i=0
 			for item in java_label_list:
