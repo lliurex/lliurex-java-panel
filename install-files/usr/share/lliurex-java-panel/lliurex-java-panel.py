@@ -346,9 +346,9 @@ class AwesomeTabs:
 	def gather_info(self):
 		
 		import time
-		base_apt_cmd="apt-cache policy "
+		#base_apt_cmd="apt-cache policy "
 		
-		gbs=[]
+		#gbs=[]
 		
 		for item in sorted(os.listdir(JAVAS_CONFIG_PATH)):
 			if os.path.isfile(JAVAS_CONFIG_PATH+item):
@@ -357,9 +357,28 @@ class AwesomeTabs:
 					sys.stdout.write("* Checking %s ...\t"%gb.info["pkg"])
 					gb.info["installed"]=self.is_installed(gb.info["pkg"])
 					sys.stdout.write("%s\n"%gb.info["installed"])
-					base_apt_cmd += "%s "%gb.info["pkg"]
-					gbs.append(gb)
+					#base_apt_cmd+= "%s "%gb.info["pkg"]
+					base_apt_cmd = "apt-cache policy %s "%gb.info["pkg"]
+					#gbs.append(gb)
+					p=subprocess.Popen([base_apt_cmd],shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)	
+					output=p.communicate()
 					
+					if gb.info["pkg"] not in output[0]:
+						available=False
+					else:	
+						version=output[0].split("\n")[4]
+						if version !='':
+							available=True
+						else:
+							available=False
+						
+					if available:
+						self.add_grid_button(gb)
+					else:		
+						print(" [!] %s not available [!] "%gb.info["pkg"])
+						gb.info["available"]=False
+		
+		'''			
 		p=subprocess.Popen([base_apt_cmd],shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)	
 		output=p.communicate()
 		
@@ -368,11 +387,11 @@ class AwesomeTabs:
 			if gb.info["pkg"] not in output[0]:
 				print(" [!] %s not available [!] "%gb.info["pkg"])
 				gb.info["available"]=False
-			else:	
-				self.add_grid_button(gb)	
-			
-		
+				available=False
+			else:
+				self.add_grid_button(gb)
 
+		'''		
 	
 	#def gather_info
 	
