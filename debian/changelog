@@ -1,3 +1,9 @@
+lliurex-java-panel (0.13) bionic; urgency=medium
+
+  * Added ca@valencia po file
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Fri, 26 Jul 2019 11:30:10 +0200
+
 lliurex-java-panel (0.12) bionic; urgency=medium
 
   * Fixed polkit files
