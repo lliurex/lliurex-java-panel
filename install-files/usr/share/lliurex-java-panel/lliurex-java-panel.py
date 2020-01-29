@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import gi
@@ -8,7 +8,7 @@ gi.require_version('PangoCairo', '1.0')
 import cairo
 import os
 import threading
-import ConfigParser
+import configparser
 import platform
 import subprocess
 import sys
@@ -121,7 +121,7 @@ class ConfigurationParser:
 	def load_plugin(self,path):
 	
 		try:
-			config = ConfigParser.ConfigParser()
+			config = configparser.ConfigParser()
 			config.optionxform=str
 			config.read(path)
 			if config.has_section("JAVA"):
@@ -136,7 +136,7 @@ class ConfigurationParser:
 				return GridButton(info)
 				
 		except Exception as e:
-			print e
+			print(e)
 			return None
 	
 	
@@ -326,11 +326,10 @@ class AwesomeTabs:
 		self.build_jre_alternatives()
 		self.build_firefox_alternatives()
 		self.configuration_box.show_all()
-
 		self.set_css_info()
-		
 		#self.main_window.show_all()
 		self.gather_window.show_all()
+		
 		GLib.timeout_add(100,self.pulsate_gathering_info)
 		
 		self.t=threading.Thread(target=self.gather_info)
@@ -361,12 +360,15 @@ class AwesomeTabs:
 					base_apt_cmd = "apt-cache policy %s "%gb.info["pkg"]
 					#gbs.append(gb)
 					p=subprocess.Popen([base_apt_cmd],shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)	
-					output=p.communicate()
+					output=p.communicate()[0]
 					
-					if gb.info["pkg"] not in output[0]:
+					if type(output) is bytes:
+						output=output.decode()
+
+					if gb.info["pkg"] not in output:
 						available=False
 					else:	
-						version=output[0].split("\n")[4]
+						version=output.split("\n")[4]
 						if version !='':
 							available=True
 						else:
@@ -410,7 +412,8 @@ class AwesomeTabs:
 	
 	def set_css_info(self):
 		
-		css = """
+	
+		css = b"""
 		
 		#BLUE {
 			background-image:-gtk-gradient (linear,	left top, left bottom, from (#0f72ff),  to (#0f72ff));;
@@ -516,6 +519,7 @@ class AwesomeTabs:
 		self.progress_label.set_name("ALTERNATIVES_LABEL")
 		
 		
+		
 	#def css_info
 
 	
@@ -523,9 +527,12 @@ class AwesomeTabs:
 		
 		
 		p=subprocess.Popen(["dpkg-query -W -f='${db:Status-Status}' %s"%pkg],shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
-		output=p.communicate()
+		output=p.communicate()[0]
+
+		if type(output) is bytes:
+			output=output.decode()
 		
-		if output[0]=="installed":
+		if output=="installed":
 			return True
 			
 		return False
@@ -563,7 +570,7 @@ class AwesomeTabs:
 				try:
 					self.copy_swing_file(grid_button.info["swing"])
 				except Exception as e:
-					print(str(e))
+					print(e)
 					pass	
 			da.queue_draw()
 			
@@ -581,7 +588,12 @@ class AwesomeTabs:
 		else:
 			if not os.path.exists(destPath_diverted):
 				cmd_diversion="dpkg-divert --package "+PACKAGE_NAME+" --add --rename --divert " +destPath_diverted + " "+ destPath_swing
-				result=(subprocess.check_output(cmd_diversion,shell=True)).split("\n")
+				result=subprocess.check_output(cmd_diversion,shell=True)
+
+				if type(result) is bytes:
+					result=result.decode()
+
+				result=result.split("\n")
 				if result[0]!="":
 					os.symlink(SWING_FILE,destPath_swing)
 				else:
@@ -608,6 +620,7 @@ class AwesomeTabs:
 
 	def build_cpanel_alternatives(self):
 		
+	
 		tmp_box=Gtk.VBox()
 		
 		alternative_list=[]
@@ -619,10 +632,21 @@ class AwesomeTabs:
 		# ############### #
 		try:		
 			java_cmd='update-alternatives --list java | grep -v "gij"'
-			java_cmd_list=(subprocess.check_output(java_cmd, shell=True)).split("\n")
-			java_label='update-alternatives --list java | grep -v "gij" | cut -d"/" -f5'
-			java_label_list=(subprocess.check_output(java_label, shell=True)).split("\n")
+			java_cmd_list=subprocess.check_output(java_cmd, shell=True)
+
+			if type(java_cmd_list) is bytes:
+				java_cmd_list=java_cmd_list.decode()
 			
+			java_cmd_list=java_cmd_list.split("\n")
+			java_label='update-alternatives --list java | grep -v "gij" | cut -d"/" -f5'
+			java_label_list=subprocess.check_output(java_label, shell=True)
+
+			if type(java_label_list) is bytes:
+				java_label_list=java_label_list.decode()
+
+			java_label_list=java_label_list.split("\n")
+			
+
 			i=0
 			for item in java_label_list:
 			
@@ -642,7 +666,7 @@ class AwesomeTabs:
 					#alternative_list.append(a)
 					tmp_box.pack_start(a,False,False,15)
 		except Exception as e:
-			print e
+			print(e)
 		'''	
 		if len(alternative_list) > 0:
 			for alternative in alternative_list[1:]:
@@ -673,9 +697,26 @@ class AwesomeTabs:
 		# ############### #
 		try:
 			java_cmd='update-alternatives --list javaws | grep -v "gij"'
-			java_cmd_list=(subprocess.check_output(java_cmd, shell=True)).split("\n")
+			java_cmd_list=subprocess.check_output(java_cmd, shell=True)
+
+
+			if type(java_cmd_list) is bytes:
+				java_cmd_list=java_cmd_list.decode()
+
+			java_cmd_list=java_cmd_list.split("\n")
+
+
 			java_label='update-alternatives --list javaws | grep -v "gij" | cut -d"/" -f6'
-			java_label_list=(subprocess.check_output(java_label, shell=True)).split("\n")
+			java_label_list=subprocess.check_output(java_label, shell=True)
+
+
+			if type(java_label_list) is bytes:
+				java_label_list=java_label_list.decode()
+
+			java_label_list=java_label_list.split("\n")
+
+			
+
 			i=0
 			for item in java_label_list:
 				if java_label_list[i]!='':
@@ -695,28 +736,40 @@ class AwesomeTabs:
 				for alternative in alternative_list[1:]:
 					alternative.join_group(alternative_list[0])
 		except Exception as e:
-			print e		
+			print(e)		
 								
 		# get jws configured actually
 		
 		# ################ #
 		try:
 			jws_configured_cmd='update-alternatives --get-selections |grep javaws$' 
-			jws_configured_label= (subprocess.check_output(jws_configured_cmd, shell=True)).split("/")[4]	
+			jws_configured_label= subprocess.check_output(jws_configured_cmd, shell=True)
+
+			if type(jws_configured_label) is bytes:
+				jws_configured_label=jws_configured_label.decode()
+
+			jws_configured_label=jws_configured_label.split("/")[4]	
+
 			k=jws_label_list.index(jws_configured_label)
 			alternative_list[k].set_active(True)
 		except Exception as e:
-			print e
+			print(e)
 			try:
 				jws_remove=(subprocess.check_output(jws_configured_cmd, shell=True)).split()[2]
 				remove_alternative='update-alternatives --remove "javaws"' + ' "'+ jws_remove+'"'
 				os.system(remove_alternative)
 				jws_configured_cmd='update-alternatives --get-selections |grep javaws$' 
-				jws_configured_label= (subprocess.check_output(jws_configured_cmd, shell=True)).split("/")[4]
+				jws_configured_label= subprocess.check_output(jws_configured_cmd, shell=True)
+
+				if type(jws_configured_label) is bytes:
+					jws_configured_label=jws_configured_label.decode()
+
+				jws_configured_label=jws_configured_label.split("/")[4]	
+
 				k=jws_label_list.index(jws_configured_label)
 				alternative_list[k].set_active(True)
 			except Exception as e:
-				print e
+				print(e)
 			
 			
 		for alternative in alternative_list:
@@ -741,10 +794,24 @@ class AwesomeTabs:
 		# ############### #
 		try:	
 			java_cmd='update-alternatives --list java | grep -v "gij"'
-			java_cmd_list=(subprocess.check_output(java_cmd, shell=True)).split("\n")
+			java_cmd_list=subprocess.check_output(java_cmd, shell=True)
+
+
+			if type(java_cmd_list) is bytes:
+				java_cmd_list=java_cmd_list.decode()
+
+			java_cmd_list=java_cmd_list.split("\n")
+
+
 			java_label='update-alternatives --list java | grep -v "gij" | cut -d"/" -f5'
-			java_label_list=(subprocess.check_output(java_label, shell=True)).split("\n")
+			java_label_list=subprocess.check_output(java_label, shell=True)
 		
+			if type(java_label_list) is bytes:
+				java_label_list=java_label_list.decode()
+
+			java_label_list=java_label_list.split("\n")
+
+
 			i=0
 			for item in java_label_list:
 				if java_label_list[i]!='':
@@ -764,17 +831,23 @@ class AwesomeTabs:
 				for alternative in alternative_list[1:]:
 					alternative.join_group(alternative_list[0])
 		except Exception as e:
-			print e
+			print(e)
 		# get jre configured actually
 		
 		# ################ #
 		try:
 			jre_configured_cmd='update-alternatives --get-selections |grep java$' 
-			jre_configured_label= (subprocess.check_output(jre_configured_cmd, shell=True)).split("/")[4]	
+			jre_configured_label=subprocess.check_output(jre_configured_cmd, shell=True)
+
+
+			if type(jre_configured_label) is bytes:
+				jre_configured_label=jre_configured_label.decode()
+
+			jre_configured_label=jre_configured_label.split("/")[4]	
 			k=jre_label_list.index(jre_configured_label)
 			alternative_list[k].set_active(True)
 		except Exception as e:
-			print e
+			print(e)
 		
 		for alternative in alternative_list:
 			alternative.connect("toggled",alternative.alternative_toggled)
@@ -799,9 +872,22 @@ class AwesomeTabs:
 		# ############### #
 		try:
 			javaplugin_cmd='update-alternatives --list mozilla-javaplugin.so | grep -v "gij"' 
-			javaplugin_cmd_list=(subprocess.check_output(javaplugin_cmd, shell=True)).split("\n")
+			javaplugin_cmd_list=subprocess.check_output(javaplugin_cmd, shell=True)
+			
+			if type(javaplugin_cmd_list) is bytes:
+				javaplugin_cmd_list=javaplugin_cmd_list.decode()
+
+			javaplugin_cmd_list=javaplugin_cmd_list.split("\n")
+
+
 			javaplugin_label='update-alternatives --list mozilla-javaplugin.so | grep -v "gij" | cut -d"/" -f5'
-			javaplugin_label_list=(subprocess.check_output(javaplugin_label, shell=True)).split("\n")
+			javaplugin_label_list=subprocess.check_output(javaplugin_label, shell=True)
+			
+			if type(javaplugin_label_list) is bytes:
+				javaplugin_label_list=javaplugin_label_list.decode()
+
+			javaplugin_label_list=javaplugin_label_list.split("\n")
+
 			i=0
 			for item in javaplugin_label_list:
 				if javaplugin_label_list[i]!='':
@@ -821,7 +907,7 @@ class AwesomeTabs:
 				for alternative in alternative_list[1:]:
 					alternative.join_group(alternative_list[0])
 		except Exception as e:
-			print e		
+			print(e)		
 				
 					
 		# get mozilla plugin configured actually
@@ -829,12 +915,17 @@ class AwesomeTabs:
 		# ################ #
 		try:
 			firefox_configured_cmd='update-alternatives --get-selections |grep mozilla-javaplugin.so' 
-			firefox_configured_label= (subprocess.check_output(firefox_configured_cmd, shell=True)).split("/")[4]	
+			firefox_configured_label=subprocess.check_output(firefox_configured_cmd, shell=True)
+
+			if type(firefox_configured_label) is bytes:
+				firefox_configured_label=firefox_configured_label.decode()
+
+			firefox_configured_label=firefox_configured_label.split("/")[4]	
 		
 			k=firefox_label_list.index(firefox_configured_label)
 			alternative_list[k].set_active(True)
 		except Exception as e:
-			print e	
+			print(e)	
 		
 		for alternative in alternative_list:
 			alternative.connect("toggled",alternative.alternative_toggled)
@@ -1285,7 +1376,7 @@ class AwesomeTabs:
 					
 				
 			except Exception as e:
-				print e
+				print(e)
 		
 		if id==1 and self.current_tab!=id:
 			try:
