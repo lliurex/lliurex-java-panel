@@ -136,7 +136,7 @@ class ConfigurationParser:
 				return GridButton(info)
 				
 		except Exception as e:
-			print(e)
+			print(str(e))
 			return None
 	
 	
@@ -285,6 +285,12 @@ class AwesomeTabs:
 		
 		self.confbutton_grid=builder.get_object("confbutton_grid")
 		
+		self.info={}
+		self.conf_buttons=[]
+		self.active_button=False
+		self.set_active_info=False
+		self.cb_active=""
+		'''
 		info={}
 		info["txt"]="Control Panel"
 		info["icon"]=RSRC_DIR+"control_panel.png"
@@ -311,7 +317,7 @@ class AwesomeTabs:
 		info["name"]="firefox"
 		
 		self.add_conf_button(info)
-		
+		'''
 		self.configuration_box=builder.get_object("configuration_box")
 		self.alternatives_box=builder.get_object("alternatives_box")
 		
@@ -468,7 +474,8 @@ class AwesomeTabs:
 		}
 
 		#DARK_BACK{
-			background-color: #070809;
+			/*background-color: #070809;*/
+			  background-color: #54606c;
 		}
 		
 		#GREEN {
@@ -570,7 +577,7 @@ class AwesomeTabs:
 				try:
 					self.copy_swing_file(grid_button.info["swing"])
 				except Exception as e:
-					print(e)
+					print(str(e))
 					pass	
 			da.queue_draw()
 			
@@ -589,7 +596,7 @@ class AwesomeTabs:
 			if not os.path.exists(destPath_diverted):
 				cmd_diversion="dpkg-divert --package "+PACKAGE_NAME+" --add --rename --divert " +destPath_diverted + " "+ destPath_swing
 				result=subprocess.check_output(cmd_diversion,shell=True)
-
+				print(result)
 				if type(result) is bytes:
 					result=result.decode()
 
@@ -665,8 +672,9 @@ class AwesomeTabs:
 					#a.set_name("RED")
 					#alternative_list.append(a)
 					tmp_box.pack_start(a,False,False,15)
+		
 		except Exception as e:
-			print(e)
+			print(str(e))
 		'''	
 		if len(alternative_list) > 0:
 			for alternative in alternative_list[1:]:
@@ -678,9 +686,14 @@ class AwesomeTabs:
 			alternative.connect("toggled",alternative.alternative_toggled)
 		'''
 				
-		self.conf_stack.add_titled(tmp_box, "cpanel", "Control Panel")
-
-		
+		if len(cpanel_label_list)>0:
+			self.info["txt"]="Control Panel"
+			self.info["icon"]=RSRC_DIR+"control_panel.png"
+			self.info["name"]="cpanel"
+			self.set_active_button("cpanel")
+			self.add_conf_button(self.info)	
+			self.conf_stack.add_titled(tmp_box, "cpanel", "Control Panel")
+			
 	#def build_cpanel_alternatives  
 	
 	
@@ -699,7 +712,6 @@ class AwesomeTabs:
 			java_cmd='update-alternatives --list javaws | grep -v "gij"'
 			java_cmd_list=subprocess.check_output(java_cmd, shell=True)
 
-
 			if type(java_cmd_list) is bytes:
 				java_cmd_list=java_cmd_list.decode()
 
@@ -708,7 +720,6 @@ class AwesomeTabs:
 
 			java_label='update-alternatives --list javaws | grep -v "gij" | cut -d"/" -f6'
 			java_label_list=subprocess.check_output(java_label, shell=True)
-
 
 			if type(java_label_list) is bytes:
 				java_label_list=java_label_list.decode()
@@ -735,8 +746,9 @@ class AwesomeTabs:
 			if len(alternative_list) > 0:
 				for alternative in alternative_list[1:]:
 					alternative.join_group(alternative_list[0])
+		
 		except Exception as e:
-			print(e)		
+			print(str(e))		
 								
 		# get jws configured actually
 		
@@ -744,20 +756,25 @@ class AwesomeTabs:
 		try:
 			jws_configured_cmd='update-alternatives --get-selections |grep javaws$' 
 			jws_configured_label= subprocess.check_output(jws_configured_cmd, shell=True)
-
 			if type(jws_configured_label) is bytes:
 				jws_configured_label=jws_configured_label.decode()
 
-			jws_configured_label=jws_configured_label.split("/")[4]	
-
+			jws_configured_label=jws_configured_label.split("/")[5].split("\n")[0]	
 			k=jws_label_list.index(jws_configured_label)
 			alternative_list[k].set_active(True)
+		
 		except Exception as e:
-			print(e)
+			print(str(e))
 			try:
-				jws_remove=(subprocess.check_output(jws_configured_cmd, shell=True)).split()[2]
+				jws_remove=subprocess.check_output(jws_configured_cmd, shell=True)
+				if type(jws_remove) is bytes:
+					jws_remove=jws_remove.decode()
+				
+				jws_remove=jws_remove.split()[2]
 				remove_alternative='update-alternatives --remove "javaws"' + ' "'+ jws_remove+'"'
+				
 				os.system(remove_alternative)
+				
 				jws_configured_cmd='update-alternatives --get-selections |grep javaws$' 
 				jws_configured_label= subprocess.check_output(jws_configured_cmd, shell=True)
 
@@ -768,14 +785,21 @@ class AwesomeTabs:
 
 				k=jws_label_list.index(jws_configured_label)
 				alternative_list[k].set_active(True)
+			
 			except Exception as e:
-				print(e)
+				print(str(e))
 			
 			
 		for alternative in alternative_list:
 			alternative.connect("toggled",alternative.alternative_toggled)
 		
-		self.conf_stack.add_titled(tmp_box, "jws", "Java Web Start")
+		if len(alternative_list)>0:
+			self.info["txt"]="Java Web Start"
+			self.info["icon"]=RSRC_DIR+"java_conf.png"
+			self.info["name"]="jws"
+			self.set_active_button("jws")
+			self.add_conf_button(self.info)
+			self.conf_stack.add_titled(tmp_box, "jws", "Java Web Start")
 
 		
 	#def  build_jws_alternatives
@@ -796,7 +820,6 @@ class AwesomeTabs:
 			java_cmd='update-alternatives --list java | grep -v "gij"'
 			java_cmd_list=subprocess.check_output(java_cmd, shell=True)
 
-
 			if type(java_cmd_list) is bytes:
 				java_cmd_list=java_cmd_list.decode()
 
@@ -805,7 +828,7 @@ class AwesomeTabs:
 
 			java_label='update-alternatives --list java | grep -v "gij" | cut -d"/" -f5'
 			java_label_list=subprocess.check_output(java_label, shell=True)
-		
+
 			if type(java_label_list) is bytes:
 				java_label_list=java_label_list.decode()
 
@@ -830,8 +853,9 @@ class AwesomeTabs:
 			if len(alternative_list) > 0:
 				for alternative in alternative_list[1:]:
 					alternative.join_group(alternative_list[0])
+		
 		except Exception as e:
-			print(e)
+			print(str(e))
 		# get jre configured actually
 		
 		# ################ #
@@ -839,21 +863,27 @@ class AwesomeTabs:
 			jre_configured_cmd='update-alternatives --get-selections |grep java$' 
 			jre_configured_label=subprocess.check_output(jre_configured_cmd, shell=True)
 
-
 			if type(jre_configured_label) is bytes:
 				jre_configured_label=jre_configured_label.decode()
 
 			jre_configured_label=jre_configured_label.split("/")[4]	
 			k=jre_label_list.index(jre_configured_label)
 			alternative_list[k].set_active(True)
+		
 		except Exception as e:
-			print(e)
+			print(str(e))
 		
 		for alternative in alternative_list:
 			alternative.connect("toggled",alternative.alternative_toggled)
 		
 		
-		self.conf_stack.add_titled(tmp_box, "jre", "JRE Selector")
+		if len(alternative_list)>0:
+			self.info["txt"]="Java Runtime\nEnvironment"
+			self.info["icon"]=RSRC_DIR+"java_conf.png"
+			self.info["name"]="jre"
+			self.set_active_button("jre")
+			self.add_conf_button(self.info)
+			self.conf_stack.add_titled(tmp_box, "jre", "JRE Selector")
 
 		
 	#def build_jre_alternatives
@@ -873,7 +903,7 @@ class AwesomeTabs:
 		try:
 			javaplugin_cmd='update-alternatives --list mozilla-javaplugin.so | grep -v "gij"' 
 			javaplugin_cmd_list=subprocess.check_output(javaplugin_cmd, shell=True)
-			
+
 			if type(javaplugin_cmd_list) is bytes:
 				javaplugin_cmd_list=javaplugin_cmd_list.decode()
 
@@ -882,7 +912,7 @@ class AwesomeTabs:
 
 			javaplugin_label='update-alternatives --list mozilla-javaplugin.so | grep -v "gij" | cut -d"/" -f5'
 			javaplugin_label_list=subprocess.check_output(javaplugin_label, shell=True)
-			
+
 			if type(javaplugin_label_list) is bytes:
 				javaplugin_label_list=javaplugin_label_list.decode()
 
@@ -906,8 +936,9 @@ class AwesomeTabs:
 			if len(alternative_list) > 0:
 				for alternative in alternative_list[1:]:
 					alternative.join_group(alternative_list[0])
+		
 		except Exception as e:
-			print(e)		
+			print(str(e))		
 				
 					
 		# get mozilla plugin configured actually
@@ -916,7 +947,7 @@ class AwesomeTabs:
 		try:
 			firefox_configured_cmd='update-alternatives --get-selections |grep mozilla-javaplugin.so' 
 			firefox_configured_label=subprocess.check_output(firefox_configured_cmd, shell=True)
-
+			
 			if type(firefox_configured_label) is bytes:
 				firefox_configured_label=firefox_configured_label.decode()
 
@@ -924,27 +955,75 @@ class AwesomeTabs:
 		
 			k=firefox_label_list.index(firefox_configured_label)
 			alternative_list[k].set_active(True)
+		
 		except Exception as e:
-			print(e)	
+			print(str(e))	
 		
 		for alternative in alternative_list:
 			alternative.connect("toggled",alternative.alternative_toggled)
 		
-		self.conf_stack.add_titled(tmp_box, "firefox", "Firefox Alternatives")
+		if len(alternative_list)>0:
+			self.info["txt"]="Firefox Plugin"
+			self.info["icon"]=RSRC_DIR+"firefox.png"
+			self.info["name"]="firefox"
+			self.set_active_button("firefox")
+			self.add_conf_button(self.info)
+			self.conf_stack.add_titled(tmp_box, "firefox", "Firefox Alternatives")
 
 		
 	#def  build_firefox_alternatives
+
+	def set_active_button(self,name):
+
+		if not self.active_button:
+			if self.cb_active=="":
+				self.info["active"]=True
+				self.active_button=True
+			else:
+				if self.cb_active==name:
+					self.info["active"]=True
+					self.active_button=True	
+		else:
+			if name !="cpanel":	
+				if not self.set_active_info:
+					self.info["active"]=False
+					self.set_active_info=True	
+
+	#def set_active_button		
+
 	
 	def refresh_alternatives(self):
 		
-		cpanel_alter=self.conf_stack.get_child_by_name("cpanel")
-		self.conf_stack.remove(cpanel_alter)
-		jws_alter=self.conf_stack.get_child_by_name("jws")
-		self.conf_stack.remove(jws_alter)
-		jre_alter=self.conf_stack.get_child_by_name("jre")
-		self.conf_stack.remove(jre_alter)
-		firefox_alter=self.conf_stack.get_child_by_name("firefox")
-		self.conf_stack.remove(firefox_alter)
+		self.info={}
+		self.conf_buttons=[]
+		self.current_conf_height=0
+		self.active_button=False
+		self.set_active_info=False
+		
+		for item in self.confbutton_grid:
+			self.confbutton_grid.remove(item)
+
+		try:
+			cpanel_alter=self.conf_stack.get_child_by_name("cpanel")
+			self.conf_stack.remove(cpanel_alter)
+		except:
+			pass
+		try:		
+			jws_alter=self.conf_stack.get_child_by_name("jws")
+			self.conf_stack.remove(jws_alter)
+		except:
+			pass	
+		try:
+			jre_alter=self.conf_stack.get_child_by_name("jre")
+			self.conf_stack.remove(jre_alter)
+		except:
+			pass
+		try:	
+			firefox_alter=self.conf_stack.get_child_by_name("firefox")
+			self.conf_stack.remove(firefox_alter)
+		except:
+			pass	
+
 		self.build_cpanel_alternatives()
 		self.build_jws_alternatives()
 		self.build_jre_alternatives()
@@ -953,7 +1032,8 @@ class AwesomeTabs:
 		
 		try:
 			self.conf_stack.set_visible_child_name(self.cb_active)
-		except:
+		except Exception as e :
+			print(str(e))
 			self.conf_stack.set_visible_child_name("cpanel")
 			
 		self.update_alternatives=False	
@@ -1376,7 +1456,7 @@ class AwesomeTabs:
 					
 				
 			except Exception as e:
-				print(e)
+				print(str(e))
 		
 		if id==1 and self.current_tab!=id:
 			try:
