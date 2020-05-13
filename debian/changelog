@@ -1,3 +1,9 @@
+lliurex-java-panel (0.15) bionic; urgency=medium
+
+  * Updated to hide conf buttons witout options
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Wed, 13 May 2020 15:47:21 +0200
+
 lliurex-java-panel (0.14) bionic; urgency=medium
 
   * Migrated to python3
