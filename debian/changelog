@@ -1,3 +1,9 @@
+lliurex-java-panel (0.16) bionic; urgency=medium
+
+  * Fixed function to obtain label for jws alternatives
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Mon, 22 Jun 2020 14:48:16 +0200
+
 lliurex-java-panel (0.15) bionic; urgency=medium
 
   * Updated to hide conf buttons witout options
