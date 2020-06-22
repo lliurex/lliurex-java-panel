@@ -718,7 +718,7 @@ class AwesomeTabs:
 			java_cmd_list=java_cmd_list.split("\n")
 
 
-			java_label='update-alternatives --list javaws | grep -v "gij" | cut -d"/" -f6'
+			java_label='update-alternatives --list javaws | grep -v "gij" | cut -d"/" -f5'
 			java_label_list=subprocess.check_output(java_label, shell=True)
 
 			if type(java_label_list) is bytes:
