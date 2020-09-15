@@ -1,0 +1,5 @@
+[JAVA]
+pkg=openjdk-14-jre
+name=OpenJDK JRE 14
+cmd=apt-get install -y openjdk-14-jre
+swing=/etc/java-14-openjdk/

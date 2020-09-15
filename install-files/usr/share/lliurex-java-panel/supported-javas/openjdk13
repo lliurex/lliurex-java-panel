@@ -1,0 +1,5 @@
+[JAVA]
+pkg=openjdk-11-jre
+name=OpenJDK JRE 11
+cmd=apt-get install -y openjdk-11-jre
+swing=/etc/java-11-openjdk/

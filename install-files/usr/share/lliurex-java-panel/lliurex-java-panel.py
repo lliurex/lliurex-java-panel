@@ -1175,7 +1175,7 @@ class AwesomeTabs:
 			txt=_("Installed")
 			pctx.set_markup(txt)
 			width=pctx.get_pixel_size()[0]
-			ctx.move_to(140-width-5,120)
+			ctx.move_to(140-width-2,120)
 			PangoCairo.show_layout(ctx, pctx)
 			
 			

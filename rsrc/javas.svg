@@ -15,9 +15,9 @@
    viewBox="0 0 140 140"
    id="svg5170"
    version="1.1"
-   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
    sodipodi:docname="javas.svg"
-   inkscape:export-filename="/home/cless/svn/xenial/lliurex-java-panel/trunk/fuentes/install-files/usr/share/lliurex-java-panel/banners/openjdk8.png"
+   inkscape:export-filename="/home/lliurex/Desarrollo/lliurex-java-panel/install-files/usr/share/lliurex-java-panel/banners/openjdk-14-jre.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
@@ -157,6 +157,26 @@
        y1="1021.3229"
        x2="367.58667"
        y2="1021.3229" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient6980"
+       id="linearGradient102-3"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(-717.59057,-482.03247)"
+       x1="341.87238"
+       y1="1021.3229"
+       x2="367.58667"
+       y2="1021.3229" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient6980"
+       id="linearGradient3846"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(-717.59057,-482.03247)"
+       x1="341.87238"
+       y1="1021.3229"
+       x2="367.58667"
+       y2="1021.3229" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -165,21 +185,21 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4142136"
-     inkscape:cx="58.793718"
-     inkscape:cy="98.824376"
+     inkscape:zoom="2.8284272"
+     inkscape:cx="7.6165974"
+     inkscape:cy="89.880119"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g3812"
      showgrid="false"
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
      units="px"
-     inkscape:window-width="1360"
-     inkscape:window-height="592"
+     inkscape:window-width="1920"
+     inkscape:window-height="897"
      inkscape:window-x="0"
-     inkscape:window-y="28"
+     inkscape:window-y="36"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata5175">
@@ -370,7 +390,7 @@
     </g>
     <g
        id="g6293"
-       transform="translate(-69.378998,-50.783203)">
+       transform="translate(-35.628998,-20.783203)">
       <circle
          style="opacity:1;fill:url(#linearGradient7215);fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.96862745"
          id="path5278-4-5"
@@ -381,7 +401,7 @@
          inkscape:connector-curvature="0"
          id="path5317-9"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:medium;line-height:125%;font-family:'Quattrocento Sans';-inkscape-font-specification:'Quattrocento Sans Bold';letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         d="m -277.39845,544.29579 q 1.50888,0.3382 2.31535,1.5609 0.8325,1.2228 0.8325,2.9658 0,1.0926 -0.33821,2.0552 -0.33819,0.9365 -1.06662,1.6389 -0.70241,0.7025 -1.79505,1.1187 -1.09264,0.3902 -2.57551,0.3902 -1.56091,0 -2.65355,-0.4162 -1.09264,-0.4423 -1.76903,-1.1447 -0.6764,-0.7284 -0.98858,-1.665 -0.31219,-0.9365 -0.31219,-1.9251 0,-1.717 0.83249,-2.9137 0.83249,-1.1967 2.31536,-1.639 l 0,-0.104 q -0.91054,-0.3382 -1.61295,-1.2748 -0.67639,-0.9365 -0.67639,-2.3673 0,-1.8732 1.27474,-3.0178 1.27475,-1.1447 3.61611,-1.1447 2.28935,0 3.59011,1.1187 1.30076,1.0926 1.30076,2.9657 0,1.3788 -0.6764,2.3414 -0.65037,0.9365 -1.61294,1.3528 l 0,0.104 z m 0.15609,4.6047 q 0,-0.5983 -0.15609,-1.1967 -0.15609,-0.5983 -0.49429,-1.0666 -0.33819,-0.4683 -0.88452,-0.7544 -0.5203,-0.3122 -1.24873,-0.3122 -0.75444,0 -1.27475,0.3122 -0.5203,0.2861 -0.85849,0.7804 -0.33821,0.4683 -0.49429,1.0666 -0.1561,0.5984 -0.1561,1.1707 0,1.4048 0.75444,2.1333 0.78046,0.7284 2.02919,0.7284 1.24873,0 2.00317,-0.7284 0.78046,-0.7285 0.78046,-2.1333 z m -0.78046,-7.9867 q 0,-1.0145 -0.5203,-1.5869 -0.49429,-0.5983 -1.48287,-0.5983 -0.96256,0 -1.48287,0.5723 -0.5203,0.5463 -0.5203,1.5869 0,1.0927 0.54632,1.717 0.54632,0.6244 1.45685,0.6244 0.91054,0 1.45685,-0.6244 0.54632,-0.6243 0.54632,-1.691 z" />
+         d="m -277.39845,544.29579 q 1.50888,0.3382 2.31535,1.5609 0.8325,1.2228 0.8325,2.9658 0,1.0926 -0.33821,2.0552 -0.33819,0.9365 -1.06662,1.6389 -0.70241,0.7025 -1.79505,1.1187 -1.09264,0.3902 -2.57551,0.3902 -1.56091,0 -2.65355,-0.4162 -1.09264,-0.4423 -1.76903,-1.1447 -0.6764,-0.7284 -0.98858,-1.665 -0.31219,-0.9365 -0.31219,-1.9251 0,-1.717 0.83249,-2.9137 0.83249,-1.1967 2.31536,-1.639 v -0.104 q -0.91054,-0.3382 -1.61295,-1.2748 -0.67639,-0.9365 -0.67639,-2.3673 0,-1.8732 1.27474,-3.0178 1.27475,-1.1447 3.61611,-1.1447 2.28935,0 3.59011,1.1187 1.30076,1.0926 1.30076,2.9657 0,1.3788 -0.6764,2.3414 -0.65037,0.9365 -1.61294,1.3528 z m 0.15609,4.6047 q 0,-0.5983 -0.15609,-1.1967 -0.15609,-0.5983 -0.49429,-1.0666 -0.33819,-0.4683 -0.88452,-0.7544 -0.5203,-0.3122 -1.24873,-0.3122 -0.75444,0 -1.27475,0.3122 -0.5203,0.2861 -0.85849,0.7804 -0.33821,0.4683 -0.49429,1.0666 -0.1561,0.5984 -0.1561,1.1707 0,1.4048 0.75444,2.1333 0.78046,0.7284 2.02919,0.7284 1.24873,0 2.00317,-0.7284 0.78046,-0.7285 0.78046,-2.1333 z m -0.78046,-7.9867 q 0,-1.0145 -0.5203,-1.5869 -0.49429,-0.5983 -1.48287,-0.5983 -0.96256,0 -1.48287,0.5723 -0.5203,0.5463 -0.5203,1.5869 0,1.0927 0.54632,1.717 0.54632,0.6244 1.45685,0.6244 0.91054,0 1.45685,-0.6244 0.54632,-0.6243 0.54632,-1.691 z" />
     </g>
     <g
        id="g6249">
@@ -428,7 +448,8 @@
        id="g108"
        inkscape:export-filename="/home/lliurex/git/lliurex-java-panel/install-files/usr/share/lliurex-java-panel/banners/openjdk-11-jre.png"
        inkscape:export-xdpi="96"
-       inkscape:export-ydpi="96">
+       inkscape:export-ydpi="96"
+       transform="translate(0,3.7499998)">
       <g
          transform="translate(88.368901,47.932368)"
          id="g6288-7">
@@ -449,6 +470,48 @@
              x="-358.26215"
              id="tspan6205-7-5"
              sodipodi:role="line">11</tspan></text>
+        <g
+           id="g3812"
+           transform="translate(-74.909118,-96.2263)">
+          <circle
+             style="opacity:1;fill:url(#linearGradient102-3);fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.96862745"
+             id="path5278-6-5-5"
+             cx="-362.86108"
+             cy="539.29047"
+             r="12.857144" />
+          <text
+             xml:space="preserve"
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:11.99999905px;line-height:0%;font-family:'Quattrocento Sans';-inkscape-font-specification:'Quattrocento Sans Bold';letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             x="-371.04108"
+             y="545.91553"
+             id="text6203-3-3-3"><tspan
+               sodipodi:role="line"
+               id="tspan6205-7-5-5"
+               x="-371.04108"
+               y="545.91553"
+               style="font-size:19.99999809px;line-height:1.25;stroke-width:1px">14</tspan></text>
+        </g>
+        <g
+           id="g3812-9"
+           transform="translate(-17.898633,3.5420289)">
+          <circle
+             style="opacity:1;fill:url(#linearGradient3846);fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.96862745"
+             id="path5278-6-5-5-1"
+             cx="-362.86108"
+             cy="539.29047"
+             r="12.857144" />
+          <text
+             xml:space="preserve"
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:11.99999905px;line-height:0%;font-family:'Quattrocento Sans';-inkscape-font-specification:'Quattrocento Sans Bold';letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             x="-371.04108"
+             y="545.91553"
+             id="text6203-3-3-3-2"><tspan
+               sodipodi:role="line"
+               id="tspan6205-7-5-5-7"
+               x="-371.04108"
+               y="545.91553"
+               style="font-size:19.99999809px;line-height:1.25;stroke-width:1px">13</tspan></text>
+        </g>
       </g>
     </g>
   </g>
