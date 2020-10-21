@@ -1,3 +1,9 @@
+lliurex-java-panel (0.17) bionic; urgency=medium
+
+  * Fixed po file
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Wed, 21 Oct 2020 11:58:30 +0200
+
 lliurex-java-panel (0.16) bionic; urgency=medium
 
   * Fixed function to obtain label for jws alternatives
