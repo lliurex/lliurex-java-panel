@@ -146,6 +146,8 @@ class MainWindow(QMainWindow):
 		self.configurationButton.hide()
 		self.messageLabel.hide()
 		self.applyButton.hide()
+		self.helpButton.hide()
+
 		qtRectangle = self.frameGeometry()
 		centerPoint = QDesktopWidget().availableGeometry().center()
 		qtRectangle.moveCenter(centerPoint)
@@ -169,6 +171,7 @@ class MainWindow(QMainWindow):
 			self.configurationButton.show()
 			self.messageLabel.show()
 			self.applyButton.show()
+			self.helpButton.show()
 		else:
 			self.messageLabel.show()
 			self.loadingBox.spinner.hide()

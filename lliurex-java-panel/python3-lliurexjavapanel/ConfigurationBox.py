@@ -177,24 +177,22 @@ class ConfigurationBox(QWidget):
 	
 	#def setMenu
 
-	def openContextMenu(self,alternative_type,point=None):
-		#point = QPoint(7, 23)
+	def openContextMenu(self,alternative_type):
+		
 		if alternative_type=='cpanel':
-			self.menuCpanel.exec_(self.mapToGlobal(point))
+			self.menuCpanel.exec_(self.sender().mapToGlobal(QPoint(10,23)))
 		elif alternative_type=='jws':
-			self.menuJws.exec_(self.mapToGlobal(point))
+			self.menuJws.exec_(self.sender().mapToGlobal(QPoint(10,23)))
 		elif alternative_type=='jre':
-			self.menuJre.exec_(self.mapToGlobal(point))
+			self.menuJre.exec_(self.sender().mapToGlobal(QPoint(10,23)))
 		elif alternative_type=='firefox':
-			self.menuFirefox.exec_(self.mapToGlobal(point))
+			self.menuFirefox.exec_(self.sender().mapToGlobal(QPoint(10,23)))
 
 	#def openContextMenu
 
 	def buttonPress(self,alternative_type):
-		x=self.sender().x()
-		y=self.sender().y()
-		point=QPoint(x+10,y+22)
-		self.openContextMenu(alternative_type,point)
+		
+		self.openContextMenu(alternative_type)
 
 	#def buttonPress	
 
