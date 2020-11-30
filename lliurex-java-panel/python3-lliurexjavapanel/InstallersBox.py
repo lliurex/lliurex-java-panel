@@ -80,7 +80,7 @@ class InstallersBox(QWidget):
 			name.setStyleSheet("font:10pt;padding:15px")
 
 
-		name.item=item
+		name.item=order
 		hbox.addWidget(name,-1)
 		
 		status=QLabel()
