@@ -11,4 +11,4 @@ c=Core.Core.get_core()
 window =c.mainWindow
 #window.show()
 #window.load_gui()
-app.exec_() 
+sys.exit(app.exec_()) 
