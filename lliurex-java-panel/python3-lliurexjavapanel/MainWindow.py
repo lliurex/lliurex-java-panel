@@ -155,6 +155,7 @@ class MainWindow(QMainWindow):
 		centerPoint = QDesktopWidget().availableGeometry().center()
 		qtRectangle.moveCenter(centerPoint)
 		self.move(qtRectangle.topLeft())
+		self.exitLocked=True
 		self.gatherInfo.start()
 		self.gatherInfo.finished.connect(self._finishProcess)
 		
@@ -176,7 +177,9 @@ class MainWindow(QMainWindow):
 			self.messageLabel.show()
 			self.loadingBox.spinner.hide()
 			self.messageLabel.setText(_("No Java version(s) availables detected"))	
-	
+
+		self.exitLocked=False
+
 	#def _finishProcess
 
 	def applyButtonClicked(self):
@@ -199,8 +202,9 @@ class MainWindow(QMainWindow):
 			for item in self.installersBox.boxInstallers.children():
 				if item.itemAt(0).widget().isEnabled():
 					item.itemAt(0).widget().setEnabled(False)	
-					self.othersBox.append(item)	
+					self.othersBox.append(item)
 
+			self.exitLocked=True
 			self.install=installProcess(self.javasToInstall)
 			self.install.start()
 			self.install.finished.connect(self._finishInstall)
@@ -244,6 +248,8 @@ class MainWindow(QMainWindow):
 			self.messageLabel.setText(_("Installing process has ending with errors"))					     
 		else:
 			self.messageLabel.setText(_("Installing process has ending successfully"))					     
+
+		self.exitLocked=False
 
 	#def _finishInstall
 			
@@ -292,13 +298,13 @@ class MainWindow(QMainWindow):
 
 	#def helpButtonClicked		
 
-'''
-if __name__ == "__main__":
-   
-    app = QtWidgets.QApplication(sys.argv)
-    window = MainWindow()
-    window.show()
-    window.loadGui()
-    app.exec_()      
- '''  
+	def closeEvent(self,event):
+
+		if self.exitLocked:
+			event.ignore()
+		else:
+			event.accept()			
+
+	#def closeEvent
+	
 from . import Core
