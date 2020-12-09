@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-17 17:52+0100\n"
-"PO-Revision-Date: 2020-11-28 10:40+0000\n"
-"Last-Translator: Raul Rodrigo <raurodse@gmail.com>\n"
+"PO-Revision-Date: 2020-12-10 11:53+0000\n"
+"Last-Translator: Angels <gimenez_angcam@gva.es>\n"
 "Language-Team: Valencian <http://weblate.lliurex.net/projects/"
 "lliurex-java-panel/lliurex-java-panel/ca@valencia/>\n"
 "Language: ca@valencia\n"
@@ -22,78 +22,79 @@ msgstr ""
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:152
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:162
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:168
-#, fuzzy
 msgid "No Java version(s) availables detected"
-msgstr "cadena para revisar"
+msgstr "No s'han detectat versions de Java disponibles"
 
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:165
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:175
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:181
 msgid "Installing selected Java version(s). Wait a moment..."
 msgstr ""
+"S'estan instal·lant la versió o versions de Java seleccionades. Espereu un "
+"moment..."
 
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:182
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:192
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:198
 msgid "You must select a Java version to install"
-msgstr ""
+msgstr "Seleccioneu una versió de Java per a instal·lar"
 
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:218
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:228
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:234
 msgid "Installing process has ending with errors"
-msgstr ""
+msgstr "El procés d'instal·lació ha finalitzat amb errors"
 
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:220
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:230
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:236
 msgid "Installing process has ending successfully"
-msgstr ""
+msgstr "El procés d'instal·lació ha finalitzat correctament"
 
 #: lliurex-java-panel/python3-lliurexjavapanel/ConfigurationBox.py:56
 msgid "Java Control Panel. Select one tu run it"
-msgstr ""
+msgstr "Tauler de control de Java. Seleccioneu-ne un per a executar-lo"
 
 #: lliurex-java-panel/python3-lliurexjavapanel/ConfigurationBox.py:61
 msgid "Java Web Start. Alternative configured:"
-msgstr ""
+msgstr "Java Web Start. Alternativa configurada:"
 
 #: lliurex-java-panel/python3-lliurexjavapanel/ConfigurationBox.py:67
 msgid "Java Runtime Environment. Alternative configured:"
-msgstr ""
+msgstr "Java Runtime Environment. Alternativa configurada:"
 
 #: lliurex-java-panel/python3-lliurexjavapanel/ConfigurationBox.py:73
 msgid "Firefox plugin. Alternative configured:"
-msgstr ""
+msgstr "Connector de Firefox. Alternativa configurada:"
 
 #: lliurex-java-panel/python3-lliurexjavapanel/ConfigurationBox.py:206
 msgid "Configuration changed successfully"
-msgstr ""
+msgstr "La configuració s'ha canviat correctament"
 
 #: lliurex-java-panel/python3-lliurexjavapanel/LoadingBox.py:28
 #: lliurex-java-panel/python3-lliurexjavapanel/LoadingBox.py:28
 msgid "Checking system..."
-msgstr ""
+msgstr "S'està comprovant el sistema..."
 
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:108
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:109
 msgid "Installers"
-msgstr ""
+msgstr "Instal·ladors"
 
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:114
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:115
 msgid "Configuration Options"
-msgstr ""
+msgstr "Opcions de configuració"
 
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:125
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:126
 msgid "Install"
-msgstr ""
+msgstr "Instal·la"
 
 #: lliurex-java-panel/python3-lliurexjavapanel/ConfigurationBox.py:140
 msgid "Click to select an option"
-msgstr ""
+msgstr "Feu clic per a seleccionar una opció"
 
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:131
 msgid "Help"
-msgstr ""
+msgstr "Ajuda"
