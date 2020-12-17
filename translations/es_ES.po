@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-17 17:52+0100\n"
-"PO-Revision-Date: 2020-11-23 11:21+0100\n"
+"PO-Revision-Date: 2020-12-17 12:24+0100\n"
 "Last-Translator: lliurex <lliurex@gva.es>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -47,7 +47,7 @@ msgstr "El proceso de instalación ha finalizado con errores"
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:230
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:236
 msgid "Installing process has ending successfully"
-msgstr "El proceso de instalación ha finalizado corréctamente"
+msgstr "El proceso de instalación ha finalizado correctamente"
 
 #: lliurex-java-panel/python3-lliurexjavapanel/ConfigurationBox.py:56
 msgid "Java Control Panel. Select one tu run it"
@@ -67,7 +67,7 @@ msgstr "Firefox plugin. Alternativa configurada:"
 
 #: lliurex-java-panel/python3-lliurexjavapanel/ConfigurationBox.py:206
 msgid "Configuration changed successfully"
-msgstr "Configuración cambiada corréctamente"
+msgstr "Configuración cambiada correctamente"
 
 #: lliurex-java-panel/python3-lliurexjavapanel/LoadingBox.py:28
 msgid "Checking system..."
