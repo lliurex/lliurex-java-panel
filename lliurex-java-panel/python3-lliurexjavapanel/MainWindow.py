@@ -191,6 +191,8 @@ class MainWindow(QMainWindow):
 		self.messageLabel.setText("")
 		if len(self.javasToInstall)>0:
 			self.applyButton.setEnabled(False)
+			self.configurationButton.setEnabled(False)
+			self.helpButton.setEnabled(False)
 			self.messageLabel.setText(_("Installing selected Java version(s). Wait a moment..."))
 
 			for item in self.boxSelected:
@@ -239,7 +241,9 @@ class MainWindow(QMainWindow):
 						element.itemAt(3).widget().show()
 				error=True		
 		
-		self.applyButton.setEnabled(True)	
+		self.applyButton.setEnabled(True)
+		self.configurationButton.setEnabled(True)
+		self.helpButton.setEnabled(True)
 
 		for item in self.othersBox:
 			item.itemAt(0).widget().setEnabled(True)
@@ -284,9 +288,9 @@ class MainWindow(QMainWindow):
 			run_pkexec=True
 		
 		if 'ca_ES' in lang:
-			cmd='xdg-open https://wiki.edu.gva.es/lliurex/tiki-index.php?page=LliureX-Java-Panel.'
+			cmd='xdg-open https://wiki.edu.gva.es/lliurex/tiki-index.php?page=LliureX-Java-Panel_V2.'
 		else:
-			cmd='xdg-open https://wiki.edu.gva.es/lliurex/tiki-index.php?page=LliureX-Java-Panel'
+			cmd='xdg-open https://wiki.edu.gva.es/lliurex/tiki-index.php?page=LliureX-Java-Panel_V2'
 
 		if not run_pkexec:
 			self.fcmd="su -c '%s' $USER" %cmd
