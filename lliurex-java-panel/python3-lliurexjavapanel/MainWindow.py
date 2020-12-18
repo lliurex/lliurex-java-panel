@@ -293,10 +293,10 @@ class MainWindow(QMainWindow):
 			cmd='xdg-open https://wiki.edu.gva.es/lliurex/tiki-index.php?page=LliureX-Java-Panel_V2'
 
 		if not run_pkexec:
-			self.fcmd="su -c '%s' $USER" %cmd
+			self.fcmd="su -c '%s' $USER" %cmd+ ' &'
 		else:
 			user=pwd.getpwuid(int(os.environ["PKEXEC_UID"])).pw_name
-			self.fcmd="su -c '" +cmd+ "' "+ user
+			self.fcmd="su -c '" +cmd+ " &' "+ user
 			
 		os.system(self.fcmd)
 
