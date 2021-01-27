@@ -1,0 +1,15 @@
+Source: lliurex-java-panel
+Section: admin
+Priority: optional
+Maintainer: Equipo LliureX <lliurex@gva.es>
+Uploaders: Equipo LliureX <lliurex@gva.es>
+Build-Depends: debhelper (>= 10), librsvg2-bin,llxsrchelper, zero-dev,python3-poinstaller
+Standards-Version: 4.1.2
+
+Package: lliurex-java-panel
+Architecture: all
+Depends: ${misc:Depends}, python3
+Description: Lliurex Java Panel Administration
+ Application to install and configure different java versions
+
+

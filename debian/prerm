@@ -1,0 +1,27 @@
+#!/bin/sh
+set -e
+
+#VARS
+SWING_FILE_OPENJDK8="/etc/java-8-openjdk/swing.properties"
+SWING_FILE_OPENJDK11="/etc/java-11-openjdk/swing.properties"
+SWING_FILE_LLIUREX="/usr/share/lliurex-java-panel/swing.properties"
+PACKAGE_NAME="lliurex-java-panel"
+
+case $1 in 
+        remove|purge|abort-install|disappear)
+                if [ -f ${SWING_FILE_OPENJDK8}.diverted ] ; then
+                        rm -f ${SWING_FILE_OPENJDK8}
+  					    dpkg-divert --package  ${PACKAGE_NAME} --rename --quiet --remove ${SWING_FILE_OPENJDK8}|| true
+                fi
+		
+		if [ -f ${SWING_FILE_OPENJDK11}.diverted ] ; then
+                        rm -f ${SWING_FILE_OPENJDK11}
+  					    dpkg-divert --package  ${PACKAGE_NAME} --rename --quiet --remove ${SWING_FILE_OPENJDK11}| true
+                fi
+                
+                ;;
+        *)
+                echo "Nothing to do"
+                ;; 
+esac
+
