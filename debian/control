@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Equipo LliureX <lliurex@gva.es>
 Uploaders: Equipo LliureX <lliurex@gva.es>
 Build-Depends: debhelper (>= 10),
-			librsvg2-bin,
+			dh-python,
 			llxsrchelper,
 			zero-dev,
 			python3-poinstaller,
