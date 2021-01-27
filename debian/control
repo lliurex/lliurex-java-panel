@@ -3,7 +3,13 @@ Section: admin
 Priority: optional
 Maintainer: Equipo LliureX <lliurex@gva.es>
 Uploaders: Equipo LliureX <lliurex@gva.es>
-Build-Depends: debhelper (>= 10), librsvg2-bin,llxsrchelper, zero-dev,python3-poinstaller
+Build-Depends: debhelper (>= 10),
+			librsvg2-bin,
+			llxsrchelper,
+			zero-dev,
+			python3-poinstaller,
+			python3-setuptools,
+			python3-all
 Standards-Version: 4.1.2
 
 Package: lliurex-java-panel
