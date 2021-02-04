@@ -1,5 +1,0 @@
-[JAVA]
-pkg=oracle-java9-installer
-name=Oracle Java 9
-cmd=apt-get install -y oracle-java9-installer
-swing=/usr/lib/jvm/java-9-oracle/lib/

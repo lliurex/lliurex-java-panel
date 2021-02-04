@@ -1,0 +1,5 @@
+[JAVA]
+pkg=openjdk-13-jre
+name=OpenJDK JRE 13
+cmd=apt-get install -y openjdk-13-jre
+swing=/etc/java-13-openjdk/
