@@ -1,5 +1,0 @@
-[JAVA]
-pkg=oracle-java6-installer
-name=Oracle Java 6
-cmd=DEBIAN_FRONTEND=kde apt-get install -y oracle-java6-installer
-swing=/usr/lib/jvm/java-6-oracle/jre/lib/
