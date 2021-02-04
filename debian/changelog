@@ -1,3 +1,9 @@
+lliurex-java-panel (0.18) bionic; urgency=medium
+
+  * Migrated to PyQt
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Thu, 04 Feb 2021 09:58:06 +0100
+
 lliurex-java-panel (0.17) bionic; urgency=medium
 
   * Fixed po file
