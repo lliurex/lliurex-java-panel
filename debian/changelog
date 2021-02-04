@@ -1,10 +1,10 @@
-lliurex-java-panel (0.18.1) bionic; urgency=medium
+lliurex-java-panel (0.18.1) bionic-updates; urgency=medium
 
   * Fixed openjdk11 info file
   
  -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Thu, 04 Feb 2021 10:41:58 +0100
 
-lliurex-java-panel (0.18) bionic; urgency=medium
+lliurex-java-panel (0.18) bionic-updates; urgency=medium
 
   * Migrated to PyQt
   
