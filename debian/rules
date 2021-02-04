@@ -9,5 +9,6 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
+export PYBUILD_NAME=lliurex-java-panel
 %:
-	dh $@ --with llxsrc,i18n,zero
+	dh $@ --with llxsrc,zero,python3 --buildsystem pybuild
