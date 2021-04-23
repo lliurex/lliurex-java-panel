@@ -1,3 +1,9 @@
+lliurex-java-panel (0.18.2) bionic-updates; urgency=medium
+
+  * Fixed bug when install 2 or more java
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Fri, 23 Apr 2021 13:02:26 +0200
+
 lliurex-java-panel (0.18.1) bionic-updates; urgency=medium
 
   * Fixed openjdk11 info file
