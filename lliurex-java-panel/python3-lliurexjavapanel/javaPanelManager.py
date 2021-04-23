@@ -5,6 +5,7 @@ import sys
 import os
 import subprocess
 import configparser
+import shutil
 
 
 BASE_DIR="/usr/share/lliurex-java-panel/"
@@ -120,21 +121,26 @@ class javaPanelManager:
 		destPath_swing=destPath+"swing.properties"
 		destPath_diverted=destPath_swing+".diverted"
 
-		if not os.path.exists(destPath_swing):
-			shutil.copy2(SWING_FILE,destPath)
-		else:
+		try:
+			if not os.path.exists(destPath_swing):
+				shutil.copy2(SWING_FILE,destPath)
+			else:
 
-			if not os.path.exists(destPath_diverted):
-				cmd_diversion="dpkg-divert --package "+PACKAGE_NAME+" --add --rename --divert " +destPath_diverted + " "+ destPath_swing
-				result=subprocess.check_output(cmd_diversion,shell=True)
-				if type(result) is bytes:
-					result=result.decode()
+				if not os.path.exists(destPath_diverted):
+					cmd_diversion="dpkg-divert --package "+PACKAGE_NAME+" --add --rename --divert " +destPath_diverted + " "+ destPath_swing
+					result=subprocess.check_output(cmd_diversion,shell=True)
+					if type(result) is bytes:
+						result=result.decode()
 
-				result=result.split("\n")
-				if result[0]!="":
-					os.symlink(SWING_FILE,destPath_swing)
-				else:
-					print("Unable to create diversion")
+					result=result.split("\n")
+					if result[0]!="":
+						os.symlink(SWING_FILE,destPath_swing)
+					else:
+						print("Unable to create diversion")
+
+		except Exception as e:
+			print("Exception:"+str(e))
+			pass
 
 	#def copySwingFile
 
