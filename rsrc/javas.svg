@@ -13,7 +13,7 @@
    viewBox="0 0 65.624996 65.624996"
    id="svg5170"
    version="1.1"
-   inkscape:version="1.0 (1.0+r73)"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
    sodipodi:docname="javas.svg"
    inkscape:export-filename="/home/lliurex/Desarrollo/Javapanel-qt/banners/openjdk-11-jre.png"
    inkscape:export-xdpi="96"
@@ -143,6 +143,16 @@
        y1="1021.3229"
        x2="367.58667"
        y2="1021.3229" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient6980"
+       id="linearGradient930"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(-717.59057,-482.03247)"
+       x1="341.87238"
+       y1="1021.3229"
+       x2="367.58667"
+       y2="1021.3229" />
   </defs>
   <sodipodi:namedview
      inkscape:guide-bbox="true"
@@ -153,9 +163,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="11.313709"
-     inkscape:cx="91.151751"
-     inkscape:cy="-5.4093557"
+     inkscape:zoom="4.0000002"
+     inkscape:cx="-24.6654"
+     inkscape:cy="44.590318"
      inkscape:document-units="px"
      inkscape:current-layer="g6288-7"
      showgrid="false"
@@ -165,9 +175,9 @@
      fit-margin-bottom="0"
      units="px"
      inkscape:window-width="1920"
-     inkscape:window-height="897"
+     inkscape:window-height="901"
      inkscape:window-x="0"
-     inkscape:window-y="36"
+     inkscape:window-y="32"
      inkscape:window-maximized="1"
      inkscape:document-rotation="0">
     <sodipodi:guide
@@ -183,7 +193,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -436,7 +446,7 @@
          id="g6288-7">
         <g
            id="g936"
-           transform="matrix(0.63616135,0,0,0.63616135,-453.76796,57.122747)">
+           transform="matrix(0.63616135,0,0,0.63616135,-450.25234,28.763375)">
           <g
              id="g930">
             <circle
@@ -444,14 +454,14 @@
                cy="494.43616"
                cx="-349.379"
                id="path5278-6-5"
-               style="opacity:1;fill:url(#linearGradient102);fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.968627" />
+               style="opacity:1;fill:url(#linearGradient102);fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.96862697" />
             <text
                id="text6203-3-3"
                y="503.09015"
                x="-358.26215"
                style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:0%;font-family:'Quattrocento Sans';-inkscape-font-specification:'Quattrocento Sans Bold';letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
                xml:space="preserve"><tspan
-                 style="font-size:26.546px;line-height:1.25"
+                 style="font-size:26.54599953px;line-height:1.25"
                  y="503.09015"
                  x="-358.26215"
                  id="tspan6205-7-5"
@@ -502,6 +512,35 @@
                  x="-371.04108"
                  id="tspan6205-7-5-5-7"
                  sodipodi:role="line">13</tspan></text>
+          </g>
+        </g>
+        <g
+           id="g942-7"
+           transform="matrix(0.63616135,0,0,0.63616135,-360.65595,11.334869)">
+          <g
+             transform="translate(-17.898633,3.5420289)"
+             id="g3812-9-5">
+            <g
+               id="g935"
+               transform="translate(-114.94726,23.578921)">
+              <circle
+                 style="opacity:1;fill:url(#linearGradient930);fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.96862697"
+                 id="path5278-6-5-5-1-3"
+                 cx="-362.86108"
+                 cy="539.29047"
+                 r="12.857144" />
+              <text
+                 xml:space="preserve"
+                 style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12px;line-height:0%;font-family:'Quattrocento Sans';-inkscape-font-specification:'Quattrocento Sans Bold';letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+                 x="-371.04108"
+                 y="545.91553"
+                 id="text6203-3-3-3-2-5"><tspan
+                   sodipodi:role="line"
+                   id="tspan6205-7-5-5-7-6"
+                   x="-371.04108"
+                   y="545.91553"
+                   style="font-size:20px;line-height:1.25;stroke-width:1px">16</tspan></text>
+            </g>
           </g>
         </g>
       </g>
