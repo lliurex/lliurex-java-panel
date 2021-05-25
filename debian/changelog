@@ -1,3 +1,9 @@
+lliurex-java-panel (0.32) focal; urgency=medium
+
+  * Added support to openjdk 16
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Tue, 25 May 2021 14:06:12 +0200
+
 lliurex-java-panel (0.31) focal; urgency=medium
 
   * Fixed bug when install 2 or more java
