@@ -206,6 +206,7 @@ class ConfigurationBox(QWidget):
 		if alternative_type=="cpanel":
 			cmd=cmd+'&'
 		else:
+			self.core.mainWindow._manageMsgBox(False,False)
 			self.core.mainWindow.messageLabel.setText(_("Configuration changed successfully"))
 		self.core.javaPanelManager.alternativeCommand(cmd)
 
