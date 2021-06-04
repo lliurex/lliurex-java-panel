@@ -118,6 +118,7 @@ class MainWindow(QMainWindow):
 		self.bannerBox=self.findChild(QLabel,'bannerLabel')
 		self.bannerBox.setStyleSheet("background-color: #7f0907") 
 		self.messageBox=self.findChild(QVBoxLayout,'messageBox')
+		self.messageImg=self.findChild(QLabel,'messageImg')
 		self.messageLabel=self.findChild(QLabel,'messageLabel')
 		self.controlsBox=self.findChild(QVBoxLayout,'controlsBox')
 		self.applyButton=self.findChild(QPushButton,'applyButton')
@@ -144,7 +145,8 @@ class MainWindow(QMainWindow):
 		self.gatherInfo=gatherInfo()
 		self.installersButton.hide()
 		self.configurationButton.hide()
-		self.messageLabel.hide()
+		#self.messageLabel.hide()
+		self._manageMsgBox(True,False)	
 		self.applyButton.hide()
 		self.helpButton.hide()
 
@@ -170,11 +172,13 @@ class MainWindow(QMainWindow):
 			self.fader_widget = FaderWidget(self.QtStack.currentWidget(), self.QtStack.widget(1))
 			self.QtStack.setCurrentIndex(1)
 			self.configurationButton.show()
-			self.messageLabel.show()
+			self._manageMsgBox(True,False)	
+			#self.messageLabel.show()
 			self.applyButton.show()
 			self.helpButton.show()
 		else:
-			self.messageLabel.show()
+			#self.messageLabel.show()
+			self._manageMsgBox(False,True)	
 			self.loadingBox.spinner.hide()
 			self.messageLabel.setText(_("No Java version(s) availables detected"))	
 
@@ -188,6 +192,8 @@ class MainWindow(QMainWindow):
 		self.javasToInstall=self.installersBox.javas_selected
 		self.boxSelected=self.installersBox.box_selected
 		#self.installersBox.scrollArea.setEnabled(False)
+		self._manageMsgBox(True,False)	
+		
 		self.messageLabel.setText("")
 		if len(self.javasToInstall)>0:
 			self.applyButton.setEnabled(False)
@@ -211,6 +217,7 @@ class MainWindow(QMainWindow):
 			self.install.start()
 			self.install.finished.connect(self._finishInstall)
 		else:
+			self._manageMsgBox(False,True)	
 			self.messageLabel.setText(_("You must select a Java version to install"))
 
 	#def applyButtonClicked
@@ -249,8 +256,10 @@ class MainWindow(QMainWindow):
 			item.itemAt(0).widget().setEnabled(True)
 		
 		if error:
+			self._manageMsgBox(False,True)	
 			self.messageLabel.setText(_("Installing process has ending with errors"))					     
 		else:
+			self._manageMsgBox(False,False)	
 			self.messageLabel.setText(_("Installing process has ending successfully"))					     
 
 		self.exitLocked=False
@@ -261,6 +270,7 @@ class MainWindow(QMainWindow):
 
 		if panel=="C":
 			self.configurationButton.hide()
+			self._manageMsgBox(True,False)	
 			self.messageLabel.setText("")
 			self.configurationBox.drawConfigurationList()
 			self.fader_widget = FaderWidget(self.QtStack.currentWidget(), self.QtStack.widget(2))
@@ -270,6 +280,7 @@ class MainWindow(QMainWindow):
 
 		elif panel=="I":
 			self.installersButton.hide()
+			self._manageMsgBox(True,False)	
 			self.messageLabel.setText("")
 			self.fader_widget = FaderWidget(self.QtStack.currentWidget(), self.QtStack.widget(2))
 			self.QtStack.setCurrentIndex(1)
@@ -322,5 +333,33 @@ class MainWindow(QMainWindow):
 			event.accept()			
 
 	#def closeEvent
+
+	def _manageMsgBox(self,hide,error):
+
+		if hide:
+			self.messageImg.setStyleSheet("background-color: transparent")
+			self.messageLabel.setStyleSheet("background-color: transparent")
+			self.messageImg.hide()
+			self.messageLabel.setAlignment(Qt.AlignCenter|Qt.AlignVCenter)
+
+		else:
+			if error:
+				self.messageImg.setStyleSheet("border-bottom: 1px solid #da4453;border-left: 1px solid #da4453;border-top: 1px solid #da4453;background-color: #ebced2")
+				self.messageLabel.setStyleSheet("border-bottom: 1px solid #da4453;border-right: 1px solid #da4453;border-top: 1px solid #da4453;background-color: #ebced2")
+				pixmap=QPixmap(self.core.rsrc_dir+"dialog-error.png")
+				self.messageImg.setPixmap(pixmap)
+				self.messageImg.show()
+				self.messageLabel.setAlignment(Qt.AlignLeft|Qt.AlignVCenter)
+				self.messageLabel.show()			
+			else:
+				self.messageImg.setStyleSheet("border-bottom: 1px solid #27ae60;border-left: 1px solid #27ae60;border-top: 1px solid #27ae60;background-color: #c7e3d4")
+				self.messageLabel.setStyleSheet("border-bottom: 1px solid #27ae60;border-right: 1px solid #27ae60;border-top: 1px solid #27ae60;background-color: #c7e3d4")
+				pixmap=QPixmap(self.core.rsrc_dir+"dialog-positive.png")
+				self.messageImg.setPixmap(pixmap)
+				self.messageImg.show()
+				self.messageLabel.setAlignment(Qt.AlignLeft|Qt.AlignVCenter)
+				self.messageLabel.show()			
+
+	#def _manageMsgBox
 	
 from . import Core
