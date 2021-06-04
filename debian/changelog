@@ -1,3 +1,9 @@
+lliurex-java-panel (0.33) focal; urgency=medium
+
+  * Changed style of feedback message
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Fri, 04 Jun 2021 14:30:35 +0200
+
 lliurex-java-panel (0.32) focal; urgency=medium
 
   * Added support to openjdk 16
