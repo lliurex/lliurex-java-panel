@@ -1,3 +1,9 @@
+lliurex-java-panel (0.34) focal; urgency=medium
+
+  * Added information about installation process
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Thu, 15 Jul 2021 14:11:38 +0200
+
 lliurex-java-panel (0.33) focal; urgency=medium
 
   * Changed style of feedback message
