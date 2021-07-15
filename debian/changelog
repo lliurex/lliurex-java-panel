@@ -1,3 +1,9 @@
+lliurex-java-panel (0.18.4) bionic-updates; urgency=medium
+
+  * Added information about installation process
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Thu, 15 Jul 2021 14:43:17 +0200
+
 lliurex-java-panel (0.18.3) bionic-updates; urgency=medium
 
   * Changed style of feedback message
