@@ -3,8 +3,8 @@ import sys
 import os
 from PyQt5 import uic
 from PyQt5.QtGui import QIcon,QPixmap,QPainter
-from PyQt5.QtCore import Qt,QEvent,QTimeLine,QThread,pyqtSignal,QSize
-from PyQt5.QtWidgets import QLabel, QWidget,QVBoxLayout,QHBoxLayout,QSizePolicy,QMainWindow,QPushButton,QStackedLayout,QDesktopWidget
+from PyQt5.QtCore import Qt,QEvent,QTimeLine,QThread,pyqtSignal,QSize,QObject
+from PyQt5.QtWidgets import QLabel, QWidget,QVBoxLayout,QHBoxLayout,QSizePolicy,QMainWindow,QPushButton,QStackedLayout,QDesktopWidget,QProgressBar
 
 import time
 import subprocess
@@ -56,6 +56,95 @@ class installProcess(QThread):
 			self.err=1
 	#def run
 # class installProcess
+
+class getPackages(QThread):
+
+	def __init__(self,*args):
+		
+		QThread.__init__(self)
+		self.core=Core.Core.get_core()
+		self.java_list=args[0]
+
+	
+	#def __init__
+
+	def run(self,*args):
+
+		self.core.javaPanelManager.getNumberPackages(self.java_list)
+	#def run
+
+#class getPackages
+
+class Worker(QObject):
+
+	_finished=pyqtSignal()
+	_progress=pyqtSignal(str)
+
+	def __init__(self,*args):
+		
+		QObject.__init__(self)
+		self.core=Core.Core.get_core()
+		self.maxRetry=3
+		self.timeToCheck=1
+		self.isWorked=False
+		self.aptStop=False
+		self.aptRun=True
+		self.unpackedRun=False
+		self.count=0
+		self.running=False
+		self.countDown=self.maxRetry
+	
+	#def __init__
+
+	def run(self):
+
+		while self.running:
+			self._updateProgress()
+			time.sleep(self.timeToCheck)
+	
+	#def run
+
+	def _updateProgress(self):
+
+		if not self.isWorked:
+			self.isWorked=True
+			if not self.aptStop:
+				isAptRunning=self.core.javaPanelManager.isAptRunning()
+				if self.count==2:
+					self.aptRun=isAptRunning
+				else:
+					self.count+=1
+
+			if not self.aptRun:
+				if not self.aptStop:	
+					self._progress.emit("unpack")
+					self.aptStop=True
+					self.unpackedRun=True
+
+				if self.countDown==self.maxRetry:
+					self.countDown=0
+					if self.unpackedRun:
+						self.core.javaPanelManager.checkProgressUnpacked()
+						if self.core.javaPanelManager.progressUnpacked!=len(self.core.javaPanelManager.initialNumberPackages):
+							self._progress.emit("unpack")
+						else:
+							self._progress.emit("install")
+							self.unpackedRun=False
+					else:
+						self.core.javaPanelManager.checkProgressInstallation()
+						if self.core.javaPanelManager.progressInstallation!=len(self.core.javaPanelManager.initialNumberPackages):
+							self._progress.emit("install")
+						else:
+							self.running=False
+							self._progress.emit("end")
+							self._finished.emit()
+				else:
+					self.countDown+=1
+
+			self.isWorked=False
+
+	#def _updateProgress
+
 class FaderWidget(QWidget):
 	
 	def __init__(self, old_widget, new_widget):
@@ -120,6 +209,7 @@ class MainWindow(QMainWindow):
 		self.messageBox=self.findChild(QVBoxLayout,'messageBox')
 		self.messageImg=self.findChild(QLabel,'messageImg')
 		self.messageLabel=self.findChild(QLabel,'messageLabel')
+		self.progressBar=self.findChild(QProgressBar,'progressBar')
 		self.controlsBox=self.findChild(QVBoxLayout,'controlsBox')
 		self.applyButton=self.findChild(QPushButton,'applyButton')
 		icn=QIcon.fromTheme(os.path.join(settings.ICONS_THEME,"gtk-ok.svg"))
@@ -199,7 +289,7 @@ class MainWindow(QMainWindow):
 			self.applyButton.setEnabled(False)
 			self.configurationButton.setEnabled(False)
 			self.helpButton.setEnabled(False)
-			self.messageLabel.setText(_("Installing selected Java version(s). Wait a moment..."))
+			#self.messageLabel.setText(_("Installing selected Java version(s). Wait a moment..."))
 
 			for item in self.boxSelected:
 				item.itemAt(0).widget().setEnabled(False)
@@ -213,16 +303,79 @@ class MainWindow(QMainWindow):
 					self.othersBox.append(item)
 
 			self.exitLocked=True
+			'''
 			self.install=installProcess(self.javasToInstall)
 			self.install.start()
 			self.install.finished.connect(self._finishInstall)
+			'''
+			self.getPackages=getPackages(self.javasToInstall)
+			self._manageMsgBox(True,False)
+			self.messageLabel.setText(_("1 of 5: Obtaining information about Java(s) to install..."))
+			self.progressBar.show()
+			self.getPackages.start()
+			self.getPackages.finished.connect(self._finishGetPackages)
+
 		else:
 			self._manageMsgBox(False,True)	
 			self.messageLabel.setText(_("You must select a Java version to install"))
 
 	#def applyButtonClicked
+
+	def _finishGetPackages(self):
+
+		self.messageLabel.setText(_("2 of 5: Downloading packages..."))
+		self.progressBar.setValue(100)
+		
+		self.checkProgress=QThread()
+		self.worker=Worker()
+		self.worker.moveToThread(self.checkProgress)
+		self.checkProgress.started.connect(self.worker.run)
+		self.worker._finished.connect(self.checkProgress.quit)
+		self.worker._progress.connect(self._updateMessage)
+		self.install=installProcess(self.javasToInstall)
+		self.install.start()
+		self.install.finished.connect(self._finishInstall)
+		self.worker.running=True
+		self.checkProgress.start()
+
+	#def _finishGetPackages
+	
+	def _updateMessage(self,step):
+
+		if step=="unpack":
+			self.messageLabel.setText(_("3 of 5: Unpacking packages: %s of %s packages")%(str(self.core.javaPanelManager.progressUnpacked),len(self.core.javaPanelManager.initialNumberPackages)))
+		elif step=="install":
+			self.messageLabel.setText(_("4 of 5: Configuring packages: %s of %s packages")%(str(self.core.javaPanelManager.progressInstallation),len(self.core.javaPanelManager.initialNumberPackages)))
+		elif step=="end":
+			self.messageLabel.setText(_("5 of 5: Finishing the installation..."))
+		
+		self._updateProgressBar(step)
+	#def _updateMessage		
+
+	def _updateProgressBar(self,step):
+
+		if step=="unpack":
+			if self.core.javaPanelManager.progressUnpackedPercentage==0.00:
+				self.progressBar.setValue(200)
+			else:
+				p_value=2+float(self.core.javaPanelManager.progressUnpackedPercentage)
+				self.progressBar.setValue(p_value*100)
+		elif step=="install":
+			if self.core.javaPanelManager.progressInstallationPercentage==0.00:
+				self.progressBar.setValue(300)
+			else:
+				p_value=3+float(self.core.javaPanelManager.progressInstallationPercentage)
+				self.progressBar.setValue(p_value*100)
+		elif step=="end":
+			self.progressBar.setValue(400)
+
+	#def _updateProgressBar
+
 			
 	def _finishInstall(self):
+
+		self.progressBar.hide()
+		self.worker.running=False
 
 		result=self.core.javaPanelManager.result_install
 		error=False
@@ -270,6 +423,7 @@ class MainWindow(QMainWindow):
 
 		if panel=="C":
 			self.configurationButton.hide()
+			self.progressBar.hide()
 			self._manageMsgBox(True,False)	
 			self.messageLabel.setText("")
 			self.configurationBox.drawConfigurationList()
@@ -336,6 +490,7 @@ class MainWindow(QMainWindow):
 
 	def _manageMsgBox(self,hide,error):
 
+		self.progressBar.hide()
 		if hide:
 			self.messageImg.setStyleSheet("background-color: transparent")
 			self.messageLabel.setStyleSheet("background-color: transparent")
