@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-17 17:52+0100\n"
-"PO-Revision-Date: 2020-12-17 12:24+0100\n"
+"POT-Creation-Date: 2021-07-15 13:25+0200\n"
+"PO-Revision-Date: 2021-07-15 13:48+0200\n"
 "Last-Translator: lliurex <lliurex@gva.es>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -17,11 +17,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.3\n"
 
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:152
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:162
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:168
+#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:273
 msgid "No Java version(s) availables detected"
 msgstr "No se han detectado versiones de Java disponibles"
 
@@ -34,18 +35,21 @@ msgstr "Instalando la(s) versión(es) de Java seleccionadas. Espere un momento..
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:182
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:192
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:198
+#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:320
 msgid "You must select a Java version to install"
 msgstr "Debe seleccionar una versión de Java para instalar"
 
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:218
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:228
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:234
+#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:413
 msgid "Installing process has ending with errors"
 msgstr "El proceso de instalación ha finalizado con errores"
 
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:220
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:230
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:236
+#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:416
 msgid "Installing process has ending successfully"
 msgstr "El proceso de instalación ha finalizado correctamente"
 
@@ -66,6 +70,7 @@ msgid "Firefox plugin. Alternative configured:"
 msgstr "Firefox plugin. Alternativa configurada:"
 
 #: lliurex-java-panel/python3-lliurexjavapanel/ConfigurationBox.py:206
+#: lliurex-java-panel/python3-lliurexjavapanel/ConfigurationBox.py:210
 msgid "Configuration changed successfully"
 msgstr "Configuración cambiada correctamente"
 
@@ -75,16 +80,19 @@ msgstr "Comprobando el sistema..."
 
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:108
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:109
+#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:198
 msgid "Installers"
 msgstr "Instaladores"
 
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:114
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:115
+#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:204
 msgid "Configuration Options"
 msgstr "Opciones de configuración"
 
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:125
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:126
+#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:217
 msgid "Install"
 msgstr "Instalar"
 
@@ -93,5 +101,28 @@ msgid "Click to select an option"
 msgstr "Haga clic para seleccionar una opción"
 
 #: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:131
+#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:222
 msgid "Help"
 msgstr "Ayuda"
+
+#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:313
+msgid "1 of 5: Obtaining information about Java(s) to install..."
+msgstr "1 de 5: Obteniendo información sobre los Java a instalar..."
+
+#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:326
+msgid "2 of 5: Downloading packages..."
+msgstr "2 de 5: Descargando paquetes..."
+
+#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:346
+#, python-format
+msgid "3 of 5: Unpacking packages: %s of %s packages"
+msgstr "3 de 5: Desempaquetando paquetes: %s de %s paquetes"
+
+#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:348
+#, python-format
+msgid "4 of 5: Configuring packages: %s of %s packages"
+msgstr "4 de 5: Configurando paquetes: %s de %s paquetes"
+
+#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:350
+msgid "5 of 5: Finishing the installation..."
+msgstr "5 de 5: Finalizando la instalación..."
