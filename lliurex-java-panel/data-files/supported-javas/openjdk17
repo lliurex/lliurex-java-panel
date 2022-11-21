@@ -1,0 +1,5 @@
+[JAVA]
+pkg=openjdk-17-jre
+name=OpenJDK JRE 17
+cmd=apt-get install -y openjdk-17-jre
+swing=/etc/java-17-openjdk/
