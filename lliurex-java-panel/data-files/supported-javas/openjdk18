@@ -1,5 +1,0 @@
-[JAVA]
-pkg=openjdk-18-jre
-name=OpenJDK JRE 18
-cmd=apt-get install -y openjdk-18-jre
-swing=/etc/java-18-openjdk/

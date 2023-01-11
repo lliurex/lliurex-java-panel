@@ -358,13 +358,13 @@ class MainWindow(QMainWindow):
 			if self.core.javaPanelManager.progressUnpackedPercentage==0.00:
 				self.progressBar.setValue(200)
 			else:
-				p_value=2+int(float(self.core.javaPanelManager.progressUnpackedPercentage))
+				p_value=2+float(self.core.javaPanelManager.progressUnpackedPercentage)
 				self.progressBar.setValue(p_value*100)
 		elif step=="install":
 			if self.core.javaPanelManager.progressInstallationPercentage==0.00:
 				self.progressBar.setValue(300)
 			else:
-				p_value=3+int(float(self.core.javaPanelManager.progressInstallationPercentage))
+				p_value=3+float(self.core.javaPanelManager.progressInstallationPercentage)
 				self.progressBar.setValue(p_value*100)
 		elif step=="end":
 			self.progressBar.setValue(400)
