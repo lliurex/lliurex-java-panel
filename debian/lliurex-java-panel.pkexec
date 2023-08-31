@@ -1,0 +1,49 @@
+[
+    {
+        "prefix": "net.lliurex.lliurex-java-panel",
+        "cmd": "/usr/sbin/lliurex-java-panel",
+        "nameaction": "gui",
+        "icon": "lliurex-java-panel",
+        "default_auth": {
+            "any": "no",
+            "inactive": "no",
+            "active": "no"
+        },
+        "auths": [
+            {
+                "type": "group",
+                "members": [
+                    "sudo",
+                    "admins"
+                ],
+                "any": "yes",
+                "inactive": "yes",
+                "active": "yes"
+            }
+        ]
+    },
+    {
+        "prefix": "net.lliurex.zero-center.lliurex-java-panel",
+        "cmd": "/usr/share/zero-center/zmds/lliurex-java-panel.zmd",
+        "nameaction": "launcher",
+        "icon": "lliurex-java-panel",
+        "default_auth": {
+            "any": "no",
+            "inactive": "no",
+            "active": "no"
+        },
+        "auths": [
+            {
+                "type": "group",
+                "members": [
+                    "sudo",
+                    "admins",
+                    "teachers"
+                ],
+                "any": "yes",
+                "inactive": "yes",
+                "active": "yes"
+            }
+        ]
+    }
+]
