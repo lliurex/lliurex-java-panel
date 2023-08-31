@@ -1,0 +1,5 @@
+[JAVA]
+pkg=openjdk-19-jre
+name=OpenJDK JRE 19
+cmd=apt-get install -y openjdk-19-jre
+swing=/etc/java-19-openjdk/

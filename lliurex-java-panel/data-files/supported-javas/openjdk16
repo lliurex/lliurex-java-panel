@@ -1,5 +1,0 @@
-[JAVA]
-pkg=openjdk-16-jre
-name=OpenJDK JRE 16
-cmd=apt-get install -y openjdk-16-jre
-swing=/etc/java-16-openjdk/
