@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools","setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lliurexjavapanel"
+version = "0.1"
+description = "App to install and configure java versions"
+authors = [
+	{ name = "Juan Ramon Pelegrina", email="juapesai@hotmail.com" },
+	{ name = "LliureX Team"}
+]
+license = {text="GPL-3"}
+urls = {repository="https://github.com/lliurex/lliurex-java-panel"}
+
+[tool.setuptools]
+include-package-data=true
+[tool.setuptools.packages.find]
+where = ["lliurex-java-panel"]
+[tool.setuptools.package-data]
+ui=["rsrc/*.*"]
+

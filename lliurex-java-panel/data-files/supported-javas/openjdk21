@@ -1,0 +1,5 @@
+[JAVA]
+pkg=openjdk-21-jre
+name=OpenJDK JRE 21
+cmd=apt-get install -y openjdk-21-jre
+swing=/etc/java-21-openjdk/
