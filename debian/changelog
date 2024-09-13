@@ -1,3 +1,9 @@
+lliurex-java-panel (0.54.1) noble; urgency=medium
+
+  * Initial release for Noble
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Fri, 13 Sep 2024 09:08:32 +0200
+
 lliurex-java-panel (0.44.1) jammy; urgency=medium
 
   * Initial release for Jammy
