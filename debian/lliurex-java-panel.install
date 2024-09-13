@@ -1,0 +1,5 @@
+lliurex-java-panel/lliurex-java-panel /usr/sbin
+lliurex-java-panel/data-files/banners/* /usr/share/lliurex-java-panel/banners/
+lliurex-java-panel/data-files/supported-javas/* /usr/share/lliurex-java-panel/supported-javas/
+lliurex-java-panel/data-files/swing.properties /usr/share/lliurex-java-panel/
+lliurex-java-panel/data-files/fonts/* /usr/share/fonts

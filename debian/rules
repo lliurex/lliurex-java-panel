@@ -11,4 +11,4 @@
 
 export PYBUILD_NAME=lliurex-java-panel
 %:
-	dh $@ --with llxsrc,zero,python3 --buildsystem pybuild
+	dh $@ --with llxsrc,zero,python3,i18n --buildsystem pybuild
