@@ -1,3 +1,9 @@
+lliurex-java-panel (0.54.2) noble; urgency=medium
+
+  * Fixed pyproject.toml file
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Fri, 13 Sep 2024 09:19:28 +0200
+
 lliurex-java-panel (0.54.1) noble; urgency=medium
 
   * Initial release for Noble
