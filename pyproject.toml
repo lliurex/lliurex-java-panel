@@ -18,5 +18,5 @@ include-package-data=true
 [tool.setuptools.packages.find]
 where = ["lliurex-java-panel"]
 [tool.setuptools.package-data]
-ui=["rsrc/*.*"]
+lliurexjavapanel=["rsrc/*.*"]
 
