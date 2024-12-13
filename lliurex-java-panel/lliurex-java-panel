@@ -2,13 +2,40 @@
 
 import sys
 import os
-from PyQt5.QtWidgets import QApplication
-from lliurexjavapanel import Core
+from PySide6.QtWidgets import QApplication
+from PySide6.QtCore import QUrl
+from PySide6.QtGui import QIcon
+from PySide6.QtQml import QQmlApplicationEngine
 
+import gettext
+gettext.textdomain("epi")
+_ = gettext.gettext
+
+from lliurexjavapanel.Core import Core
+
+c=Core.get_core()
 
 app = QApplication(sys.argv)
-c=Core.Core.get_core()
-window =c.mainWindow
-#window.show()
-#window.load_gui()
-sys.exit(app.exec_()) 
+app.setDesktopFileName("lliurex-java-panel")
+engine=QQmlApplicationEngine()
+engine.clearComponentCache()
+context=engine.rootContext()
+mainStackBridge=c.mainStack
+javaStackBridge=c.javaStack
+#settingStackBridge=c.settigStack
+context.setContextProperty('mainStackBridge',mainStackBridge)
+context.setContextProperty('javaStackBridge',javaStackBridge)
+#context.setContextProperty('settingStackBridge',settingStackBridge)
+
+url = QUrl("/usr/lib/python3.12/dist-packages/lliurexjavapanel/rsrc/lliurex-java-panel.qml")
+
+engine.load(url)
+
+if not engine.rootObjects():
+	sys.exit(-1)
+
+engine.quit.connect(app.quit)
+ret=app.exec()
+del engine
+del app
+sys.exit(ret)

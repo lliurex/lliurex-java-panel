@@ -14,27 +14,17 @@ BASE_DIR="/usr/share/lliurex-java-panel/"
 SWING_FILE=BASE_DIR+"swing.properties"
 PACKAGE_NAME="lliurex-java-panel"
 
-class javaPanelManager:
+class JavaPanelManager:
 
 	def __init__(self):
 
-		self.core=Core.Core.get_core()
-		self.supported_javas=self.core.supported_java
-		self.banners=self.core.banners
-		self.java_list={}
-		self.order=0
-		self.result_install={}
-		self.initialNumberPackages=[]
-		self.numberPackagesInstalled=[]
-		self.numberPackagesUnpacked=[]
-		self.progressInstallation=0
-		self.progressInstallationPercentage=0.00
-		self.progressUnpacked=0
-		self.progressUnpackedPercentage=0.00
-		self.aptIsRunning=False
-		self.dpkgUnlocker=DpkgUnlockerManager.DpkgUnlockerManager()
-
-
+		self.supportedJavas=os.path.join(BASE_DIR,"supported-javas")
+		self.banners=os.path.join(BASE_DIR,"banners")
+		self.javasData=[]
+		self.javasInfo={}
+		self.javaSelected=[]
+		self.uncheckAll=True
+		
 	#def __init__
 	
 	def loadFile(self,path):
@@ -48,15 +38,14 @@ class javaPanelManager:
 				info["pkg"]=config.get("JAVA","pkg")
 				info["name"]=config.get("JAVA","name")
 				info["cmd"]=config.get("JAVA","cmd")
-				if os.path.exists(self.core.banners+info["pkg"]+".png"):
-					info["banner"]=self.core.banners+info["pkg"]+".png"
+				if os.path.exists(os.path.join(self.banners,info["pkg"]+".png")):
+					info["banner"]=os.path.join(self.banners,info["pkg"]+".png")
 				else:
 					info["banner"]=None
-
-
 				try:
 					info["swing"]=config.get("JAVA","swing")
 				except Exception as e:
+					info["swing"]=""
 					pass	
 				return info
 				
@@ -67,19 +56,18 @@ class javaPanelManager:
 
 	def getSupportedJava(self):
 
-		for item in sorted(os.listdir(self.supported_javas)):
-			if os.path.isfile(self.supported_javas+item):
-				tmp_info=self.loadFile(self.supported_javas+item)
-				if tmp_info!=None:
-					tmp_info["installed"]=self.isInstalled(tmp_info["pkg"])
-
-					base_apt_cmd = "apt-cache policy %s "%tmp_info["pkg"]
-					p=subprocess.Popen([base_apt_cmd],shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)	
+		for item in sorted(os.listdir(self.supportedJavas)):
+			if os.path.isfile(os.path.join(self.supportedJavas,item)):
+				tmpInfo=self.loadFile(os.path.join(self.supportedJavas,item))
+				if tmpInfo!=None:
+					javaInstalled=self.isInstalled(tmpInfo["pkg"])
+					baseAptCmd = "apt-cache policy %s "%tmpInfo["pkg"]
+					p=subprocess.Popen([baseAptCmd],shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)	
 					output=p.communicate()[0]
 					if type(output) is bytes:
 						output=output.decode()
 
-					if tmp_info["pkg"] not in output:
+					if tmpInfo["pkg"] not in output:
 						available=False
 					else:	
 						version=output.split("\n")[4]
@@ -89,13 +77,27 @@ class javaPanelManager:
 							available=False
 						
 					if available:
-						self.java_list[self.order]=tmp_info
-						self.order+=1
+						tmp={}
+						tmp["pkg"]=tmpInfo["pkg"]
+						tmp["name"]=tmpInfo["name"]
+						tmp["status"]=javaInstalled
+						tmp["banner"]=tmpInfo["banner"]
+						tmp["showSpinner"]=False
+						tmp["isChecked"]=False
+						tmp["isVisible"]=True
+						if javaInstalled=="installed":
+							tmp["resultProcess"]=0
+						else:
+							tmp["resultProcess"]=-1
+						self.javasData.append(tmp)
+						self.javasInfo[tmpInfo["pkg"]]={}
+						self.javasInfo[tmpInfo["pkg"]]["cmd"]=tmpInfo["cmd"]
+						self.javasInfo[tmpInfo["pkg"]]["swing"]=tmpInfo["swing"]
 					
-		self.getConfigurationOptions()
+		#self.getConfigurationOptions()
 
 	#def getSupportedJava	
-
+	
 	def isInstalled(self,pkg):
 		
 		p=subprocess.Popen(["dpkg-query -W -f='${db:Status-Status}' %s"%pkg],shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
@@ -105,12 +107,12 @@ class javaPanelManager:
 			output=output.decode()
 		
 		if output=="installed":
-			return True
+			return "installed"
 			
-		return False
+		return "available"
 		
 	#def isInstalled
-
+	'''
 	def installJava(self,javasToInstall):
 	
 		cmd="DEBIAN_FRONTEND=noninteractive apt-get install -y "
@@ -167,26 +169,27 @@ class javaPanelManager:
 	def getCpanelAlternatives(self):
 		
 	
-		alternative_list=[]
-		cpanel_label_list=[]
-		cpanel_cmd_list=[]
-		self.cpanel_alternatives={}
+		alternativeList=[]
+		cpanelLabelList=[]
+		cpanelCmdList=[]
+		self.cpanelAlternatives=[]
+		self.cpanelAlternativesName=[]
 		
 		# build alternatives list here
 		
 		# ############### #
 		try:		
-			java_cmd='update-alternatives --list java | grep -v "gij"'
-			java_cmd_list=subprocess.check_output(java_cmd, shell=True)
+			javaCmd='update-alternatives --list java | grep -v "gij"'
+			javaCmdList=subprocess.check_output(javaCmd, shell=True)
 
-			if type(java_cmd_list) is bytes:
-				java_cmd_list=java_cmd_list.decode()
+			if type(javaCmdList) is bytes:
+				javaCmdList=javaCmdList.decode()
 			
-			java_cmd_list=java_cmd_list.split("\n")
-			java_label='update-alternatives --list java | grep -v "gij" | cut -d"/" -f5'
-			java_label_list=subprocess.check_output(java_label, shell=True)
+			javaCmdList=javaCmdList.split("\n")
+			javaLabel='update-alternatives --list java | grep -v "gij" | cut -d"/" -f5'
+			javaLabelOutput=subprocess.check_output(javaLabel, shell=True)
 
-			if type(java_label_list) is bytes:
+			if type(javaLabel_list) is bytes:
 				java_label_list=java_label_list.decode()
 
 			java_label_list=java_label_list.split("\n")
@@ -490,5 +493,5 @@ class javaPanelManager:
 		return -1
 	
 	#def checkStatus
-
-from . import Core
+	'''
+#class JavaPanelManager

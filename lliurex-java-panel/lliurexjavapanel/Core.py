@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 import sys
 
-from . import settings
-from . import waitingSpinner
-from . import LoadingBox
-from . import InstallersBox
-from . import ConfigurationBox
-from . import MainWindow
-from . import javaPanelManager
+from . import JavaPanelManager
+'''
+from . import InstallStack
+from . import SettingStack
+'''
+from . import JavaStack
+from . import MainStack
 
 class Core:
 
@@ -32,18 +32,17 @@ class Core:
 	
 	def init(self):
 
-		self.rsrc_dir= settings.RSRC_DIR + "/"
-		self.supported_java=settings.SUPPORTED_JAVA+"/"
-		self.banners=settings.BANNERS+"/"
-		self.javaPanelManager=javaPanelManager.javaPanelManager()
-		self.waitingSpinner=waitingSpinner.waitingSpinner()
-		self.loadingBox=LoadingBox.LoadingBox()
-		self.configurationBox=ConfigurationBox.ConfigurationBox()
-		self.installersBox=InstallersBox.InstallersBox()
-		self.mainWindow=MainWindow.MainWindow()
+		self.javaPanelManager=JavaPanelManager.JavaPanelManager()
+		'''
+		self.installStack=InstallStack.InstallStack()
+		self.settingStack=SettingStack.Bridge()
+		'''
+		self.javaStack=JavaStack.Bridge()
+		self.mainStack=MainStack.Bridge()
 
-		self.mainWindow.show()
-		self.mainWindow.loadGui()
+		self.mainStack.initBridge()
+
+	#def init
 
 	def dprint(self,msg):
 		
@@ -51,3 +50,7 @@ class Core:
 			
 			print("[CORE] %s"%msg)
 		
+
+	#def dprint
+
+#class Core
