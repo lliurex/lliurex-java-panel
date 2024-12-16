@@ -8,7 +8,7 @@ from PySide6.QtGui import QIcon
 from PySide6.QtQml import QQmlApplicationEngine
 
 import gettext
-gettext.textdomain("epi")
+gettext.textdomain("lliurex-java-panel")
 _ = gettext.gettext
 
 from lliurexjavapanel.Core import Core
@@ -22,10 +22,10 @@ engine.clearComponentCache()
 context=engine.rootContext()
 mainStackBridge=c.mainStack
 javaStackBridge=c.javaStack
-#settingStackBridge=c.settigStack
+settingsStackBridge=c.settingsStack
 context.setContextProperty('mainStackBridge',mainStackBridge)
 context.setContextProperty('javaStackBridge',javaStackBridge)
-#context.setContextProperty('settingStackBridge',settingStackBridge)
+context.setContextProperty('settingsStackBridge',settingsStackBridge)
 
 url = QUrl("/usr/lib/python3.12/dist-packages/lliurexjavapanel/rsrc/lliurex-java-panel.qml")
 

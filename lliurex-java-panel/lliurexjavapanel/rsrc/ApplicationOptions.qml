@@ -26,22 +26,20 @@ GridLayout{
 
             MenuOptionBtn {
                 id:packagesOption
-                optionText:i18nd("epi-gtk","Home")
+                optionText:i18nd("lliurex-java-panel","Home")
                 optionIcon:"/usr/share/icons/breeze/places/22/user-home.svg"
                 visible:true
                 Connections{
                     function onMenuOptionClicked(){
                         mainStackBridge.manageTransitions(0)
-                        if (packageStackBridge.currentPkgOption==2){
-                            packageStackBridge.showPkgInfo([1,""])
-                        }
+                      
                     }
                 }
             }
             /*
             MenuOptionBtn {
                 id:detailsOption
-                optionText:i18nd("epi-gtk","View details")
+                optionText:i18nd("lliurex-java-panel","View details")
                 optionIcon:"/usr/share/icons/breeze/apps/22/utilities-terminal.svg"
                 visible:mainStackBridge.enableKonsole
                 Connections{
@@ -50,7 +48,18 @@ GridLayout{
                     }
                 }
             }
-            */
+            
+            MenuOptionBtn {
+                id:settingsOption
+                optionText:i18nd("lliurex-java-panel","Settings")
+                optionIcon:"/usr/share/icons/breeze/actions/22/configure.svg"
+                visible:true
+                Connections{
+                    function onMenuOptionClicked(){
+                        mainStackBridge.manageTransitions(2)
+                    }
+                }
+            }
             MenuOptionBtn {
                 id:helpOption
                 optionText:i18nd("epi-gtk","Help")
@@ -80,6 +89,14 @@ GridLayout{
             JavasPanel{
                 id:javasPanel
             }
+
+            KonsolePanel{
+                id:konsolePanel
+            }
+
+            SettingsPanel{
+                id:settingsPanel
+            }
             
         }
 
@@ -105,6 +122,7 @@ GridLayout{
                 id:feedbackColumn
                 spacing:10
                 Layout.alignment:Qt.AlignHCenter
+                visible:mainStackBridge.currentOptionsStack==0?true:false
                 Text{
                     id:feedBackText
                     text:getFeedBackText(mainStackBridge.feedbackCode)
@@ -130,7 +148,7 @@ GridLayout{
                
             PC.Button {
                 id:installBtn
-                visible:true
+                visible:mainStackBridge.currentOptionsStack==0?true:false
                 focus:true
                 display:AbstractButton.TextBesideIcon
                 icon.name:"dialog-ok"

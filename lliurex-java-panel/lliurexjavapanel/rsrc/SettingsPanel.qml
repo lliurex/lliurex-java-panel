@@ -8,26 +8,28 @@ import QtQuick.Layouts
 Rectangle{
     color:"transparent"
     Text{ 
-        text:i18nd("lliurex-java-panel","List of java version to install")
+        text:i18nd("lliurex-java-panel","Configuration options")
         font.family: "Quattrocento Sans Bold"
         font.pointSize: 16
     }
 
     GridLayout{
-        id:generalJavasLayout
+        id:generalSettingsLayout
         rows:1
         flow: GridLayout.TopToBottom
         rowSpacing:10
         anchors.left:parent.left
         width:parent.width-10
         height:parent.height-22
+
         enabled:true
 
-        JavasList{
-            id:javasList
+        SettingsList{
+            id:settingsList
             Layout.fillHeight:true
             Layout.fillWidth:true
-            javasModel:javaStackBridge.javasModel
+            Layout.topMargin: 50
+            configurationModel:settingsStackBridge.configurationModel
         }
     
     }

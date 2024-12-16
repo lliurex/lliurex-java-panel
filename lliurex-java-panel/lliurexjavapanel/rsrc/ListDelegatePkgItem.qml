@@ -38,10 +38,10 @@ PC.ItemDelegate{
 			id:packageCheck
 			checked:isChecked
 			onToggled:{
-				javaStackBridge.onCheckPkg([pkg,checked])
+				javaStackBridge.onCheckedJava([pkg,checked])
 			}
 			anchors.left:parent.left
-			anchors.leftMargin:5
+			anchors.leftMargin:10
 			anchors.verticalCenter:parent.verticalCenter
 			visible:true
 			enabled:javaStackBridge.enableJavaList

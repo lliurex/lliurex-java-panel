@@ -47,7 +47,7 @@ class Bridge(QObject):
 		self._endProcess=True
 		self._endCurrentCommand=False
 		self._currentCommand=""
-		self._enableKonsole=False
+		self._enableKonsole=True
 		self._launchedProcess=""
 		self._isProgressBarVisible=False
 		self.moveToStack=""
@@ -73,6 +73,7 @@ class Bridge(QObject):
 	def _showInfo(self):
 
 		self.core.javaStack.showInfo()
+		self.core.settingsStack.showInfo()
 		self.currentStack=2
 
 	#def _showInfo

@@ -20,10 +20,24 @@ class JavaPanelManager:
 
 		self.supportedJavas=os.path.join(BASE_DIR,"supported-javas")
 		self.banners=os.path.join(BASE_DIR,"banners")
+		self.alternativesBanner="/usr/lib/python3.12/dist-packages/lliurexjavapanel/rsrc"
 		self.javasData=[]
 		self.javasInfo={}
 		self.javaSelected=[]
 		self.uncheckAll=True
+		self.configurationData=[]
+		self.cPanelAlternatives=[]
+		self.cPanelModel=[]
+		self.jwsAlternatives=[]
+		self.jwsModel=[]
+		self.jwsCurrentAlternative=0
+		self.jreAlternatives=[]
+		self.jreModel=[]
+		self.jreCurrentAlternative=0
+		self.firefoxAlternatives=[]
+		self.firefoxModel=[]
+		self.firefoxCurrentAlternative=0
+		self.clearCache()
 		
 	#def __init__
 	
@@ -94,7 +108,7 @@ class JavaPanelManager:
 						self.javasInfo[tmpInfo["pkg"]]["cmd"]=tmpInfo["cmd"]
 						self.javasInfo[tmpInfo["pkg"]]["swing"]=tmpInfo["swing"]
 					
-		#self.getConfigurationOptions()
+		self.getConfigurationOptions()
 
 	#def getSupportedJava	
 	
@@ -156,7 +170,7 @@ class JavaPanelManager:
 			pass
 
 	#def copySwingFile
-
+	'''
 	def getConfigurationOptions(self):
 
 		self.getCpanelAlternatives()
@@ -169,11 +183,8 @@ class JavaPanelManager:
 	def getCpanelAlternatives(self):
 		
 	
-		alternativeList=[]
-		cpanelLabelList=[]
-		cpanelCmdList=[]
-		self.cpanelAlternatives=[]
-		self.cpanelAlternativesName=[]
+		self.cPanelAlternatives=[]
+		self.cPanelModel=[]
 		
 		# build alternatives list here
 		
@@ -189,23 +200,30 @@ class JavaPanelManager:
 			javaLabel='update-alternatives --list java | grep -v "gij" | cut -d"/" -f5'
 			javaLabelOutput=subprocess.check_output(javaLabel, shell=True)
 
-			if type(javaLabel_list) is bytes:
-				java_label_list=java_label_list.decode()
+			if type(javaLabelOutput) is bytes:
+				javaLabelOutput=javaLabelOutput.decode()
 
-			java_label_list=java_label_list.split("\n")
+			javaLabelOutput=javaLabelOutput.split("\n")
 
 			i=0
-			for item in java_label_list:
+			for item in javaLabelOutput:
 			
-				if java_label_list[i]!='':
-					if ('openjdk' not in java_label_list[i]):
-						cpanel_label_list.append(item)
-						cpanel_cmd_list.append(java_cmd_list[i].replace("bin/java", "bin/jcontrol"))
-						self.cpanel_alternatives[item]={}
-						self.cpanel_alternatives[item]["cmd"]=java_cmd_list[i].replace("bin/java", "bin/jcontrol")
+				if javaLabelOutput[i]!='':
+					if ('openjdk' not in javaLabelOutput[i]):
+						tmp={}
+						tmp["name"]=item
+						tmp["cmd"]=javaCmdList[i].replace("bin/java", "bin/jcontrol")
+						self.cPanelAlternatives.append(tmp)
+						self.cPanelModel.append(item)
+					
 					i+=1
-			
-			
+
+			if len(self.cPanelAlternatives)>0:
+				tmp={}
+				tmp["id"]=1
+				tmp["banner"]=os.path.join(self.alternativesBanner,"cpanel.png")
+				self.configurationData.append(tmp)
+
 		except Exception as e:
 			print(str(e))
 
@@ -213,43 +231,47 @@ class JavaPanelManager:
 	
 	def getJwsAlternatives(self):
 	
-		
-		alternative_list=[]
-		jws_label_list=[]
-		jws_cmd_list=[]
-		self.jws_alternatives={}
+		self.jwsAlternatives=[]
+		self.jwsModel=[]
+		self.jwsCurrentAlternative=0
+
 		# build alternatives list here
 		
 		# ############### #
 		try:
-			java_cmd='update-alternatives --list javaws | grep -v "gij"'
-			java_cmd_list=subprocess.check_output(java_cmd, shell=True)
+			javaCmd='update-alternatives --list javaws | grep -v "gij"'
+			javaCmdList=subprocess.check_output(javaCmd, shell=True)
 
-			if type(java_cmd_list) is bytes:
-				java_cmd_list=java_cmd_list.decode()
+			if type(javaCmdList) is bytes:
+				javaCmdList=javaCmdList.decode()
 
-			java_cmd_list=java_cmd_list.split("\n")
+			javaCmdList=javaCmdList.split("\n")
 
-			java_label='update-alternatives --list javaws | grep -v "gij" | cut -d"/" -f5'
-			java_label_list=subprocess.check_output(java_label, shell=True)
+			javaLabel='update-alternatives --list javaws | grep -v "gij" | cut -d"/" -f5'
+			javaLabelList=subprocess.check_output(javaLabel, shell=True)
 
 
-			if type(java_label_list) is bytes:
-				java_label_list=java_label_list.decode()
+			if type(javaLabelList) is bytes:
+				javaLabelList=javaLabelList.decode()
 
-			java_label_list=java_label_list.split("\n")
+			javaLabelList=javaLabelList.split("\n")
 			
 
 			i=0
-			for item in java_label_list:
-				if java_label_list[i]!='':
-					jws_label_list.append(item)
-					jws_cmd_list.append('update-alternatives --set javaws ' + java_cmd_list[i])
-					self.jws_alternatives[item]={}
-					self.jws_alternatives[item]["cmd"]='update-alternatives --set javaws ' + java_cmd_list[i]
-					self.jws_alternatives[item]["default"]=False
+			for item in javaLabelList:
+				if javaLabelList[i]!='':
+					tmp={}
+					tmp["name"]=item
+					tmp["cmd"]='update-alternatives --set javaws ' + javaCmdList[i]
+					self.jwsAlternatives.append(tmp)
+					self.jwsModel.append(item)
 					i+=1
-		
+			if len(self.jwsAlternatives)>0:
+				tmp={}
+				tmp["id"]=2
+				tmp["banner"]=os.path.joint(self.alternativesBanner,"jre.png")
+				self.configurationData.append(tmp)
+
 		except Exception as e:
 			print(str(e))		
 								
@@ -257,34 +279,42 @@ class JavaPanelManager:
 		
 		# ################ #
 		try:
-			jws_configured_cmd='update-alternatives --get-selections | grep javaws$' 
-			jws_configured_label= subprocess.check_output(jws_configured_cmd, shell=True)
-			if type(jws_configured_label) is bytes:
-				jws_configured_label=jws_configured_label.decode()
+			jwsConfiguredCmd='update-alternatives --get-selections | grep javaws$' 
+			jwsConfiguredLabel= subprocess.check_output(jwsConfiguredCmd, shell=True)
+			if type(jwsConfiguredLabel) is bytes:
+				jwsConfiguredLabel=jwsConfiguredLabel.decode()
 
-			jws_configured_label=jws_configured_label.split("/")[5].split("\n")[0]	
-			self.jws_alternatives[jws_configured_label]["default"]=True
+			jwsCurrentAlternative=jwsConfiguredLabel.split("/")[5].split("\n")[0]	
+			for i in range(len(self.jwsAlternatives)):
+				if self-jwsAltarnatives[i]["name"]==jwsCurrentAlternative:
+					self.jwsCurrentAlternative=i
+
+			#self.jws_alternatives[jws_configured_label]["default"]=True
 		
 		except Exception as e:
 			print(str(e))
 			try:
-				jws_remove=subprocess.check_output(jws_configured_cmd, shell=True)
-				if type(jws_remove) is bytes:
-					jws_remove=jws_remove.decode()
+				jwsRemove=subprocess.check_output(jwsConfiguredCmd, shell=True)
+				if type(jwsRemove) is bytes:
+					jwsRemove=jwsRemove.decode()
 				
-				jws_remove=jws_remove.split()[2]
-				remove_alternative='update-alternatives --remove "javaws"' + ' "'+ jws_remove+'"'
+				jwsRemove=jwsRemove.split()[2]
+				removeAlternative='update-alternatives --remove "javaws"' + ' "'+ jwsRemove+'"'
 				
-				os.system(remove_alternative)
+				os.system(removeAlternative)
 				
-				jws_configured_cmd='update-alternatives --get-selections |grep javaws$' 
-				jws_configured_label= subprocess.check_output(jws_configured_cmd, shell=True)
+				jwsConfiguredCmd='update-alternatives --get-selections |grep javaws$' 
+				jwsConfiguredLabel= subprocess.check_output(jwsConfiguredCmd, shell=True)
 
-				if type(jws_configured_label) is bytes:
-					jws_configured_label=jws_configured_label.decode()
+				if type(jwsConfiguredLabel) is bytes:
+					jwsConfiguredLabel=jwsConfiguredLabel.decode()
 
-				jws_configured_label=jws_configured_label.split("/")[4]	
-				self.jws_alternatives[jws_configured_label]["default"]=True
+				jwsCurrentAlternative=jwsConfiguredLabel.split("/")[4]	
+				for i in range(len(self.jwsAlternatives)):
+					if self-jwsAltarnatives[i]["name"]==jwsCurrentAlternative:
+						self.jwsCurrentAlternative=i
+			
+				#self.jws_alternatives[jws_configured_label]["default"]=True
 			
 			except Exception as e:
 				print(str(e))
@@ -295,58 +325,63 @@ class JavaPanelManager:
 
 	def getJreAlternatives(self):
 	
-		alternative_list=[]
-		jre_label_list=[]
-		jre_cmd_list=[]
-		self.jre_alternatives={}
+		self.jreAlternatives=[]
+		self.jreModel=[]
+		self.jreCurrentAlternative=0
 		# build alternatives list here
 		
 		# ############### #
 		try:	
-			java_cmd='update-alternatives --list java | grep -v "gij"'
-			java_cmd_list=subprocess.check_output(java_cmd, shell=True)
+			javaCmd='update-alternatives --list java | grep -v "gij"'
+			javaCmdList=subprocess.check_output(javaCmd, shell=True)
 
-			if type(java_cmd_list) is bytes:
-				java_cmd_list=java_cmd_list.decode()
+			if type(javaCmdList) is bytes:
+				javaCmdList=javaCmdList.decode()
 
-			java_cmd_list=java_cmd_list.split("\n")
+			javaCmdList=javaCmdList.split("\n")
 
 
-			java_label='update-alternatives --list java | grep -v "gij" | cut -d"/" -f5'
-			java_label_list=subprocess.check_output(java_label, shell=True)
+			javaLabel='update-alternatives --list java | grep -v "gij" | cut -d"/" -f5'
+			javaLabelList=subprocess.check_output(javaLabel, shell=True)
 
-			if type(java_label_list) is bytes:
-				java_label_list=java_label_list.decode()
+			if type(javaLabelList) is bytes:
+				javaLabelList=javaLabelList.decode()
 
-			java_label_list=java_label_list.split("\n")
+			javaLabelList=javaLabelList.split("\n")
 
 
 			i=0
-			for item in java_label_list:
-				if java_label_list[i]!='':
-					jre_label_list.append(item)
-					jre_cmd_list.append('update-alternatives --set java ' + java_cmd_list[i])
-					self.jre_alternatives[item]={}
-					self.jre_alternatives[item]["cmd"]='update-alternatives --set java ' + java_cmd_list[i]
-					self.jre_alternatives[item]["default"]=False
+			for item in javaLabelList:
+				if javaLabelList[i]!='':
+					tmp={}
+					tmp["name"]=item
+					tmp["cmd"]='update-alternatives --set java ' + javaCmdList[i]
+					self.jreAlternatives.append(tmp)
+					self.jreModel.append(item)
 					i+=1
 				
-					
+			if len(self.jreAlternatives)>0:
+				tmp={}
+				tmp["id"]=3
+				tmp["banner"]=os.path.join(self.alternativesBanner,"jre.png")
+				self.configurationData.append(tmp)
+
 		except Exception as e:
 			print(str(e))
 		# get jre configured actually
 		
 		# ################ #
 		try:
-			jre_configured_cmd='update-alternatives --get-selections |grep java$' 
-			jre_configured_label=subprocess.check_output(jre_configured_cmd, shell=True)
+			jreConfiguredCmd='update-alternatives --get-selections |grep java$' 
+			jreConfiguredLabel=subprocess.check_output(jreConfiguredCmd, shell=True)
 
-			if type(jre_configured_label) is bytes:
-				jre_configured_label=jre_configured_label.decode()
+			if type(jreConfiguredLabel) is bytes:
+				jreConfiguredLabel=jreConfiguredLabel.decode()
 
-			jre_configured_label=jre_configured_label.split("/")[4]	
-			self.jre_alternatives[jre_configured_label]["default"]=True
-		
+			jreConfiguredLabel=jreConfiguredLabel.split("/")[4]	
+			for i in range(len(self.jreAlternatives)):
+				if self.jreAlternatives[i]["name"]==jreConfiguredLabel:
+					self.jreCurrentAlternative=i
 
 		except Exception as e:
 			print(str(e))
@@ -356,42 +391,46 @@ class JavaPanelManager:
 
 	def getFirefoxAlternatives(self):
 	
-		alternative_list=[]
-		firefox_label_list=[]
-		firefox_cmd_list=[]	
-		self.firefox_alternatives={}
+		self.firefoxAlternatives=[]
+		self.firefoxModel=[]
+		self.firefoxCurrentAlternative=0
 		
 		# build alternatives list here
 		
 		# ############### #
 		try:
-			javaplugin_cmd='update-alternatives --list mozilla-javaplugin.so | grep -v "gij"' 
-			javaplugin_cmd_list=subprocess.check_output(javaplugin_cmd, shell=True)
+			javaPluginCmd='update-alternatives --list mozilla-javaplugin.so | grep -v "gij"' 
+			javaPluginCmdList=subprocess.check_output(javaPluginCmd, shell=True)
 
-			if type(javaplugin_cmd_list) is bytes:
-				javaplugin_cmd_list=javaplugin_cmd_list.decode()
+			if type(javaPluginCmdList) is bytes:
+				javaPluginCmdList=javaPluginCmdList.decode()
 
-			javaplugin_cmd_list=javaplugin_cmd_list.split("\n")
+			javaPluginCmdList=javaPluginCmdList.split("\n")
 
+			javaPluginLabel='update-alternatives --list mozilla-javaplugin.so | grep -v "gij" | cut -d"/" -f5'
+			javaPluginLabelList=subprocess.check_output(javaPluginLabel, shell=True)
 
-			javaplugin_label='update-alternatives --list mozilla-javaplugin.so | grep -v "gij" | cut -d"/" -f5'
-			javaplugin_label_list=subprocess.check_output(javaplugin_label, shell=True)
+			if type(javaPluginLabelList) is bytes:
+				javaPluginLabelList=javaPluginLabelList.decode()
 
-			if type(javaplugin_label_list) is bytes:
-				javaplugin_label_list=javaplugin_label_list.decode()
-
-			javaplugin_label_list=javaplugin_label_list.split("\n")
+			javaPluginLabelList=javaPluginLabelList.split("\n")
 
 			i=0
-			for item in javaplugin_label_list:
-				if javaplugin_label_list[i]!='':
-					firefox_label_list.append(item)
-					firefox_cmd_list.append('update-alternatives --set mozilla-javaplugin.so ' + javaplugin_cmd_list[i])
-					self.firefox_alternatives[item]={}
-					self.firefox_alternatives[item]["cmd"]='update-alternatives --set mozilla-javaplugin.so ' + javaplugin_cmd_list[i]
-					self.firefox_alternatives[item]["default"]=False
+			for item in javaPluginLabelList:
+				if javaPluginLabelList[i]!='':
+					tmp={}
+					tmp["name"]=item
+					tmp["cmd"]='update-alternatives --set mozilla-javaplugin.so ' + javaPluginCmdList[i]
+					self.firefoxAlternatives.append(tmp)
+					self.firefoxModel.append(item)
 					i+=1
-							
+			
+			if len(self.firefoxAlternatives)>0:
+				tmp={}
+				tmp["id"]=4
+				tmp["banner"]=os.path.join(self.alternativesBanner,"firefox.png")					
+				self.configurationData.append(tmp)			
+		
 		except Exception as e:
 			print(str(e))		
 				
@@ -400,27 +439,42 @@ class JavaPanelManager:
 		
 		# ################ #
 		try:
-			firefox_configured_cmd='update-alternatives --get-selections |grep mozilla-javaplugin.so' 
-			firefox_configured_label=subprocess.check_output(firefox_configured_cmd, shell=True)
+			firefoxConfiguredCmd='update-alternatives --get-selections |grep mozilla-javaplugin.so' 
+			firefoxConfiguredLabel=subprocess.check_output(firefoxConfiguredCmd, shell=True)
 			
-			if type(firefox_configured_label) is bytes:
-				firefox_configured_label=firefox_configured_label.decode()
+			if type(firefoxConfiguredLabel) is bytes:
+				firefoxConfiguredLabel=firefoxConfiguredLabel.decode()
 
-			firefox_configured_label=firefox_configured_label.split("/")[4]	
-			self.firefox_alternatives[firefox_configured_label]["default"]=True
-			
-		
+			firefoxConfiguredLabel=firefoxConfiguredLabel.split("/")[4]	
+			for i in range(len(self.firefoxAlternatives)):
+				if self.firefoxAlternatives[i]["name"]==firefoxConfiguredLabel:
+					self.firefoxCurrentAlternative=i
+
 		except Exception as e:
 			print(str(e))	
 		
 		
 	#def  getFirefoxAlternatives
+	
+	def launchAlternativeCommand(self,data):
 
-	def alternativeCommand(self,cmd):
+		if data[0]==1:
+			cmd=self.cPanelAlternatives[data[1]]["cmd"]
+		elif data[0]==2:
+			cmd=self.jwsAlternatives[data[1]]["cmd"]
+		elif data[0]==3:
+			cmd=self.jreAlternatives[data[1]]["cmd"]
+		elif data[0]==4:
+			cmd=self.firefoxAlternatives[data[1]]["cmd"]
 
+		print(cmd)
+		'''
 		os.system(cmd)
 		self.getConfigurationOptions()
+		'''
 
+	#def launchAlternativeCommand
+	'''
 	def getNumberPackages(self,javasToInstall):
 
 		pkgs=""
@@ -494,4 +548,50 @@ class JavaPanelManager:
 	
 	#def checkStatus
 	'''
+
+	def clearCache(self):
+
+		clear=False
+		versionFile="/root/.lliurex-java-panel.conf"
+		cachePath1="/root/.cache/lliurex-java-panel"
+		installedVersion=self.getPackageVersion()
+
+		if not os.path.exists(versionFile):
+			with open(versionFile,'w') as fd:
+				fd.write(installedVersion)
+				fd.close()
+
+			clear=True
+
+		else:
+			with open(versionFile,'r') as fd:
+				fileVersion=fd.readline()
+				fd.close()
+
+			if fileVersion!=installedVersion:
+				with open(versionFile,'w') as fd:
+					fd.write(installedVersion)
+					fd.close()
+				clear=True
+		
+		if clear:
+			if os.path.exists(cachePath1):
+				shutil.rmtree(cachePath1)
+
+	#def clearCache
+
+	def getPackageVersion(self):
+
+		packageVersionFile="/var/lib/lliurex-java-panel/version"
+		pkgVersion=""
+
+		if os.path.exists(packageVersionFile):
+			with open(packageVersionFile,'r') as fd:
+				pkgVersion=fd.readline()
+				fd.close()
+
+		return pkgVersion
+
+	#def getPackageVersion
+
 #class JavaPanelManager
