@@ -164,7 +164,10 @@ GridLayout{
                 Layout.rightMargin:10
                 Keys.onReturnPressed: installBtn.clicked()
                 Keys.onEnterPressed: installBtn.clicked()
-                onClicked:{}
+                onClicked:{
+                    applyChanges()
+                    mainStackBridge.launchInstallProcess()
+                }
             }
         }
     }
@@ -185,7 +188,6 @@ GridLayout{
         timer.start()
     }
    
-    /*
     function applyChanges(){
         delay(100, function() {
             if (mainStackBridge.endProcess){
@@ -200,22 +202,35 @@ GridLayout{
             }
           })
     } 
-    */
+    
     function getFeedBackText(code){
 
         var msg="";
         switch (code){
             case -1:
-                msg=i18nd("lliurex-java-panel","Installing process has ending with errors")
-                break;
             case -2:
-                msg=i18nd("lliurex-java-panel","Unable to apply configuration option")
+                msg=i18nd("lliurex-java-panel","Installing process has ending with errors");
                 break;
-            case 0:
-                msg=i18nd("lliurex-java-panel","Installing process has ending successfully")
+            case -3:
+                msg=i18nd("lliurex-java-panel","Unable to apply configuration option");
+                break;
+            case -4:
+                msg=i18nd("lliurex-java-panel","Internet connection not detected")
                 break;
             case 1:
-                msg=i18nd("lliurex-java-panel","Change apply successfully")
+                msg=i18nd("lliurex-java-panel","Installing process has ending successfully");
+                break;
+            case 2:
+                msg=i18nd("lliurex-java-panel","Change apply successfully");
+                break;
+            case 3:
+                msg=i18nd("lliurex-java-panel","Checking internet connection. Wait a moment...")
+                break;
+            case 4:
+                msg=i18nd("lliurex-java-panel","Preparing installation. Wait a moment...")
+                break;
+            case 5:
+                msg=i18nd("lliurex-java-panel","Installing selected java version. Wait a moment...")
                 break;
             default:
                 break;

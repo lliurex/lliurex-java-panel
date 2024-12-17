@@ -47,7 +47,7 @@ class Bridge(QObject):
 		self._endProcess=True
 		self._endCurrentCommand=False
 		self._currentCommand=""
-		self._enableKonsole=True
+		self._enableKonsole=False
 		self._launchedProcess=""
 		self._isProgressBarVisible=False
 		self.moveToStack=""
@@ -317,12 +317,10 @@ class Bridge(QObject):
 		self.core.javaStack.filterStatusValue="all"
 		self.endProcess=False
 		self.enableApplyBtn=False
-		if not Bridge.epiGuiManager.noCheck:
-			self.isProgressBarVisible=True
-			self.feedbackCode=Bridge.epiGuiManager.MSG_FEEDBACK_INTERNET
-			self.core.installStack.checkInternetConnection()
-		else:
-			self.core.packageStack.getEulas()
+		self.isProgressBarVisible=True
+		self.isProcessRunning=True
+		self.feedbackCode=Bridge.javaPanelManager.MSG_FEEDBACK_INTERNET
+		self.core.installStack.checkInternetConnection()
 	
 	#def launchInstallProcess
 

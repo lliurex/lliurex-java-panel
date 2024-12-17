@@ -7,6 +7,10 @@ import subprocess
 import configparser
 import shutil
 import copy
+import threading
+import urllib.request
+import tempfile
+
 import dpkgunlocker.dpkgunlockermanager as DpkgUnlockerManager
 
 
@@ -14,13 +18,18 @@ BASE_DIR="/usr/share/lliurex-java-panel/"
 SWING_FILE=BASE_DIR+"swing.properties"
 PACKAGE_NAME="lliurex-java-panel"
 
-INSTALL_JAVA_ERROR=-1
-CHANGE_ALTERNATIVE_ERROR=-2
-
-INSTALL_JAVA_SUCCESSFULL=0
-CHANGE_ALTERNATIVE_SUCCESSFULL=1
-
 class JavaPanelManager:
+	
+	ERROR_PARTIAL_INSTALL=-1
+	ERROR_INSTALL_INSTALL=-2
+	CHANGE_ALTERNATIVE_ERROR=-3
+	ERROR_INTERNET_CONNECTION=-4
+	
+	SUCCESS_INSTALL_PROCESS=1
+	CHANGE_ALTERNATIVE_SUCCESSFULL=2
+	MSG_FEEDBACK_INTERNET=3
+	MSG_FEEDBACK_INSTALL_REPOSITORIES=4
+	MSG_FEEDBACK_INSTALL_INSTALL=5
 
 	def __init__(self):
 
@@ -30,7 +39,7 @@ class JavaPanelManager:
 		self.javasData=[]
 		self.javasInfo={}
 		self.javaSelected=[]
-		self.uncheckAll=True
+		self.uncheckAll=False
 		self.configurationData=[]
 		self.cPanelAlternatives=[]
 		self.cPanelModel=[]
@@ -43,6 +52,14 @@ class JavaPanelManager:
 		self.firefoxAlternatives=[]
 		self.firefoxModel=[]
 		self.firefoxCurrentAlternative=0
+		self.firstConnection=False
+		self.secondConnection=False
+		self.urltocheck1="http://lliurex.net"
+		self.urltocheck2="https://github.com/lliurex"
+		self.pkgSelectedFromList=[]
+		self.pkgsInstalled=[]
+		self.totalPackages=0
+
 		self.clearCache()
 		
 	#def __init__
@@ -107,7 +124,9 @@ class JavaPanelManager:
 						tmp["isVisible"]=True
 						if javaInstalled=="installed":
 							tmp["resultProcess"]=0
+							self.pkgsInstalled.append(tmpInfo["pkg"])
 						else:
+							self.totalPackages+=1
 							tmp["resultProcess"]=-1
 						self.javasData.append(tmp)
 						self.javasInfo[tmpInfo["pkg"]]={}
@@ -179,6 +198,7 @@ class JavaPanelManager:
 	'''
 	def getConfigurationOptions(self):
 
+		self.configurationData=[]
 		self.getCpanelAlternatives()
 		self.getJwsAlternatives()
 		self.getJreAlternatives()
@@ -187,7 +207,6 @@ class JavaPanelManager:
 	#def getConfigurationOptions	
 
 	def getCpanelAlternatives(self):
-		
 	
 		self.cPanelAlternatives=[]
 		self.cPanelModel=[]
@@ -325,8 +344,6 @@ class JavaPanelManager:
 			except Exception as e:
 				print(str(e))
 			
-	
-		
 	#def  getJwsAlternatives
 
 	def getJreAlternatives(self):
@@ -354,7 +371,6 @@ class JavaPanelManager:
 				javaLabelList=javaLabelList.decode()
 
 			javaLabelList=javaLabelList.split("\n")
-
 
 			i=0
 			for item in javaLabelList:
@@ -461,7 +477,248 @@ class JavaPanelManager:
 		
 		
 	#def  getFirefoxAlternatives
+
+	def onCheckedPackages(self,pkgId,isChecked):
+
+		if isChecked:
+			self._managePkgSelected(pkgId,True)
+		else:
+			self._managePkgSelected(pkgId,False)
+
+		if len(self.pkgSelectedFromList)==self.totalPackages:
+			self.uncheckAll=True
+		else:
+			self.uncheckAll=False
+
+		tmpParam={}
+		tmpParam["isChecked"]=isChecked
+		self._updateJavasModel(tmpParam,pkgId)			
 	
+	#def onCheckedPackages
+
+	def selectAll(self):
+
+		if self.uncheckAll:
+			active=False
+		else:
+			active=True
+
+		pkgList=copy.deepcopy(self.javasData)
+		tmpParam={}
+		tmpParam["isChecked"]=active
+		for item in pkgList:
+			if item["isChecked"]!=active:
+				self._managePkgSelected(item["pkg"],active)
+				self._updateJavasModel(tmpParam,item["pkg"])
+		
+		self.uncheckAll=active
+		
+	#def selectAll
+
+	def _managePkgSelected(self,pkgId,active=True,order=0):
+
+		if active:
+			if pkgId not in self.pkgSelectedFromList:
+				self.pkgSelectedFromList.append(pkgId)
+		else:
+			if pkgId in self.pkgSelectedFromList:
+				self.pkgSelectedFromList.remove(pkgId)
+		
+	#def _managePkgSelected
+
+	def checkInternetConnection(self):
+
+		self.checkingUrl1_t=threading.Thread(target=self._checkingUrl1)
+		self.checkingUrl2_t=threading.Thread(target=self._checkingUrl2)
+		self.checkingUrl1_t.daemon=True
+		self.checkingUrl2_t.daemon=True
+		self.checkingUrl1_t.start()
+		self.checkingUrl2_t.start()
+
+	#def checkInternetConnection
+
+	def _checkingUrl1(self):
+
+		self.connection=self._checkConnection(self.urltocheck1)
+		self.firstConnection=self.connection[0]
+
+	#def _checkingUrl1	
+
+	def _checkingUrl2(self):
+
+		self.connection=self._checkConnection(self.urltocheck2)
+		self.secondConnection=self.connection[0]
+
+	#def _checkingUrl2
+
+	def _checkConnection(self,url):
+		
+		result=[]
+		try:
+			res=urllib.request.urlopen(url)
+			result.append(True)
+			
+		except Exception as e:
+			result.append(False)
+			result.append(str(e))
+		
+		return result	
+
+	#def _checkConnection
+
+	def getResultCheckConnection(self):
+
+ 		self.endCheck=False
+ 		error=False
+ 		urlError=False
+ 		self.retConnection=[False,""]
+
+ 		if self.checkingUrl1_t.is_alive() and self.checkingUrl2_t.is_alive():
+ 			pass
+ 		else:
+ 			if not self.firstConnection and not self.secondConnection:
+ 				if self.checkingUrl1_t.is_alive() or self.checkingUrl2_t.is_alive():
+ 					pass
+ 				else:
+ 					self.endCheck=True
+ 			else:
+ 				self.endCheck=True
+
+ 		if self.endCheck:
+ 			if not self.firstConnection and not self.secondConnection:
+ 				error=True
+ 				msgError=JavaPanelError.ERROR_INTERNET_CONNECTION
+ 				self.retConnection=[error,msgError]
+
+	#def getResultCheckConnection
+
+	def initInstallProcess(self):
+
+		self.updateReposLaunched=False
+		self.updateReposDone=False
+
+	#def initInstallProcess
+
+	def initPkgInstallProcess(self,pkgId):
+
+		self.installAppLaunched=False
+		self.installAppDone=False
+		self.checkInstallLaunched=False
+		self.checkInstallDone=False
+		
+		self._initProcessValues("install",pkgId)
+
+	#def initPkgInstallProcess
+
+	def getUpdateReposCommand(self):
+
+		command="apt-get update"
+		length=len(command)
+
+		if length>0:
+			command=self._createProcessToken(command,"updaterepos")
+		else:
+			self.updateReposDone=True
+
+		return command
+
+	#def getUpdateReposCommand
+
+	def getInstallCommand(self,pkgId):
+
+		command=""
+		command="DEBIAN_FRONTEND=noninteractive %s"%self.javasInfo[pkgId]["cmd"]
+		length=len(command)
+
+		if length>0:
+			command=self._createProcessToken(command,"install")
+		else:
+			self.installAppDone=True
+
+		return command
+
+	#def getInstallCommand
+
+	def checkInstall(self,pkgId):
+
+		self.feedBackCheck=[True,"",""]
+		self.installed=self.isInstalled(pkgId)
+
+		self._updateProcessModelInfo(pkgId,'install',self.installed)
+		if not self.installed:
+			msgCode=ERROR_INSTALL_INSTALL
+			typeMsg="Error"
+			self.feedBackCheck=[self.installed,msgCode,typeMsg]
+		else:
+			msgCode=JavaPanelManager.SUCCESS_INSTALL_PROCESS
+			typeMsg="Ok"
+			self.feedBackCheck=[self.installed,msgCode,typeMsg]
+		
+		self.checkInstallDone=True
+
+	#def checkInstall
+
+	def isAllInstalled(self):
+
+		pkgAvailable=0
+		if self.totalPackages==len(self.pkgsInstalled):
+			return [True,False]
+		else:
+			pkgAvailable=self.totalPackages-len(self.pkgsInstalled)
+			if pkgAvailable==self.totalPackages:
+				return [False,True]
+			else:
+				return [False,False]
+
+	#def isAllInstalled
+
+	def _initProcessValues(self,action,pkgId):
+
+		for item in self.javasData:
+			if item["pkg"]==pkgId:
+				tmpParam={}
+				tmpParam["resultProcess"]=-1
+				if item["pkg"] in self.pkgSelectedFromList:
+					if action=="install":
+						tmpParam["showSpinner"]=True
+						
+					self._updateJavasModel(tmpParam,item["pkg"])
+
+
+	#def _initProcessValues
+
+	def _updateProcessModelInfo(self,pkgId,action,result):
+
+		for item in self.javasInfo:
+			if item in self.pkgSelectedFromList:
+				tmpParam={}
+				if action=="install":
+					if result=="installed":
+						if pkgId not in self.pkgsInstalled:
+							self.pkgsInstalled.append(pkgId)
+						tmpParam["resultProcess"]=0
+					else:
+						tmpParam["resultProcess"]=1
+
+					tmpParam["status"]=result
+					tmpParam["showSpinner"]=False
+					self._updateJavasModel(tmpParam,item)
+
+	
+	#def _updateProcessModelInfo
+
+	def _updateJavasModel(self,param,pkgId):
+
+		for item in self.javasData:
+			if item["pkg"]==pkgId:
+				for element in param:
+					if item[element]!=param[element]:
+						item[element]=param[element]
+				break
+
+
+	#def _updateJavasModel
+
 	def launchAlternativeCommand(self,data):
 
 		if data[0]=="cpanel":
@@ -476,19 +733,17 @@ class JavaPanelManager:
 		if data[0]=="cpanel":
 			cmd="%s &"%cmd
 			os.system(cmd)
-			return [True,CHANGE_ALTERNATIVE_SUCCESSFULL]
+			return [True,JavaPanelManager.CHANGE_ALTERNATIVE_SUCCESSFULL]
 		else:
-			print(cmd)
 			p=subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE)
 			output=p.communicate()
 			rc=p.returncode
-			print(rc)
 			self.getConfigurationOptions()
 
 			if rc==0:
-				return [True,CHANGE_ALTERNATIVE_SUCCESSFULL]
+				return [True,JavaPanelManager.CHANGE_ALTERNATIVE_SUCCESSFULL]
 			else:
-				return [False,CHANGE_ALTERNATIVE_ERROR]
+				return [False,JavaPanelManager.CHANGE_ALTERNATIVE_ERROR]
 		
 	
 	#def launchAlternativeCommand
@@ -574,27 +829,30 @@ class JavaPanelManager:
 		cachePath1="/root/.cache/lliurex-java-panel"
 		installedVersion=self.getPackageVersion()
 
-		if not os.path.exists(versionFile):
-			with open(versionFile,'w') as fd:
-				fd.write(installedVersion)
-				fd.close()
-
-			clear=True
-
-		else:
-			with open(versionFile,'r') as fd:
-				fileVersion=fd.readline()
-				fd.close()
-
-			if fileVersion!=installedVersion:
+		try:
+			if not os.path.exists(versionFile):
 				with open(versionFile,'w') as fd:
 					fd.write(installedVersion)
 					fd.close()
+
 				clear=True
-		
-		if clear:
-			if os.path.exists(cachePath1):
-				shutil.rmtree(cachePath1)
+
+			else:
+				with open(versionFile,'r') as fd:
+					fileVersion=fd.readline()
+					fd.close()
+
+				if fileVersion!=installedVersion:
+					with open(versionFile,'w') as fd:
+						fd.write(installedVersion)
+						fd.close()
+					clear=True
+			
+			if clear:
+				if os.path.exists(cachePath1):
+					shutil.rmtree(cachePath1)
+		except:
+			pass
 
 	#def clearCache
 
@@ -611,5 +869,24 @@ class JavaPanelManager:
 		return pkgVersion
 
 	#def getPackageVersion
+
+	def _createProcessToken(self,command,action):
+
+		cmd=""
+		
+		if action=="updaterepos":
+			self.tokenUpdaterepos=tempfile.mkstemp('_updaterepos')	
+			removeTmp=' rm -f %s'%self.tokenUpdaterepos[1]	
+		elif action=="install":
+			self.tokenInstall=tempfile.mkstemp('_install')
+			removeTmp=' rm -f %s'%self.tokenInstall[1]
+		
+		cmd='%s ;stty -echo;%s\n'%(command,removeTmp)
+		if cmd.startswith(";"):
+			cmd=cmd[1:]
+
+		return cmd
+
+	#def _createProcessToken	
 
 #class JavaPanelManager

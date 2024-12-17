@@ -2,8 +2,7 @@
 import sys
 
 from . import JavaPanelManager
-
-#from . import InstallStack
+from . import InstallStack
 from . import SettingsStack
 from . import JavaStack
 from . import MainStack
@@ -32,7 +31,7 @@ class Core:
 	def init(self):
 
 		self.javaPanelManager=JavaPanelManager.JavaPanelManager()
-		#self.installStack=InstallStack.InstallStack()
+		self.installStack=InstallStack.InstallStack()
 		self.settingsStack=SettingsStack.Bridge()
 		self.javaStack=JavaStack.Bridge()
 		self.mainStack=MainStack.Bridge()

@@ -43,7 +43,7 @@ PC.ItemDelegate{
 			anchors.left:parent.left
 			anchors.leftMargin:10
 			anchors.verticalCenter:parent.verticalCenter
-			visible:true
+			visible:status=="installed"?false:true
 			enabled:javaStackBridge.enableJavaList
 		}
 
@@ -82,7 +82,7 @@ PC.ItemDelegate{
 			source:{
 				if (resultProcess==0){
 					"/usr/lib/python3.12/dist-packages/lliurexjavapanel/rsrc/ok.png"
-					}else{
+				}else{
 					"/usr/lib/python3.12/dist-packages/lliurexjavapanel/rsrc/error.png"
 				}
 			}

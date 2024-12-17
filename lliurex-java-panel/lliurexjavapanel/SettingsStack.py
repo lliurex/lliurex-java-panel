@@ -211,11 +211,9 @@ class Bridge(QObject):
 
 	def _changeAlternativeRet(self):
 
-		print("TERMINADO")
 		self.core.mainStack.closePopUp=[True,""]
 		self.core.mainStack.closeGui=True
 		if self.changeAlternativeT.ret[0]:
-			print("OK")
 			self.core.mainStack.showStatusMessage=[True,self.changeAlternativeT.ret[1],"Ok"]
 		else:
 			self.core.mainStack.showStatusMessage=[True,self.changeAlternativeT.ret[1],"Error"]

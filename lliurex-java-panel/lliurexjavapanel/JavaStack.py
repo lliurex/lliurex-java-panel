@@ -23,17 +23,19 @@ class Bridge(QObject):
 		Bridge.javaPanelManager=self.core.javaPanelManager
 		self._javasModel=JavasModel.JavasModel()
 		self._enableJavaList=True
-		self._uncheckAll=True
+		self._uncheckAll=False
 		self._filterStatusValue="all"
+		self._totalErrorInProcess=0
+		self._isAllInstalled=[False,False]
 
 	#def __init__
 
 	def showInfo(self):
 
-		print("Cargando")
 		self._updateJavasModel()
 		self.uncheckAll=Bridge.javaPanelManager.uncheckAll
-	
+		self.isAllInstalled=Bridge.javaPanelManager.isAllInstalled()
+
 	#def showInfo
 
 	def _getUncheckAll(self):
@@ -49,6 +51,34 @@ class Bridge(QObject):
 			self.on_uncheckAll.emit()
 
 	#def _setUncheckAll
+
+	def _getIsAllInstalled(self):
+
+		return self._isAllInstalled
+
+	#def _getIsAllInstalled
+
+	def _setIsAllInstalled(self,isAllInstalled):
+
+		if self._isAllInstalled!=isAllInstalled:
+			self._isAllInstalled=isAllInstalled
+			self.on_isAllInstalled.emit()
+
+	#def _setIsAllInstalled
+
+	def _getTotalErrorInProcess(self):
+
+		return self._totalErrorInProcess
+
+	#def _getTotalErrorInProcess
+
+	def _setTotalErrorInProcess(self,totalErrorInProcess):
+
+		if self._totalErrorInProcess!=totalErrorInProcess:
+			self._totalErrorInProcess=totalErrorInProcess
+			self.on_totalErrorInProcess.emit()
+
+	#def _setTotalErrorInProcess
 
 	def _getEnableJavaList(self):
 
@@ -124,13 +154,11 @@ class Bridge(QObject):
 
 	#def _refreshInfo
 	
-	def updateResultJavasModel(self,step,action):
+	def updateResultJavasModel(self,step):
 
 		params=[]
 		params.append("showSpinner")
 		params.append("resultProcess")
-		if step=="start" and action=="install":
-			params.append("isVisible")
 		if step=="end":
 			params.append("banner")
 			params.append("status")
@@ -142,6 +170,7 @@ class Bridge(QObject):
 	def _updateJavasModelInfo(self,params):
 
 		updatedInfo=Bridge.javaPanelManager.javasData
+		
 		if len(updatedInfo)>0:
 			for i in range(len(updatedInfo)):
 				valuesToUpdate=[]
@@ -150,7 +179,7 @@ class Bridge(QObject):
 					tmp={}
 					tmp[item]=updatedInfo[i][item]
 					valuesToUpdate.append(tmp)
-				self.javasModel.setData(index,valuesToUpdate)
+				self._javasModel.setData(index,valuesToUpdate)
 	
 	#def _updateJavasModelInfo
 
@@ -161,8 +190,60 @@ class Bridge(QObject):
 
 	#def manageStatusFilter
 
+	@Slot('QVariantList')
+	def onCheckedJava(self,info):
+
+		Bridge.javaPanelManager.onCheckedPackages(info[0],info[1])
+		self._refreshInfo()
+
+	#def onCheckedJava
+
+	@Slot()
+	def selectAll(self):
+
+		Bridge.javaPanelManager.selectAll()
+		self.filterStatusValue="all"
+		self._refreshInfo()
+		
+	#def selectAll
+
+	def _refreshInfo(self):
+
+		params=[]
+		params.append("isChecked")
+		self._updatePackagesModelInfo(params)
+		self.uncheckAll=Bridge.javaPanelManager.uncheckAll
+		if len(Bridge.javaPanelManager.pkgSelectedFromList)>0:
+			self.core.mainStack.enableApplyBtn=True
+		else:
+			self.core.mainStack.enableApplyBtn=False
+
+	#def _refreshInfo
+
+	def _updatePackagesModelInfo(self,params):
+
+		updatedInfo=Bridge.javaPanelManager.javasData
+		print(updatedInfo)
+		if len(updatedInfo)>0:
+			for i in range(len(updatedInfo)):
+				valuesToUpdate=[]
+				index=self._javasModel.index(i)
+				for item in params:
+					tmp={}
+					tmp[item]=updatedInfo[i][item]
+					valuesToUpdate.append(tmp)
+				self._javasModel.setData(index,valuesToUpdate)
+	
+	#def _updatePackagesModelInfo
+
 	on_uncheckAll=Signal()
 	uncheckAll=Property(bool,_getUncheckAll,_setUncheckAll,notify=on_uncheckAll)
+
+	on_isAllInstalled=Signal()
+	isAllInstalled=Property('QVariant',_getIsAllInstalled,_setIsAllInstalled,notify=on_isAllInstalled)
+
+	on_totalErrorInProcess=Signal()
+	totalErrorInProcess=Property(int,_getTotalErrorInProcess,_setTotalErrorInProcess,notify=on_totalErrorInProcess)
 
 	on_enableJavaList=Signal()
 	enableJavaList=Property(bool,_getEnableJavaList,_setEnableJavaList,notify=on_enableJavaList)
