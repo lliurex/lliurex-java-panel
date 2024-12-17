@@ -14,6 +14,12 @@ BASE_DIR="/usr/share/lliurex-java-panel/"
 SWING_FILE=BASE_DIR+"swing.properties"
 PACKAGE_NAME="lliurex-java-panel"
 
+INSTALL_JAVA_ERROR=-1
+CHANGE_ALTERNATIVE_ERROR=-2
+
+INSTALL_JAVA_SUCCESSFULL=0
+CHANGE_ALTERNATIVE_SUCCESSFULL=1
+
 class JavaPanelManager:
 
 	def __init__(self):
@@ -220,7 +226,7 @@ class JavaPanelManager:
 
 			if len(self.cPanelAlternatives)>0:
 				tmp={}
-				tmp["id"]=1
+				tmp["name"]="cpanel"
 				tmp["banner"]=os.path.join(self.alternativesBanner,"cpanel.png")
 				self.configurationData.append(tmp)
 
@@ -268,7 +274,7 @@ class JavaPanelManager:
 					i+=1
 			if len(self.jwsAlternatives)>0:
 				tmp={}
-				tmp["id"]=2
+				tmp["name"]="jws"
 				tmp["banner"]=os.path.joint(self.alternativesBanner,"jre.png")
 				self.configurationData.append(tmp)
 
@@ -362,7 +368,7 @@ class JavaPanelManager:
 				
 			if len(self.jreAlternatives)>0:
 				tmp={}
-				tmp["id"]=3
+				tmp["name"]="jre"
 				tmp["banner"]=os.path.join(self.alternativesBanner,"jre.png")
 				self.configurationData.append(tmp)
 
@@ -427,7 +433,7 @@ class JavaPanelManager:
 			
 			if len(self.firefoxAlternatives)>0:
 				tmp={}
-				tmp["id"]=4
+				tmp["name"]="firefox"
 				tmp["banner"]=os.path.join(self.alternativesBanner,"firefox.png")					
 				self.configurationData.append(tmp)			
 		
@@ -458,21 +464,33 @@ class JavaPanelManager:
 	
 	def launchAlternativeCommand(self,data):
 
-		if data[0]==1:
+		if data[0]=="cpanel":
 			cmd=self.cPanelAlternatives[data[1]]["cmd"]
-		elif data[0]==2:
+		elif data[0]=="jws":
 			cmd=self.jwsAlternatives[data[1]]["cmd"]
-		elif data[0]==3:
+		elif data[0]=="jre":
 			cmd=self.jreAlternatives[data[1]]["cmd"]
-		elif data[0]==4:
+		elif data[0]=="firefox":
 			cmd=self.firefoxAlternatives[data[1]]["cmd"]
 
-		print(cmd)
-		'''
-		os.system(cmd)
-		self.getConfigurationOptions()
-		'''
+		if data[0]=="cpanel":
+			cmd="%s &"%cmd
+			os.system(cmd)
+			return [True,CHANGE_ALTERNATIVE_SUCCESSFULL]
+		else:
+			print(cmd)
+			p=subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE)
+			output=p.communicate()
+			rc=p.returncode
+			print(rc)
+			self.getConfigurationOptions()
 
+			if rc==0:
+				return [True,CHANGE_ALTERNATIVE_SUCCESSFULL]
+			else:
+				return [False,CHANGE_ALTERNATIVE_ERROR]
+		
+	
 	#def launchAlternativeCommand
 	'''
 	def getNumberPackages(self,javasToInstall):

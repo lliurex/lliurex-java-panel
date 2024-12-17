@@ -35,13 +35,13 @@ class Bridge(QObject):
 		self.core=Core.Core.get_core()
 		Bridge.javaPanelManager=self.core.javaPanelManager
 		self._closeGui=False
-		self._closePopUp=True
+		self._closePopUp=[True,""]
 		self._loadMsgCode=""
 		self._loadErrorCode=""
 		self._currentStack=0
 		self._currentOptionsStack=0
 		self._showStatusMessage=[False,"","Ok"]
-		self._feedbackCode=""
+		self._feedbackCode=1000
 		self._isProcessRunning=False
 		self._enableApplyBtn=False
 		self._endProcess=True
@@ -189,6 +189,20 @@ class Bridge(QObject):
 			self.on_showStatusMessage.emit()
 
 	#def _setShowStatusMessage
+
+	def _getClosePopUp(self):
+
+		return self._closePopUp
+
+	#def _getClosePopUp
+
+	def _setClosePopUp(self,closePopUp):
+
+		if self._closePopUp!=closePopUp:
+			self._closePopUp=closePopUp
+			self.on_closePopUp.emit()
+
+	#def _setClosePopUp
 
 	def _getEndProcess(self):
 
@@ -399,6 +413,9 @@ class Bridge(QObject):
 
 	on_showStatusMessage=Signal()
 	showStatusMessage=Property('QVariantList',_getShowStatusMessage,_setShowStatusMessage,notify=on_showStatusMessage)
+	
+	on_closePopUp=Signal()
+	closePopUp=Property('QVariantList',_getClosePopUp,_setClosePopUp,notify=on_closePopUp)
 	
 	on_endProcess=Signal()
 	endProcess=Property(bool,_getEndProcess,_setEndProcess, notify=on_endProcess)

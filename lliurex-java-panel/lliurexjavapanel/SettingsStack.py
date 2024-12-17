@@ -13,8 +13,27 @@ from . import ConfigurationModel
 
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
+class ChangeAlternative(QThread):
+
+	def __init__(self,*args):
+
+		QThread.__init__(self)
+		self.ret=[]
+		self.data=args[0]
+		
+	#def __init__
+		
+	def run(self,*args):
+		
+		self.ret=Bridge.javaPanelManager.launchAlternativeCommand(self.data)
+
+	#def run
+
+#class ChangeAlternative
+
 class Bridge(QObject):
 
+	APPLY_SPACE_CHANGES_MESSAGE=2
 
 	def __init__(self):
 
@@ -154,10 +173,10 @@ class Bridge(QObject):
 
 		ret=self._configurationModel.clear()
 		configurationEntries=Bridge.javaPanelManager.configurationData
-		print(configurationEntries)
+
 		for item in configurationEntries:
-			if item["id"]!="":
-				self._configurationModel.appendRow(item["id"],item["banner"])
+			if item["name"]!="":
+				self._configurationModel.appendRow(item["name"],item["banner"])
 		
 		self._configurationModel
 
@@ -167,9 +186,42 @@ class Bridge(QObject):
 
 	def manageAlternative(self,data):
 
-		ret=Bridge.javaPanelManager.launchAlternativeCommand(data)
+		launchCommand=True
 
-	#def manageAlternative 
+		if data[0]!="cpanel":
+			if data[0]=="jws":
+				currentValue=self.jwsCurrentAlternative
+			elif data[0]=="jre":
+				currentValue=self.jreCurrentAlternative
+			elif data[0]=="firefox":
+				currentValue=self.firefoxCurrentAlternative
+
+			if data[1]==currentValue:
+				launchCommand=False
+		
+		if launchCommand:
+			self.core.mainStack.showStatusMessages=[False,"","Ok"]
+			self.core.mainStack.closePopUp=[False,Bridge.APPLY_SPACE_CHANGES_MESSAGE]
+			self.core.mainStack.closeGui=False		
+			self.changeAlternativeT=ChangeAlternative(data)
+			self.changeAlternativeT.start()
+			self.changeAlternativeT.finished.connect(self._changeAlternativeRet)
+	
+	#def manageAlternative
+
+	def _changeAlternativeRet(self):
+
+		print("TERMINADO")
+		self.core.mainStack.closePopUp=[True,""]
+		self.core.mainStack.closeGui=True
+		if self.changeAlternativeT.ret[0]:
+			print("OK")
+			self.core.mainStack.showStatusMessage=[True,self.changeAlternativeT.ret[1],"Ok"]
+		else:
+			self.core.mainStack.showStatusMessage=[True,self.changeAlternativeT.ret[1],"Error"]
+
+	#def _changeAlternativeRet
+
 
 	on_cPanelModel=Signal()
 	cPanelModel=Property('QVariant',_getCPanelModel,_setCPanelModel,notify=on_cPanelModel)

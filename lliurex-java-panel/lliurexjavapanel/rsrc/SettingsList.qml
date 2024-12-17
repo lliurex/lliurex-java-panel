@@ -51,7 +51,7 @@ Rectangle{
                     model:configurationModel
                     delegate: ListDelegateConfigItem{
                         width:settingsTable.width
-                        name:model.id
+                        name:model.name
                         banner:model.banner
      
                     }

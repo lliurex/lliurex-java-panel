@@ -6,7 +6,7 @@ import org.kde.plasma.components as PC
 
 PC.ItemDelegate{
 	    id: listConfigItem
-	    property int name
+	    property string name
 	    property string banner
 	   
 	    height:85
@@ -70,16 +70,16 @@ PC.ItemDelegate{
 	function getConfigName(configName){
 
 		switch (configName){
-			case 1:
+			case "cpanel":
 				var msg=i18nd("lliurex-java-panel","Java Control Panel. Select one tu run it")
 				break;
-			case 2:
+			case "jws":
 				var msg=i18nd("lliurex-java-panel","Java Web Start. Alternative configured:")
 				break;
-			case 3:
+			case "jre":
 				var msg=i18nd("lliurex-java-panel","Java Runtime Environment. Alternative configured:")
 				break;
-			case 4:
+			case "firefox":
 				var msg=i18nd("lliurex-java-panel","Firefox plugin. Alternative configured:")
 				break;
 		}
@@ -90,13 +90,13 @@ PC.ItemDelegate{
 	function getCurrentValue(configName){
 
 		switch(configName){
-			case 1:
+			case "cpanel":
 				return 1
-			case 2:
+			case "jws":
 				return settingsStackBridge.jwsCurrentAlternative
-			case 3:
+			case "jre":
 				return settingsStackBridge.jreCurrentAlternative
-			case 4:
+			case "firefox":
 				return settingsStackBridge.firefoxCurrentAlternative
 		}
 	}
@@ -104,13 +104,13 @@ PC.ItemDelegate{
 	function getModel(configName){
 
 		switch(configName){
-			case 1:
+			case "cpanel":
 				return settingsStackBridge.cPanelModel
-			case 2:
+			case "jws":
 				return settingsStackBridge.jwsModel
-			case 3:
+			case "jre":
 				return settingsStackBridge.jreModel
-			case 4:
+			case "firefox":
 				return settingsStackBridge.firefoxModel
 		}
 

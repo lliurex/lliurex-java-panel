@@ -36,7 +36,6 @@ GridLayout{
                     }
                 }
             }
-            /*
             MenuOptionBtn {
                 id:detailsOption
                 optionText:i18nd("lliurex-java-panel","View details")
@@ -62,7 +61,7 @@ GridLayout{
             }
             MenuOptionBtn {
                 id:helpOption
-                optionText:i18nd("epi-gtk","Help")
+                optionText:i18nd("lliurex-java-panel","Help")
                 optionIcon:"/usr/share/icons/breeze/actions/22/help-contents.svg"
                 Connections{
                     function onMenuOptionClicked(){
@@ -100,7 +99,7 @@ GridLayout{
             
         }
 
-         Kirigami.InlineMessage {
+        Kirigami.InlineMessage {
             id: messageLabel
             visible:mainStackBridge.showStatusMessage[0]
             text:getFeedBackText(mainStackBridge.showStatusMessage[1])
@@ -122,7 +121,7 @@ GridLayout{
                 id:feedbackColumn
                 spacing:10
                 Layout.alignment:Qt.AlignHCenter
-                visible:mainStackBridge.currentOptionsStack==0?true:false
+                visible:true
                 Text{
                     id:feedBackText
                     text:getFeedBackText(mainStackBridge.feedbackCode)
@@ -148,7 +147,7 @@ GridLayout{
                
             PC.Button {
                 id:installBtn
-                visible:mainStackBridge.currentOptionsStack==0?true:false
+                visible:true
                 focus:true
                 display:AbstractButton.TextBesideIcon
                 icon.name:"dialog-ok"
@@ -168,6 +167,11 @@ GridLayout{
                 onClicked:{}
             }
         }
+    }
+
+    
+    CustomPopup{
+        id:settingsPopup
     }
    
     Timer{
@@ -200,9 +204,19 @@ GridLayout{
     function getFeedBackText(code){
 
         var msg="";
-        var errorHeaded=i18nd("epi-gtk","The selected applications cannot be uninstalled.\n")
-        var warningHeaded=i18nd("epi-gtk","Some selected application successfully uninstalled.\nOthers not because ")
         switch (code){
+            case -1:
+                msg=i18nd("lliurex-java-panel","Installing process has ending with errors")
+                break;
+            case -2:
+                msg=i18nd("lliurex-java-panel","Unable to apply configuration option")
+                break;
+            case 0:
+                msg=i18nd("lliurex-java-panel","Installing process has ending successfully")
+                break;
+            case 1:
+                msg=i18nd("lliurex-java-panel","Change apply successfully")
+                break;
             default:
                 break;
         }
