@@ -36,8 +36,6 @@ class Bridge(QObject):
 		Bridge.javaPanelManager=self.core.javaPanelManager
 		self._closeGui=False
 		self._closePopUp=[True,""]
-		self._loadMsgCode=""
-		self._loadErrorCode=""
 		self._currentStack=0
 		self._currentOptionsStack=0
 		self._showStatusMessage=[False,"","Ok"]
@@ -68,32 +66,12 @@ class Bridge(QObject):
 
 	def _gatherInfoRet(self):
 
-		self._showInfo()
-			
-	#def _gatherInfoRet
-
-	def _showInfo(self):
-
 		self.core.javaStack.getInfo()
 		self.core.settingsStack.getInfo()
 		self.manageRemoveBtn()
 		self.currentStack=2
 
-	#def _showInfo
-
-	def _getLoadMsgCode(self):
-
-		return self._loadMsgCode
-
-	#def _getLoadMsgCode
-
-	def _setLoadMsgCode(self,loadMsgCode):
-
-		if self._loadMsgCode!=loadMsgCode:
-			self._loadMsgCode=loadMsgCode
-			self.on_loadMsgCode.emit()
-
-	#def _setLoadMsgCode
+	#def _gatherInfoRet
 
 	def _getCurrentStack(self):
 
@@ -136,20 +114,6 @@ class Bridge(QObject):
 			self.on_feedbackCode.emit()
 
 	#def _setFeedbackCode
-
-	def _getLoadErrorCode(self):
-
-		return self._loadErrorCode
-
-	#def _getLoadErrorCode
-
-	def _setLoadErrorCode(self,loadErrorCode):
-
-		if self._loadErrorCode!=loadErrorCode:
-			self._loadErrorCode=loadErrorCode
-			self.on_loadErrorCode.emit()
-
-	#def _setLoadErrorCode
 
 	def _getEnableApplyBtn(self):
 
@@ -406,7 +370,7 @@ class Bridge(QObject):
 		if 'PKEXEC_UID' in os.environ:
 			runPkexec=True
 
-		self.helpCmd='xdg-open %s'%self.core.packageStack.wikiUrl
+		self.helpCmd='xdg-open https://wiki.edu.gva.es/lliurex/tiki-index.php?page=LliureX+Java+Panel'
 
 		if runPkexec:
 			user=pwd.getpwuid(int(os.environ["PKEXEC_UID"])).pw_name
@@ -430,7 +394,6 @@ class Bridge(QObject):
 	def closeApplication(self):
 
 		if self.endProcess:
-			#Bridge.javaPanelManager.clearEnvironment()
 			self.closeGui=True
 		else:
 			self.closeGui=False
@@ -453,17 +416,11 @@ class Bridge(QObject):
 
 	#def cancelClossing
 	
-	on_loadMsgCode=Signal()
-	loadMsgCode=Property(int,_getLoadMsgCode,_setLoadMsgCode,notify=on_loadMsgCode)
-	
 	on_currentStack=Signal()
 	currentStack=Property(int,_getCurrentStack,_setCurrentStack, notify=on_currentStack)
 	
 	on_currentOptionsStack=Signal()
 	currentOptionsStack=Property(int,_getCurrentOptionsStack,_setCurrentOptionsStack, notify=on_currentOptionsStack)
-
-	on_loadErrorCode=Signal()
-	loadErrorCode=Property(int,_getLoadErrorCode,_setLoadErrorCode,notify=on_loadErrorCode)
 	
 	on_feedbackCode=Signal()
 	feedbackCode=Property(int,_getFeedbackCode,_setFeedbackCode,notify=on_feedbackCode)
