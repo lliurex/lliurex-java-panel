@@ -106,7 +106,7 @@ class Bridge(QObject):
 		javasEntries=Bridge.javaPanelManager.javasData
 		for item in javasEntries:
 			if item["pkg"]!="":
-				self._javasModel.appendRow(item["pkg"],item["name"],item["isChecked"],item["status"],item["banner"],item["isVisible"],item["resultProcess"],item["showSpinner"])
+				self._javasModel.appendRow(item["pkg"],item["name"],item["isChecked"],item["status"],item["banner"],item["isVisible"],item["resultProcess"],item["showSpinner"],item["isManaged"])
 
 	#def _updateJavasModel
 

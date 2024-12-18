@@ -171,7 +171,7 @@ Rectangle{
                             isVisible:model.isVisible
                             resultProcess:model.resultProcess
                             showSpinner:model.showSpinner
-
+                            isManaged:model.isManaged
                         }
                     }
 

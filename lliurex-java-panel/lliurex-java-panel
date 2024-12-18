@@ -11,6 +11,19 @@ import gettext
 gettext.textdomain("lliurex-java-panel")
 _ = gettext.gettext
 
+try:
+	print("  [LliureX-Java-Panel]: Checking root")
+	f=open("/var/run/LliurexJavapanel.token","w")
+	f.close()
+	os.remove("/var/run/LliurexJavapanel.token")
+
+except:
+	print("  [LliureX-Java-Panel]: No administration privileges")
+	msg=_("You need administration privileges to run this application.")
+	cmd='kdialog --title "Lliurex-Java-Panel" --icon "lliurex-java-panel.svg" --sorry "%s"'%(msg)
+	os.system(cmd)
+	sys.exit(1)
+
 from lliurexjavapanel.Core import Core
 
 c=Core.get_core()

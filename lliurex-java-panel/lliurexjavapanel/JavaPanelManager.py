@@ -59,8 +59,10 @@ class JavaPanelManager:
 		self.pkgSelectedFromList=[]
 		self.pkgsInstalled=[]
 		self.totalPackages=0
-
-		self.clearCache()
+		self.javaRegisterDir="/etc/lliurex-java-panel"
+		self.javaRegisterFile=os.path.join(self.javaRegisterDir,"managed_java.txt")
+		self._clearCache()
+		self._createEnvirontment()
 		
 	#def __init__
 	
@@ -93,11 +95,12 @@ class JavaPanelManager:
 
 	def getSupportedJava(self):
 
+		self._readJavaRegister()
 		for item in sorted(os.listdir(self.supportedJavas)):
 			if os.path.isfile(os.path.join(self.supportedJavas,item)):
 				tmpInfo=self.loadFile(os.path.join(self.supportedJavas,item))
 				if tmpInfo!=None:
-					javaInstalled=self.isInstalled(tmpInfo["pkg"])
+					status=self.isInstalled(tmpInfo["pkg"])
 					baseAptCmd = "apt-cache policy %s "%tmpInfo["pkg"]
 					p=subprocess.Popen([baseAptCmd],shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)	
 					output=p.communicate()[0]
@@ -117,17 +120,18 @@ class JavaPanelManager:
 						tmp={}
 						tmp["pkg"]=tmpInfo["pkg"]
 						tmp["name"]=tmpInfo["name"]
-						tmp["status"]=javaInstalled
+						tmp["status"]=status
 						tmp["banner"]=tmpInfo["banner"]
 						tmp["showSpinner"]=False
 						tmp["isChecked"]=False
 						tmp["isVisible"]=True
-						if javaInstalled=="installed":
+						if status=="installed":
 							tmp["resultProcess"]=0
-							self.pkgsInstalled.append(tmpInfo["pkg"])
 						else:
-							self.totalPackages+=1
 							tmp["resultProcess"]=-1
+						tmp["isManaged"]=self.checkIsManaged(tmp["pkg"],status)
+						if tmp["isManaged"]:
+							self.totalPackages+=1
 						self.javasData.append(tmp)
 						self.javasInfo[tmpInfo["pkg"]]={}
 						self.javasInfo[tmpInfo["pkg"]]["cmd"]=tmpInfo["cmd"]
@@ -151,6 +155,16 @@ class JavaPanelManager:
 		return "available"
 		
 	#def isInstalled
+
+	def checkIsManaged(self,pkg,status):
+
+		if status=="installed":
+			if pkg not in self.registerContent:
+				return False
+		
+		return True 
+		
+	#def checkIsManaged
 
 	def getConfigurationOptions(self):
 
@@ -438,9 +452,10 @@ class JavaPanelManager:
 		tmpParam={}
 		tmpParam["isChecked"]=active
 		for item in pkgList:
-			if item["isChecked"]!=active:
-				self._managePkgSelected(item["pkg"],active)
-				self._updateJavasModel(tmpParam,item["pkg"])
+			if item["isManaged"]:
+				if item["isChecked"]!=active:
+					self._managePkgSelected(item["pkg"],active)
+					self._updateJavasModel(tmpParam,item["pkg"])
 		
 		self.uncheckAll=active
 		
@@ -705,7 +720,8 @@ class JavaPanelManager:
 		
 	
 	#def launchAlternativeCommand
-	def clearCache(self):
+	
+	def _clearCache(self):
 
 		clear=False
 		versionFile="/root/.lliurex-java-panel.conf"
@@ -737,7 +753,7 @@ class JavaPanelManager:
 		except:
 			pass
 
-	#def clearCache
+	#def _clearCache
 
 	def getPackageVersion(self):
 
@@ -770,6 +786,44 @@ class JavaPanelManager:
 
 		return cmd
 
-	#def _createProcessToken	
+	#def _createProcessToken
+
+	def _createEnvirontment(self):
+
+		if not os.path.exists(self.javaRegisterDir):
+			os.mkdir(self.javaRegisterDir)
+			
+		if os.path.exists(self.javaRegisterDir):	
+			if not os.path.exists(self.javaRegisterFile):
+				with open(self.javaRegisterFile,'w') as fd:
+					pass
+
+	#def _createEnvirontment
+
+	def _readJavaRegister(self):
+
+		self.registerContent=[]
+		tmpContent=[]
+		if os.path.exists(self.javaRegisterFile):
+			with open(self.javaRegisterFile,'r') as fd:
+				tmpContent=fd.readlines()
+
+		for item in tmpContent:
+			self.registerContent.append(item.strip())
+
+	#def _updateJavaRegister
+
+	def updateJavaRegister(self):
+
+		for item in self.pkgsInstalled:
+			if item not in self.registerContent:
+				self.registerContent.append(item)
+
+		if os.path.exists(self.javaRegisterFile):
+			with open(self.javaRegisterFile,'w') as fd:
+				for item in self.registerContent:
+					fd.write("%s\n"%item)
+
+	#def _updateJavaRegister	
 
 #class JavaPanelManager

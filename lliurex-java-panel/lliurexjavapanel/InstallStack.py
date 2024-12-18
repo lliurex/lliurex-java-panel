@@ -136,6 +136,7 @@ class InstallStack(QObject):
 			self.core.javaStack.totalErrorInProcess=self.totalError
 			self.core.javaStack.enableJavaList=True
 			InstallStack.javaPanelManager.getConfigurationOptions()
+			InstallStack.javaPanelManager.updateJavaRegister()
 			self.core.settingsStack.getInfo()
 			self.installProcessTimer.stop()
 

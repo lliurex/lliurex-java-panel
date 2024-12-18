@@ -153,9 +153,9 @@ GridLayout{
                 icon.name:"dialog-ok"
                 text:i18nd("lliurex-java-panel","Install")
                 enabled:{
-                    if (mainStackBridge.enableApplyBtn){
+                    if ((mainStackBridge.enableApplyBtn) && (mainStackBridge.currentOptionsStack!=2)){
                         true
-                  }else{
+                    }else{
                         false
                     }
                 }

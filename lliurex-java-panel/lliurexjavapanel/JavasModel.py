@@ -13,6 +13,7 @@ class JavasModel(QtCore.QAbstractListModel):
 	IsVisibleRole=QtCore.Qt.UserRole+1006
 	ResultProcessRole=QtCore.Qt.UserRole+1007
 	ShowSpinnerRole = QtCore.Qt.UserRole + 1008
+	IsManagedRole=QtCore.Qt.UserRole+1009
 
 
 	def __init__(self,parent=None):
@@ -50,6 +51,8 @@ class JavasModel(QtCore.QAbstractListModel):
 				return item["resultProcess"]
 			elif role == JavasModel.ShowSpinnerRole:
 				return item["showSpinner"]
+			elif role == JavasModel.IsManagedRole:
+				return item["isManaged"]
 		
 		#def data
 
@@ -64,15 +67,16 @@ class JavasModel(QtCore.QAbstractListModel):
 		roles[JavasModel.IsVisibleRole] = b"isVisible"
 		roles[JavasModel.ResultProcessRole] = b"resultProcess"
 		roles[JavasModel.ShowSpinnerRole] = b"showSpinner"
+		roles[JavasModel.IsManagedRole]=b"isManaged"
 
 		return roles
 
 	#def roleName
 
-	def appendRow(self,pkg,na,isc,st,ba,isv,rpr,ss):
+	def appendRow(self,pkg,na,isc,st,ba,isv,rpr,ss,im):
 		
 		self.beginInsertRows(QtCore.QModelIndex(), self.rowCount(),self.rowCount())
-		self._entries.append(dict(pkg=pkg, name=na,isChecked=isc,status=st,banner=ba,isVisible=isv,resultProcess=rpr,showSpinner=ss))
+		self._entries.append(dict(pkg=pkg, name=na,isChecked=isc,status=st,banner=ba,isVisible=isv,resultProcess=rpr,showSpinner=ss,isManaged=im))
 		self.endInsertRows()
 
 	#def appendRow

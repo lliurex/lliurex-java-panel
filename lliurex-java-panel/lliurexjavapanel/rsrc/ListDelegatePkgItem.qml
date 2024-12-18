@@ -14,6 +14,7 @@ PC.ItemDelegate{
 	    property bool isVisible
 	    property int resultProcess
 	    property bool showSpinner
+	    property bool isManaged
 
 	    height:85
 	    enabled:true
@@ -43,7 +44,7 @@ PC.ItemDelegate{
 			anchors.left:parent.left
 			anchors.leftMargin:10
 			anchors.verticalCenter:parent.verticalCenter
-			visible:status=="installed"?false:true
+			visible:isManaged
 			enabled:javaStackBridge.enableJavaList
 		}
 
