@@ -124,36 +124,6 @@ class Bridge(QObject):
 
 	#def _setFilterStatusValue
 
-	@Slot('QVariantList')
-	def onCheckPkg(self,info):
-
-		Bridge.javaPanelManager.onCheckedJavas(info[0],info[1])
-		self._refreshInfo()
-
-	#def onCheckPkg
-
-	@Slot()
-	def selectAll(self):
-
-		#Bridge.javaPanelManager.selectAll()
-		self.filterStatusValue="all"
-		self._refreshInfo()
-		
-	#def selectAll
-
-	def _refreshInfo(self):
-
-		params=[]
-		params.append("isChecked")
-		self._updateJavasModelInfo(params)
-		self.uncheckAll=Bridge.javaPanelManager.uncheckAll
-		if len(Bridge.javaPanelManager.javaSelected)>0:
-			self.core.mainStack.enableApplyBtn=True
-		else:
-			self.core.mainStack.enableApplyBtn=False
-
-	#def _refreshInfo
-	
 	def updateResultJavasModel(self,step):
 
 		params=[]
@@ -213,17 +183,20 @@ class Bridge(QObject):
 		params.append("isChecked")
 		self._updatePackagesModelInfo(params)
 		self.uncheckAll=Bridge.javaPanelManager.uncheckAll
-		if len(Bridge.javaPanelManager.pkgSelectedFromList)>0:
+		if len(Bridge.javaPanelManager.javaSelected)>0:
 			self.core.mainStack.enableApplyBtn=True
+			self.core.mainStack.manageRemoveBtn()
 		else:
 			self.core.mainStack.enableApplyBtn=False
+			self.core.mainStack.manageRemoveBtn()
+
 
 	#def _refreshInfo
 
 	def _updatePackagesModelInfo(self,params):
 
 		updatedInfo=Bridge.javaPanelManager.javasData
-		print(updatedInfo)
+
 		if len(updatedInfo)>0:
 			for i in range(len(updatedInfo)):
 				valuesToUpdate=[]

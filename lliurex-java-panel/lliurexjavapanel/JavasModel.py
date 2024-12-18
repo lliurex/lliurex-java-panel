@@ -87,7 +87,7 @@ class JavasModel(QtCore.QAbstractListModel):
 			row = index.row()
 			for item in valuesToUpdate:
 				for param in item:
-					if param in ["status","showSpinner","isVisible","isChecked","resultProcess"]:
+					if param in ["status","banner","showSpinner","isVisible","isChecked","resultProcess"]:
 						self._entries[row][param]=item[param]
 						self.dataChanged.emit(index,index)
 

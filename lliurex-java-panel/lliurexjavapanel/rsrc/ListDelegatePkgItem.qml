@@ -50,7 +50,7 @@ PC.ItemDelegate{
 
 		Image {
 			id:packageIcon
-			source:banner
+			source:"image://iconProvider/"+banner
 			sourceSize.width:64
 			sourceSize.height:64
 			anchors.left:packageCheck.right

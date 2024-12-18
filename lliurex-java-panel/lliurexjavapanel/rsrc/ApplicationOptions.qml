@@ -116,7 +116,35 @@ GridLayout{
             Layout.topMargin:10
             Layout.bottomMargin:10
             Layout.fillWidth:true
-
+            
+            PC.Button {
+                id:uninstallBtn
+                visible:{
+                    if (mainStackBridge.showRemoveBtn){
+                        true
+                    }else{
+                       false
+                    }
+                }
+                focus:true
+                display:AbstractButton.TextBesideIcon
+                icon.name:"remove"
+                text:i18nd("lliurex-java-panel","Uninstall")
+                enabled:{
+                    if ((mainStackBridge.enableRemoveBtn) && (mainStackBridge.currentOptionsStack!=2)){
+                        true
+                    }else{
+                        false
+                    }
+                }
+                Layout.preferredHeight:40
+                Layout.rightMargin:10
+                Keys.onReturnPressed: uninstallBtn.clicked()
+                Keys.onEnterPressed: uninstallBtn.clicked()
+                onClicked:{
+                    uninstallDialog.open()
+                }
+            }
             ColumnLayout{
                 id:feedbackColumn
                 spacing:10
@@ -172,6 +200,31 @@ GridLayout{
         }
     }
 
+    CustomDialog{
+        id:uninstallDialog
+        dialogIcon:"/usr/share/icons/breeze/status/64/dialog-warning.svg"
+        dialogTitle:"LliureX Java Panel"+" - "+i18nd("lliurex-java-panel","Uninstall process")
+        dialogMsg:i18nd("lliurex-java-panel","Do you want uninstall the selected java versions?")
+        dialogWidth:350
+        btnAcceptVisible:true
+        btnCancelText:i18nd("lliurex-java-panel","Cancel")
+        btnCancelIcon:"dialog-cancel"
+
+        Connections{
+            target:uninstallDialog
+            function onDialogApplyClicked(){
+                uninstallDialog.close()
+                konsolePanel.runCommand('history -c\n')
+                applyChanges()
+                mainStackBridge.launchUnInstallProcess()
+            }
+            function onCancelDialogClicked(){
+                uninstallDialog.close()
+            } 
+
+        }        
+    }
+
     
     CustomPopup{
         id:settingsPopup
@@ -209,7 +262,7 @@ GridLayout{
         switch (code){
             case -1:
             case -2:
-                msg=i18nd("lliurex-java-panel","Installing process has ending with errors");
+                msg=i18nd("lliurex-java-panel","Installation process has ending with errors");
                 break;
             case -3:
                 msg=i18nd("lliurex-java-panel","Unable to apply configuration option");
@@ -217,8 +270,12 @@ GridLayout{
             case -4:
                 msg=i18nd("lliurex-java-panel","Internet connection not detected")
                 break;
+            case -5:
+            case -6:
+                msg=i18nd("lliurex-java-panel","Uninstallation process has ending with errors");
+                break;
             case 1:
-                msg=i18nd("lliurex-java-panel","Installing process has ending successfully");
+                msg=i18nd("lliurex-java-panel","Installation process has ending successfully");
                 break;
             case 2:
                 msg=i18nd("lliurex-java-panel","Change apply successfully");
@@ -231,6 +288,12 @@ GridLayout{
                 break;
             case 5:
                 msg=i18nd("lliurex-java-panel","Installing selected java version. Wait a moment...")
+                break;
+            case 6:
+                msg=i18nd("lliurex-java-panel","Uninstalling selected java version. Wait a moment...")
+                break;
+            case 7:
+                msg=i18nd("lliurex-java-panel","Uninstallation process has ending successfully")
                 break;
             default:
                 break;

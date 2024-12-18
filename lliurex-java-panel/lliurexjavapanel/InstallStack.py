@@ -35,7 +35,7 @@ class InstallStack(QObject):
 		InstallStack.javaPanelManager.getResultCheckConnection()
 		if InstallStack.javaPanelManager.endCheck:
 			self.checkConnectionTimer.stop()
-			self.core.mainStack.feedbackCode=0
+			self.core.mainStack.feedbackCode=""
 			if InstallStack.javaPanelManager.retConnection[0]:
 				self.core.mainStack.isProgressBarVisible=False
 				self.core.mainStack.endProcess=True
@@ -70,7 +70,7 @@ class InstallStack(QObject):
 		self.showError=False
 		self.endAction=False
 		self.pkgProcessed=False
-		countLimit=len(InstallStack.javaPanelManager.pkgSelectedFromList)
+		countLimit=len(InstallStack.javaPanelManager.javaSelected)
 		if countLimit==0:
 			self.countLimit=1
 		else:
@@ -94,7 +94,7 @@ class InstallStack(QObject):
 				if not self.endAction:
 					self.pkgToSelect+=1
 					if self.pkgToSelect<self.countLimit:
-						self.pkgToProcess=InstallStack.javaPanelManager.pkgSelectedFromList[self.pkgToSelect]
+						self.pkgToProcess=InstallStack.javaPanelManager.javaSelected[self.pkgToSelect]
 						InstallStack.javaPanelManager.initPkgInstallProcess(self.pkgToProcess)
 						self.core.javaStack.updateResultJavasModel('start')
 					else:
@@ -115,13 +115,12 @@ class InstallStack(QObject):
 						InstallStack.javaPanelManager.checkInstall(self.pkgToProcess)
 
 					if InstallStack.javaPanelManager.checkInstallDone:
+						self.core.javaStack.updateResultJavasModel('end')
 						if InstallStack.javaPanelManager.feedBackCheck[0]:
-							self.core.javaStack.updateResultJavasModel('end')
 							self.pkgProcessed=False
 						else:
 							self.error=True
 							self.pkgProcessed=False
-							self.core.javaStack.updateResultJavasModel('end')
 							self.totalError+=1
 						
 		if self.endAction:
@@ -135,6 +134,7 @@ class InstallStack(QObject):
 			self.core.javaStack.isAllInstalled=InstallStack.javaPanelManager.isAllInstalled()
 			self.core.javaStack.totalErrorInProcess=self.totalError
 			self.core.javaStack.enableJavaList=True
+			self.core.mainStack.manageRemoveBtn()
 			InstallStack.javaPanelManager.getConfigurationOptions()
 			InstallStack.javaPanelManager.updateJavaRegister()
 			self.core.settingsStack.getInfo()

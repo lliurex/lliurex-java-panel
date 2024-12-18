@@ -24,12 +24,17 @@ class JavaPanelManager:
 	ERROR_INSTALL_INSTALL=-2
 	CHANGE_ALTERNATIVE_ERROR=-3
 	ERROR_INTERNET_CONNECTION=-4
+	ERROR_UNINSTALL_UNINSTALL=-5
+	ERROR_PARTIAL_UNINSTALL=-6
 	
 	SUCCESS_INSTALL_PROCESS=1
 	CHANGE_ALTERNATIVE_SUCCESSFULL=2
+	SUCCESS_UNINSTALL_PROCESS=7
+
 	MSG_FEEDBACK_INTERNET=3
 	MSG_FEEDBACK_INSTALL_REPOSITORIES=4
 	MSG_FEEDBACK_INSTALL_INSTALL=5
+	MSG_FEEDBACK_UNINSTALL_RUN=6
 
 	def __init__(self):
 
@@ -56,8 +61,8 @@ class JavaPanelManager:
 		self.secondConnection=False
 		self.urltocheck1="http://lliurex.net"
 		self.urltocheck2="https://github.com/lliurex"
-		self.pkgSelectedFromList=[]
 		self.pkgsInstalled=[]
+		self.nonManagedPkg=0
 		self.totalPackages=0
 		self.javaRegisterDir="/etc/lliurex-java-panel"
 		self.javaRegisterFile=os.path.join(self.javaRegisterDir,"managed_java.txt")
@@ -76,7 +81,8 @@ class JavaPanelManager:
 				info={}
 				info["pkg"]=config.get("JAVA","pkg")
 				info["name"]=config.get("JAVA","name")
-				info["cmd"]=config.get("JAVA","cmd")
+				info["installCmd"]=config.get("JAVA","installCmd")
+				info["removeCmd"]=config.get("JAVA","removeCmd")
 				if os.path.exists(os.path.join(self.banners,info["pkg"]+".png")):
 					info["banner"]=os.path.join(self.banners,info["pkg"]+".png")
 				else:
@@ -125,18 +131,26 @@ class JavaPanelManager:
 						tmp["showSpinner"]=False
 						tmp["isChecked"]=False
 						tmp["isVisible"]=True
-						if status=="installed":
-							tmp["resultProcess"]=0
-						else:
-							tmp["resultProcess"]=-1
 						tmp["isManaged"]=self.checkIsManaged(tmp["pkg"],status)
-						if tmp["isManaged"]:
-							self.totalPackages+=1
+						tmp["resultProcess"]=-1
+						if status=="installed":
+							tmp["banner"]="%s_OK.png"%tmp["banner"]
+							if tmp["isManaged"]:
+								self.totalPackages+=1
+							else:
+								self.nonManagedPkg+=1
+							self.pkgsInstalled.append(tmp["pkg"])
+						else:
+							if tmp["isManaged"]:
+								self.totalPackages+=1
 						self.javasData.append(tmp)
 						self.javasInfo[tmpInfo["pkg"]]={}
-						self.javasInfo[tmpInfo["pkg"]]["cmd"]=tmpInfo["cmd"]
+						self.javasInfo[tmpInfo["pkg"]]["installCmd"]=tmpInfo["installCmd"]
+						self.javasInfo[tmpInfo["pkg"]]["removeCmd"]=tmpInfo["removeCmd"]
 						self.javasInfo[tmpInfo["pkg"]]["swing"]=tmpInfo["swing"]
-					
+						self.javasInfo[tmpInfo["pkg"]]["isManaged"]=tmp["isManaged"]
+						self.javasInfo[tmpInfo["pkg"]]["banner"]=tmpInfo["banner"]
+
 		self.getConfigurationOptions()
 
 	#def getSupportedJava	
@@ -430,7 +444,7 @@ class JavaPanelManager:
 		else:
 			self._managePkgSelected(pkgId,False)
 
-		if len(self.pkgSelectedFromList)==self.totalPackages:
+		if len(self.javaSelected)==self.totalPackages:
 			self.uncheckAll=True
 		else:
 			self.uncheckAll=False
@@ -464,11 +478,11 @@ class JavaPanelManager:
 	def _managePkgSelected(self,pkgId,active=True,order=0):
 
 		if active:
-			if pkgId not in self.pkgSelectedFromList:
-				self.pkgSelectedFromList.append(pkgId)
+			if pkgId not in self.javaSelected:
+				self.javaSelected.append(pkgId)
 		else:
-			if pkgId in self.pkgSelectedFromList:
-				self.pkgSelectedFromList.remove(pkgId)
+			if pkgId in self.javaSelected:
+				self.javaSelected.remove(pkgId)
 		
 	#def _managePkgSelected
 
@@ -552,7 +566,7 @@ class JavaPanelManager:
 		self.checkInstallLaunched=False
 		self.checkInstallDone=False
 		
-		self._initProcessValues("install",pkgId)
+		self._initProcessValues(pkgId)
 
 	#def initPkgInstallProcess
 
@@ -573,7 +587,7 @@ class JavaPanelManager:
 	def getInstallCommand(self,pkgId):
 
 		command=""
-		command="DEBIAN_FRONTEND=noninteractive %s"%self.javasInfo[pkgId]["cmd"]
+		command="DEBIAN_FRONTEND=noninteractive %s"%self.javasInfo[pkgId]["installCmd"]
 		length=len(command)
 
 		if length>0:
@@ -646,37 +660,115 @@ class JavaPanelManager:
 
 	#def isAllInstalled
 
-	def _initProcessValues(self,action,pkgId):
+	def initUnInstallProcess(self,pkgId):
+
+		self.removePkgLaunched=False
+		self.removePkgDone=False
+		self.checkRemoveLaunched=False
+		self.checkRemoveDone=False
+		self._initProcessValues(pkgId)
+
+	#def initUnInstallProcess
+
+	def _initProcessValues(self,pkgId):
 
 		for item in self.javasData:
 			if item["pkg"]==pkgId:
 				tmpParam={}
 				tmpParam["resultProcess"]=-1
-				if item["pkg"] in self.pkgSelectedFromList:
-					if action=="install":
-						tmpParam["showSpinner"]=True
-						
+				if item["pkg"] in self.javaSelected:
+					tmpParam["showSpinner"]=True
 					self._updateJavasModel(tmpParam,item["pkg"])
 
 
 	#def _initProcessValues
 
+	def getUnInstallCommand(self,pkgId):
+
+		command=""
+		command="DEBIAN_FRONTEND=noninteractive %s"%self.javasInfo[pkgId]["removeCmd"]
+		length=len(command)
+
+		if length>0:
+			command=self._createProcessToken(command,"uninstall")
+		else:
+			self.installAppDone=True
+
+		return command
+
+	#def getUnInstallCommand
+
+	def checkRemove(self,pkgId):
+
+		self.feedBackCheck=[True,"",""]
+		self.status=self.isInstalled(pkgId)
+
+		self._updateProcessModelInfo(pkgId,'uninstall',self.status)
+		if self.status!="available":
+			msgCode=JavaPanelManager.ERROR_UNINSTALL_UNINSTALL
+			typeMsg="Error"
+			self.feedBackCheck=[False,msgCode,typeMsg]
+		else:
+			msgCode=JavaPanelManager.SUCCESS_UNINSTALL_PROCESS
+			typeMsg="Ok"
+			self.removeSwingFile(self.javasInfo[pkgId]["swing"])
+			self.feedBackCheck=[True,msgCode,typeMsg]
+		
+		self.checkRemoveDone=True
+
+	#def checkRemove
+
+	def removeSwingFile(self,destPath):
+
+		if destPath!="":
+			destPathSwing=destPath+"swing.properties"
+			destPathDiverted=destPathSwing+".diverted"
+
+			try:
+				if os.path.exists(destPathDiverted):
+					if os.path.exists(destPathSwing):
+						os.remove(destPathSwing)
+					
+					cmdDiversion="dpkg-divert --package %s --remove --rename %s"%(PACKAGE_NAME,destPathSwing)
+					result=subprocess.check_output(cmdDiversion,shell=True)
+					if type(result) is bytes:
+						result=result.decode()
+
+					result=result.split("\n")
+					if result[0]=="":
+						print("Unable to remove diversion")
+			
+			except Exception as e:
+				print("Exception:"+str(e))
+				pass
+
+	#def removeSwingFile
+
 	def _updateProcessModelInfo(self,pkgId,action,result):
 
 		for item in self.javasInfo:
-			if item==pkgId and item in self.pkgSelectedFromList:
+			if item==pkgId and item in self.javaSelected:
 				tmpParam={}
 				if action=="install":
 					if result=="installed":
 						if pkgId not in self.pkgsInstalled:
 							self.pkgsInstalled.append(pkgId)
 						tmpParam["resultProcess"]=0
+						tmpParam["banner"]="%s_OK"%self.javasInfo[pkgId]["banner"]
+					else:
+						tmpParam["resultProcess"]=1
+				elif action=="uninstall":
+					if result=="available":
+						if pkgId in self.pkgsInstalled:
+							self.pkgsInstalled.remove(pkgId)
+						tmpParam["resultProcess"]=0
+						tmpParam["banner"]=self.javasInfo[pkgId]["banner"]
 					else:
 						tmpParam["resultProcess"]=1
 
-					tmpParam["status"]=result
-					tmpParam["showSpinner"]=False
-					self._updateJavasModel(tmpParam,item)
+				tmpParam["status"]=result
+				tmpParam["showSpinner"]=False
+				self._updateJavasModel(tmpParam,item)
 
 	
 	#def _updateProcessModelInfo
@@ -779,7 +871,10 @@ class JavaPanelManager:
 		elif action=="install":
 			self.tokenInstall=tempfile.mkstemp('_install')
 			removeTmp=' rm -f %s'%self.tokenInstall[1]
-		
+		elif action=="uninstall":
+			self.tokenUnInstall=tempfile.mkstemp('_uninstall')
+			removeTmp=' rm -f %s'%self.tokenUnInstall[1]
+
 		cmd='%s ;stty -echo;%s\n'%(command,removeTmp)
 		if cmd.startswith(";"):
 			cmd=cmd[1:]
@@ -816,8 +911,9 @@ class JavaPanelManager:
 	def updateJavaRegister(self):
 
 		for item in self.pkgsInstalled:
-			if item not in self.registerContent:
-				self.registerContent.append(item)
+			if self.javasInfo[item]["isManaged"]:
+				if item not in self.registerContent:
+					self.registerContent.append(item)
 
 		if os.path.exists(self.javaRegisterFile):
 			with open(self.javaRegisterFile,'w') as fd:

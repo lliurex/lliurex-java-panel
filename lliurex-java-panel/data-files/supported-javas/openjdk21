@@ -1,5 +1,6 @@
 [JAVA]
 pkg=openjdk-21-jre
 name=OpenJDK JRE 21
-cmd=apt-get install -y openjdk-21-jre
+installCmd=apt-get install -y openjdk-21-jre
+removeCmd=apt-get remove -y openjdk-21-jre openjdk-21-jre-headless
 swing=/etc/java-21-openjdk/

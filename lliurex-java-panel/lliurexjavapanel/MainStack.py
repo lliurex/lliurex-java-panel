@@ -41,9 +41,11 @@ class Bridge(QObject):
 		self._currentStack=0
 		self._currentOptionsStack=0
 		self._showStatusMessage=[False,"","Ok"]
-		self._feedbackCode=1000
+		self._feedbackCode=""
 		self._isProcessRunning=False
 		self._enableApplyBtn=False
+		self._enableRemoveBtn=False
+		self._showRemoveBtn=False
 		self._endProcess=True
 		self._endCurrentCommand=False
 		self._currentCommand=""
@@ -74,6 +76,7 @@ class Bridge(QObject):
 
 		self.core.javaStack.getInfo()
 		self.core.settingsStack.getInfo()
+		self.manageRemoveBtn()
 		self.currentStack=2
 
 	#def _showInfo
@@ -161,6 +164,34 @@ class Bridge(QObject):
 			self.on_enableApplyBtn.emit()
 
 	#def _setEnableApplyBtn
+
+	def _getEnableRemoveBtn(self):
+
+		return self._enableRemoveBtn
+
+	#def _getEnableRemoveBtn
+
+	def _setEnableRemoveBtn(self,enableRemoveBtn):
+
+		if self._enableRemoveBtn!=enableRemoveBtn:
+			self._enableRemoveBtn=enableRemoveBtn
+			self.on_enableRemoveBtn.emit()
+
+	#def _setEnableRemoveBtn
+
+	def _getShowRemoveBtn(self):
+
+		return self._showRemoveBtn
+
+	#def _getShowRemoveBtn
+
+	def _setShowRemoveBtn(self,showRemoveBtn):
+
+		if self._showRemoveBtn!=showRemoveBtn:
+			self._showRemoveBtn=showRemoveBtn
+			self.on_showRemoveBtn.emit()
+
+	#def _setShowRemoveBtn
 
 	def _getIsProcessRunning(self):
 
@@ -309,6 +340,27 @@ class Bridge(QObject):
 		
 	#def getNewCommand
 
+	def manageRemoveBtn(self):
+
+		match=False
+		
+		if len(Bridge.javaPanelManager.pkgsInstalled)-Bridge.javaPanelManager.nonManagedPkg:
+			self.showRemoveBtn=True
+		else:
+			self.showRemoveBtn=False
+		
+		for item in Bridge.javaPanelManager.javaSelected:
+			if item in Bridge.javaPanelManager.pkgsInstalled:
+				match=True
+				break
+		
+		if match:
+			self.enableRemoveBtn=True
+		else:
+			self.enableRemoveBtn=False
+
+	#def manageRemoveBtn
+
 	@Slot()
 	def launchInstallProcess(self):
 
@@ -317,12 +369,26 @@ class Bridge(QObject):
 		self.core.javaStack.filterStatusValue="all"
 		self.endProcess=False
 		self.enableApplyBtn=False
+		self.enableRemoveBtn=False
 		self.isProgressBarVisible=True
 		self.isProcessRunning=True
 		self.feedbackCode=Bridge.javaPanelManager.MSG_FEEDBACK_INTERNET
 		self.core.installStack.checkInternetConnection()
 	
 	#def launchInstallProcess
+
+	@Slot()
+	def launchUnInstallProcess(self):
+
+		self.showStatusMessage=[False,"","Ok"]
+		self.core.javaStack.enablePkgList=False
+		self.core.javaStack.filterStatusValue="all"
+		self.endProcess=False
+		self.enableApplyBtn=False
+		self.enableRemoveBtn=False
+		self.core.unInstallStack.unInstallProcess()
+
+	#def launchUnInstallProcess
 
 	@Slot(int)
 	def manageTransitions(self,stack):
@@ -376,7 +442,6 @@ class Bridge(QObject):
 
 		self.showCloseDialog=False
 		self.endProcess=True
-		#Bridge.javaPanelManager.clearEnvironment(True)
 		self.closeGui=True
 
 	#def forceClossing
@@ -405,6 +470,12 @@ class Bridge(QObject):
 
 	on_enableApplyBtn=Signal()
 	enableApplyBtn=Property(bool,_getEnableApplyBtn,_setEnableApplyBtn,notify=on_enableApplyBtn)
+
+	on_enableRemoveBtn=Signal()
+	enableRemoveBtn=Property(bool,_getEnableRemoveBtn,_setEnableRemoveBtn,notify=on_enableRemoveBtn)
+
+	on_showRemoveBtn=Signal()
+	showRemoveBtn=Property(bool,_getShowRemoveBtn,_setShowRemoveBtn,notify=on_showRemoveBtn)
 
 	on_isProcessRunning=Signal()
 	isProcessRunning=Property(bool,_getIsProcessRunning,_setIsProcessRunning,notify=on_isProcessRunning)
