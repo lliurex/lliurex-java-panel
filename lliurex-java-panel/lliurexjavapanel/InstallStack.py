@@ -91,11 +91,6 @@ class InstallStack(QObject):
 		
 		if InstallStack.javaPanelManager.updateReposDone:
 			if not self.pkgProcessed:
-				if self.error:
-					self.endAction=True
-				else:
-					self.error=False
-
 				if not self.endAction:
 					self.pkgToSelect+=1
 					if self.pkgToSelect<self.countLimit:
@@ -139,8 +134,9 @@ class InstallStack(QObject):
 			self.core.mainStack.isProcessRunning=False
 			self.core.javaStack.isAllInstalled=InstallStack.javaPanelManager.isAllInstalled()
 			self.core.javaStack.totalErrorInProcess=self.totalError
+			self.core.javaStack.enableJavaList=True
 			InstallStack.javaPanelManager.getConfigurationOptions()
-			self.core.settingsStack.showInfo()
+			self.core.settingsStack.getInfo()
 			self.installProcessTimer.stop()
 
 			if self.showError:

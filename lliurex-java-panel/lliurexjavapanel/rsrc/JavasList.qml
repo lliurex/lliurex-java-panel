@@ -28,7 +28,21 @@ Rectangle{
                 display:AbstractButton.IconOnly
                 icon.name:"view-filter"
                 visible:true
-                enabled:javaStackBridge.enableJavaList
+                enabled:{
+                    if (javaStackBridge.totalErrorInProcess==0){
+                        if (javaStackBridge.enableJavaList){
+                            if (javaStackBridge.isAllInstalled[0] || javaStackBridge.isAllInstalled[1]){
+                                false
+                            }else{
+                                true
+                            }
+                        }else{
+                            false
+                        }
+                    }else{
+                        true
+                    }
+                }
                 ToolTip.delay: 1000
                 ToolTip.timeout: 3000
                 ToolTip.visible: hovered
@@ -68,7 +82,17 @@ Rectangle{
                     PC.MenuItem{
                         icon.name:"emblem-error"
                         text:i18nd("lliurex-java-panel","Show java with error")
-                        enabled:true
+                        enabled:{
+                            if (javaStackBridge.filterStatusValue!="error"){
+                                if (javaStackBridge.totalErrorInProcess>0){
+                                    true
+                                }else{
+                                    false
+                                }
+                            }else{
+                                false
+                            }
+                        }
                         onClicked:javaStackBridge.manageStatusFilter("error")
                     }
                     PC.MenuItem{
@@ -122,7 +146,7 @@ Rectangle{
                     property int totalItems
                     anchors.fill:parent
                     height: parent.height
-                    enabled:true
+                    enabled:javaStackBridge.enableJavaList
                     currentIndex:-1
                     clip: true
                     focus:true

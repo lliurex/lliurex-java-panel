@@ -40,7 +40,7 @@ Rectangle{
                     property int totalItems
                     anchors.fill:parent
                     height: parent.height
-                    enabled:true
+                    enabled:javaStackBridge.enableJavaList
                     currentIndex:-1
                     clip: true
                     focus:true

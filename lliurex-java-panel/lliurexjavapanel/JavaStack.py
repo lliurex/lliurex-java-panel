@@ -30,7 +30,7 @@ class Bridge(QObject):
 
 	#def __init__
 
-	def showInfo(self):
+	def getInfo(self):
 
 		self._updateJavasModel()
 		self.uncheckAll=Bridge.javaPanelManager.uncheckAll

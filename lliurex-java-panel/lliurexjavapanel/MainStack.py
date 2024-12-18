@@ -72,8 +72,8 @@ class Bridge(QObject):
 
 	def _showInfo(self):
 
-		self.core.javaStack.showInfo()
-		self.core.settingsStack.showInfo()
+		self.core.javaStack.getInfo()
+		self.core.settingsStack.getInfo()
 		self.currentStack=2
 
 	#def _showInfo

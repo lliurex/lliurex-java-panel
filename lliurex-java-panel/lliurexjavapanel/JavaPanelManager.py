@@ -151,51 +151,7 @@ class JavaPanelManager:
 		return "available"
 		
 	#def isInstalled
-	'''
-	def installJava(self,javasToInstall):
-	
-		cmd="DEBIAN_FRONTEND=noninteractive apt-get install -y "
-		self.result_install={}
-		for item in javasToInstall:
-			tmp_cmd=self.java_list[item]["pkg"]+" "
-			cmd=cmd+tmp_cmd
-		
-		os.system(cmd)
 
-		self.getConfigurationOptions()
-		for item in javasToInstall:
-			self.result_install[item]=self.isInstalled(self.java_list[item]["cmd"].split("-y")[1].strip())	
-			self.copySwingFile(self.java_list[item]["swing"])
-
-		
-
-	def copySwingFile(self,destPath):
-
-		destPath_swing=destPath+"swing.properties"
-		destPath_diverted=destPath_swing+".diverted"
-
-		try:
-			if not os.path.exists(destPath_swing):
-				shutil.copy2(SWING_FILE,destPath)
-			else:
-
-				if not os.path.exists(destPath_diverted):
-					cmd_diversion="dpkg-divert --package "+PACKAGE_NAME+" --add --rename --divert " +destPath_diverted + " "+ destPath_swing
-					result=subprocess.check_output(cmd_diversion,shell=True)
-					if type(result) is bytes:
-						result=result.decode()
-
-					result=result.split("\n")
-					if result[0]!="":
-						os.symlink(SWING_FILE,destPath_swing)
-					else:
-						print("Unable to create diversion")
-		except Exception as e:
-			print("Exception:"+str(e))
-			pass
-
-	#def copySwingFile
-	'''
 	def getConfigurationOptions(self):
 
 		self.configurationData=[]
@@ -211,9 +167,6 @@ class JavaPanelManager:
 		self.cPanelAlternatives=[]
 		self.cPanelModel=[]
 		
-		# build alternatives list here
-		
-		# ############### #
 		try:		
 			javaCmd='update-alternatives --list java | grep -v "gij"'
 			javaCmdList=subprocess.check_output(javaCmd, shell=True)
@@ -260,9 +213,6 @@ class JavaPanelManager:
 		self.jwsModel=[]
 		self.jwsCurrentAlternative=0
 
-		# build alternatives list here
-		
-		# ############### #
 		try:
 			javaCmd='update-alternatives --list javaws | grep -v "gij"'
 			javaCmdList=subprocess.check_output(javaCmd, shell=True)
@@ -275,13 +225,11 @@ class JavaPanelManager:
 			javaLabel='update-alternatives --list javaws | grep -v "gij" | cut -d"/" -f5'
 			javaLabelList=subprocess.check_output(javaLabel, shell=True)
 
-
 			if type(javaLabelList) is bytes:
 				javaLabelList=javaLabelList.decode()
 
 			javaLabelList=javaLabelList.split("\n")
 			
-
 			i=0
 			for item in javaLabelList:
 				if javaLabelList[i]!='':
@@ -300,9 +248,6 @@ class JavaPanelManager:
 		except Exception as e:
 			print(str(e))		
 								
-		# get jws configured actually
-		
-		# ################ #
 		try:
 			jwsConfiguredCmd='update-alternatives --get-selections | grep javaws$' 
 			jwsConfiguredLabel= subprocess.check_output(jwsConfiguredCmd, shell=True)
@@ -314,8 +259,7 @@ class JavaPanelManager:
 				if self-jwsAltarnatives[i]["name"]==jwsCurrentAlternative:
 					self.jwsCurrentAlternative=i
 
-			#self.jws_alternatives[jws_configured_label]["default"]=True
-		
+
 		except Exception as e:
 			print(str(e))
 			try:
@@ -339,8 +283,7 @@ class JavaPanelManager:
 					if self-jwsAltarnatives[i]["name"]==jwsCurrentAlternative:
 						self.jwsCurrentAlternative=i
 			
-				#self.jws_alternatives[jws_configured_label]["default"]=True
-			
+	
 			except Exception as e:
 				print(str(e))
 			
@@ -351,9 +294,7 @@ class JavaPanelManager:
 		self.jreAlternatives=[]
 		self.jreModel=[]
 		self.jreCurrentAlternative=0
-		# build alternatives list here
-		
-		# ############### #
+
 		try:	
 			javaCmd='update-alternatives --list java | grep -v "gij"'
 			javaCmdList=subprocess.check_output(javaCmd, shell=True)
@@ -362,7 +303,6 @@ class JavaPanelManager:
 				javaCmdList=javaCmdList.decode()
 
 			javaCmdList=javaCmdList.split("\n")
-
 
 			javaLabel='update-alternatives --list java | grep -v "gij" | cut -d"/" -f5'
 			javaLabelList=subprocess.check_output(javaLabel, shell=True)
@@ -390,9 +330,7 @@ class JavaPanelManager:
 
 		except Exception as e:
 			print(str(e))
-		# get jre configured actually
-		
-		# ################ #
+
 		try:
 			jreConfiguredCmd='update-alternatives --get-selections |grep java$' 
 			jreConfiguredLabel=subprocess.check_output(jreConfiguredCmd, shell=True)
@@ -417,9 +355,6 @@ class JavaPanelManager:
 		self.firefoxModel=[]
 		self.firefoxCurrentAlternative=0
 		
-		# build alternatives list here
-		
-		# ############### #
 		try:
 			javaPluginCmd='update-alternatives --list mozilla-javaplugin.so | grep -v "gij"' 
 			javaPluginCmdList=subprocess.check_output(javaPluginCmd, shell=True)
@@ -456,10 +391,6 @@ class JavaPanelManager:
 		except Exception as e:
 			print(str(e))		
 				
-					
-		# get mozilla plugin configured actually
-		
-		# ################ #
 		try:
 			firefoxConfiguredCmd='update-alternatives --get-selections |grep mozilla-javaplugin.so' 
 			firefoxConfiguredLabel=subprocess.check_output(firefoxConfiguredCmd, shell=True)
@@ -587,7 +518,7 @@ class JavaPanelManager:
  		if self.endCheck:
  			if not self.firstConnection and not self.secondConnection:
  				error=True
- 				msgError=JavaPanelError.ERROR_INTERNET_CONNECTION
+ 				msgError=JavaPanelManager.ERROR_INTERNET_CONNECTION
  				self.retConnection=[error,msgError]
 
 	#def getResultCheckConnection
@@ -642,21 +573,49 @@ class JavaPanelManager:
 	def checkInstall(self,pkgId):
 
 		self.feedBackCheck=[True,"",""]
-		self.installed=self.isInstalled(pkgId)
+		self.status=self.isInstalled(pkgId)
 
-		self._updateProcessModelInfo(pkgId,'install',self.installed)
-		if not self.installed:
-			msgCode=ERROR_INSTALL_INSTALL
+		self._updateProcessModelInfo(pkgId,'install',self.status)
+		if self.status!="installed":
+			msgCode=JavaPanelManager.ERROR_INSTALL_INSTALL
 			typeMsg="Error"
-			self.feedBackCheck=[self.installed,msgCode,typeMsg]
+			self.feedBackCheck=[False,msgCode,typeMsg]
 		else:
 			msgCode=JavaPanelManager.SUCCESS_INSTALL_PROCESS
 			typeMsg="Ok"
-			self.feedBackCheck=[self.installed,msgCode,typeMsg]
+			self.copySwingFile(self.javasInfo[pkgId]["swing"])
+			self.feedBackCheck=[True,msgCode,typeMsg]
 		
 		self.checkInstallDone=True
 
 	#def checkInstall
+
+	def copySwingFile(self,destPath):
+
+		if destPath!="":
+			destPathSwing=destPath+"swing.properties"
+			destPathDiverted=destPathSwing+".diverted"
+
+			try:
+				if not os.path.exists(destPathSwing):
+					shutil.copy2(SWING_FILE,destPath)
+				else:
+					if not os.path.exists(destPathDiverted):
+						cmdDiversion="dpkg-divert --package "+PACKAGE_NAME+" --add --rename --divert " +destPathDiverted + " "+ destPathSwing
+						result=subprocess.check_output(cmdDiversion,shell=True)
+						if type(result) is bytes:
+							result=result.decode()
+
+						result=result.split("\n")
+						if result[0]!="":
+							os.symlink(SWING_FILE,destPathSwing)
+						else:
+							print("Unable to create diversion")
+			except Exception as e:
+				print("Exception:"+str(e))
+				pass
+
+	#def copySwingFile
 
 	def isAllInstalled(self):
 
@@ -690,7 +649,7 @@ class JavaPanelManager:
 	def _updateProcessModelInfo(self,pkgId,action,result):
 
 		for item in self.javasInfo:
-			if item in self.pkgSelectedFromList:
+			if item==pkgId and item in self.pkgSelectedFromList:
 				tmpParam={}
 				if action=="install":
 					if result=="installed":
@@ -715,7 +674,6 @@ class JavaPanelManager:
 					if item[element]!=param[element]:
 						item[element]=param[element]
 				break
-
 
 	#def _updateJavasModel
 
@@ -747,81 +705,6 @@ class JavaPanelManager:
 		
 	
 	#def launchAlternativeCommand
-	'''
-	def getNumberPackages(self,javasToInstall):
-
-		pkgs=""
-		for item in javasToInstall:
-			pkgs=pkgs+" "+self.java_list[item]["pkg"]
-		
-		cmd="LANG=C LANGUAGE=en apt-get update; apt-get install --simulate %s"%pkgs
-		psimulate = subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE)
-		rawoutputpsimulate = psimulate.stdout.readlines()
-		rawpackagestoinstall = [ aux.decode().strip() for aux in rawoutputpsimulate if aux.decode().startswith('Inst') ]
-		r = [ aux.replace('Inst ','') for aux in rawpackagestoinstall ]
-		for allinfo in r :
-			self.initialNumberPackages.append(allinfo.split(' ')[0])
-
-		self.numberPackagesUnpacked=copy.deepcopy(self.initialNumberPackages)
-		self.numberPackagesInstalled=copy.deepcopy(self.initialNumberPackages)
-
-	#def getNumberPackages
-
-	def isAptRunning(self):
-
-		locks_info=self.dpkgUnlocker.isDpkgLocked()
-		if locks_info==3:
-			return True
-		else:
-			return False
-
-	#def isAptRunning
-
-	def checkProgressUnpacked(self):
-
-		for i in range(len(self.numberPackagesUnpacked)-1,-1,-1):
-			status=self.checkStatus(self.numberPackagesUnpacked[i])
-			if status==1:
-				self.numberPackagesUnpacked.pop(i)
-			elif status==0:
-				self.numberPackagesUnpacked.pop(i)
-				self.numberPackagesInstalled.pop(i)	
-
-		self.progressUnpacked=len(self.initialNumberPackages)-len(self.numberPackagesUnpacked)
-		self.progressUnpackedPercentage="{:.2f}".format(1-float(len(self.numberPackagesUnpacked)/len(self.initialNumberPackages)))
-	#def checkProgressUnpacked
-
-	def checkProgressInstallation(self):
-
-		for i in range(len(self.numberPackagesInstalled)-1,-1,-1):
-			status=self.checkStatus(self.numberPackagesInstalled[i])
-			if status==0:
-				self.numberPackagesInstalled.pop(i)
-
-		self.progressInstallation=len(self.initialNumberPackages)-len(self.numberPackagesInstalled)
-		self.progressInstallationPercentage="{:.2f}".format(1-float(len(self.numberPackagesInstalled)/len(self.initialNumberPackages)))
-	
-	#def checkProgressInstallation
-	
-	def checkStatus(self,pkg):
-		
-		p=subprocess.Popen(["dpkg-query -W -f='${db:Status-Status}' %s"%pkg],shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
-		output=p.communicate()[0]
-
-		if type(output) is bytes:
-			output=output.decode()
-		
-		if output=="installed":
-			return 0
-
-		elif output=="unpacked":
-			return 1
-		
-		return -1
-	
-	#def checkStatus
-	'''
-
 	def clearCache(self):
 
 		clear=False

@@ -52,7 +52,7 @@ class Bridge(QObject):
 
 	#def __init__
 
-	def showInfo(self):
+	def getInfo(self):
 
 		self._updateConfigurationModel()
 		self.cPanelModel=Bridge.javaPanelManager.cPanelModel
