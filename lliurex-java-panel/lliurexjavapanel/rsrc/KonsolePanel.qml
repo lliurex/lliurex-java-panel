@@ -7,7 +7,13 @@ import QMLTermWidget
 Rectangle{
     color:"transparent"
     Text{ 
-        text:i18nd("lliurex-java-panel","Installation process details")
+        text:{
+            if (mainStackBridge.launchedProcess=="uninstall"){  
+                i18nd("lliurex-java-panel","Uninstallation process details")
+            }else{
+                i18nd("lliurex-java-panel","Installation process details")
+            }
+        }
         font.family: "Quattrocento Sans Bold"
         font.pointSize: 16
     }

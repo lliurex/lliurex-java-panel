@@ -220,7 +220,6 @@ class Bridge(QObject):
 
 	#def _changeAlternativeRet
 
-
 	on_cPanelModel=Signal()
 	cPanelModel=Property('QVariant',_getCPanelModel,_setCPanelModel,notify=on_cPanelModel)
 	

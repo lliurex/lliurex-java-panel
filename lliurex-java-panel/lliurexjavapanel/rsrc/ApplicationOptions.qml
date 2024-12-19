@@ -204,8 +204,8 @@ GridLayout{
         id:uninstallDialog
         dialogIcon:"/usr/share/icons/breeze/status/64/dialog-warning.svg"
         dialogTitle:"LliureX Java Panel"+" - "+i18nd("lliurex-java-panel","Uninstall process")
-        dialogMsg:i18nd("lliurex-java-panel","Do you want uninstall the selected java versions?")
-        dialogWidth:350
+        dialogMsg:i18nd("lliurex-java-panel","Do you want uninstall the selected Java versions?")
+        dialogWidth:450
         btnAcceptVisible:true
         btnCancelText:i18nd("lliurex-java-panel","Cancel")
         btnCancelIcon:"dialog-cancel"
@@ -287,10 +287,10 @@ GridLayout{
                 msg=i18nd("lliurex-java-panel","Preparing installation. Wait a moment...")
                 break;
             case 5:
-                msg=i18nd("lliurex-java-panel","Installing selected java version. Wait a moment...")
+                msg=i18nd("lliurex-java-panel","Installing selected Java versions. Wait a moment...")
                 break;
             case 6:
-                msg=i18nd("lliurex-java-panel","Uninstalling selected java version. Wait a moment...")
+                msg=i18nd("lliurex-java-panel","Uninstalling selected Java versions. Wait a moment...")
                 break;
             case 7:
                 msg=i18nd("lliurex-java-panel","Uninstallation process has ending successfully")

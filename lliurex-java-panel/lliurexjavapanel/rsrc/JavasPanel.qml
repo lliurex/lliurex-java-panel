@@ -8,7 +8,7 @@ import QtQuick.Layouts
 Rectangle{
     color:"transparent"
     Text{ 
-        text:i18nd("lliurex-java-panel","List of java version to install")
+        text:i18nd("lliurex-java-panel","List of Java versions availables")
         font.family: "Quattrocento Sans Bold"
         font.pointSize: 16
     }

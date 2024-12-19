@@ -102,6 +102,7 @@ class JavaPanelManager:
 	def getSupportedJava(self):
 
 		self._readJavaRegister()
+
 		for item in sorted(os.listdir(self.supportedJavas)):
 			if os.path.isfile(os.path.join(self.supportedJavas,item)):
 				tmpInfo=self.loadFile(os.path.join(self.supportedJavas,item))
@@ -110,6 +111,7 @@ class JavaPanelManager:
 					baseAptCmd = "apt-cache policy %s "%tmpInfo["pkg"]
 					p=subprocess.Popen([baseAptCmd],shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)	
 					output=p.communicate()[0]
+					
 					if type(output) is bytes:
 						output=output.decode()
 
@@ -267,6 +269,7 @@ class JavaPanelManager:
 					self.jwsAlternatives.append(tmp)
 					self.jwsModel.append(item)
 					i+=1
+			
 			if len(self.jwsAlternatives)>0:
 				tmp={}
 				tmp["name"]="jws"
@@ -310,7 +313,6 @@ class JavaPanelManager:
 				for i in range(len(self.jwsAlternatives)):
 					if self-jwsAltarnatives[i]["name"]==jwsCurrentAlternative:
 						self.jwsCurrentAlternative=i
-			
 	
 			except Exception as e:
 				print(str(e))
@@ -451,6 +453,7 @@ class JavaPanelManager:
 
 		tmpParam={}
 		tmpParam["isChecked"]=isChecked
+		
 		self._updateJavasModel(tmpParam,pkgId)			
 	
 	#def onCheckedPackages
@@ -605,6 +608,7 @@ class JavaPanelManager:
 		self.status=self.isInstalled(pkgId)
 
 		self._updateProcessModelInfo(pkgId,'install',self.status)
+		
 		if self.status!="installed":
 			msgCode=JavaPanelManager.ERROR_INSTALL_INSTALL
 			typeMsg="Error"
@@ -666,6 +670,7 @@ class JavaPanelManager:
 		self.removePkgDone=False
 		self.checkRemoveLaunched=False
 		self.checkRemoveDone=False
+		
 		self._initProcessValues(pkgId)
 
 	#def initUnInstallProcess
@@ -679,7 +684,6 @@ class JavaPanelManager:
 				if item["pkg"] in self.javaSelected:
 					tmpParam["showSpinner"]=True
 					self._updateJavasModel(tmpParam,item["pkg"])
-
 
 	#def _initProcessValues
 
@@ -704,6 +708,7 @@ class JavaPanelManager:
 		self.status=self.isInstalled(pkgId)
 
 		self._updateProcessModelInfo(pkgId,'uninstall',self.status)
+		
 		if self.status!="available":
 			msgCode=JavaPanelManager.ERROR_UNINSTALL_UNINSTALL
 			typeMsg="Error"
@@ -768,8 +773,8 @@ class JavaPanelManager:
 
 				tmpParam["status"]=result
 				tmpParam["showSpinner"]=False
+				
 				self._updateJavasModel(tmpParam,item)
-
 	
 	#def _updateProcessModelInfo
 
@@ -803,6 +808,7 @@ class JavaPanelManager:
 			p=subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE)
 			output=p.communicate()
 			rc=p.returncode
+			
 			self.getConfigurationOptions()
 
 			if rc==0:
@@ -899,6 +905,7 @@ class JavaPanelManager:
 
 		self.registerContent=[]
 		tmpContent=[]
+		
 		if os.path.exists(self.javaRegisterFile):
 			with open(self.javaRegisterFile,'r') as fd:
 				tmpContent=fd.readlines()

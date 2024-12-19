@@ -42,17 +42,12 @@ class InstallStack(QObject):
 				self.core.mainStack.enableApplyBtn=True
 				self.core.mainStack.showStatusMessage=[True,InstallStack.javaPanelManager.retConnection[1],"Error"]
 			else:
-				self.core.mainStack.isProgressBarVisible=False
 				self.installProcess()
 
 	#def _checkConnectionTimerRet
 
 	def installProcess(self):
 
-		self.core.mainStack.enableApplyBtn=False
-		self.core.mainStack.enableKonsole=True
-		self.core.mainStack.isProgressBarVisible=True
-		self.core.javaStack.enableJavaList=False
 		self.totalError=0
 		self.core.javaStack.totalErrorInProcess=0
 		self.launchedProcess="install"

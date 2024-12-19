@@ -56,7 +56,7 @@ Rectangle{
 
                     PC.MenuItem{
                         icon.name:"installed"
-                        text:i18nd("lliurex-java-panel","Show installed java")
+                        text:i18nd("lliurex-java-panel","Show installed Java")
                         enabled:{
                             if (javaStackBridge.filterStatusValue!="installed"){
                                 true
@@ -69,7 +69,7 @@ Rectangle{
 
                     PC.MenuItem{
                         icon.name:"noninstalled"
-                        text:i18nd("lliurex-java-panel","Show uninstalled java")
+                        text:i18nd("lliurex-java-panel","Show uninstalled Java")
                         enabled:{
                             if (javaStackBridge.filterStatusValue!="available"){
                                 true
@@ -81,7 +81,7 @@ Rectangle{
                     }
                     PC.MenuItem{
                         icon.name:"emblem-error"
-                        text:i18nd("lliurex-java-panel","Show java with error")
+                        text:i18nd("lliurex-java-panel","Show Java with error")
                         enabled:{
                             if (javaStackBridge.filterStatusValue!="error"){
                                 if (javaStackBridge.totalErrorInProcess>0){
@@ -180,7 +180,7 @@ Rectangle{
                         anchors.centerIn: parent
                         width: parent.width - (Kirigami.Units.largeSpacing * 4)
                         visible: listPkg.count==0?true:false
-                        text: i18nd("lliurex-java-panel","Java not found")
+                        text: i18nd("lliurex-java-panel","Java versions not available")
                     }
 
                  } 
@@ -203,9 +203,9 @@ Rectangle{
                 }
                 text:{
                     if (javaStackBridge.uncheckAll){
-                        i18nd("lliurex-java-panel","Uncheck all javas")
+                        i18nd("lliurex-java-panel","Uncheck all")
                     }else{
-                        i18nd("lliurex-java-panel","Check all javas")
+                        i18nd("lliurex-java-panel","Check all")
                     }
                 }
                 enabled:javaStackBridge.enableJavaList

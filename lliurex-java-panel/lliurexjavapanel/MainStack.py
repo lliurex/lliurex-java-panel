@@ -329,13 +329,15 @@ class Bridge(QObject):
 	def launchInstallProcess(self):
 
 		self.showStatusMessage=[False,"","Ok"]
-		self.core.javaStack.enablePkgList=False
+		self.core.javaStack.enableJavaList=False
 		self.core.javaStack.filterStatusValue="all"
 		self.endProcess=False
 		self.enableApplyBtn=False
 		self.enableRemoveBtn=False
 		self.isProgressBarVisible=True
 		self.isProcessRunning=True
+		self.launchedProcess="install"
+		self.enableKonsole=True
 		self.feedbackCode=Bridge.javaPanelManager.MSG_FEEDBACK_INTERNET
 		self.core.installStack.checkInternetConnection()
 	
@@ -345,11 +347,16 @@ class Bridge(QObject):
 	def launchUnInstallProcess(self):
 
 		self.showStatusMessage=[False,"","Ok"]
-		self.core.javaStack.enablePkgList=False
+		self.core.javaStack.enableJavaList=False
 		self.core.javaStack.filterStatusValue="all"
 		self.endProcess=False
 		self.enableApplyBtn=False
 		self.enableRemoveBtn=False
+		self.launchedProcess="uninstall"
+		self.enableKonsole=True
+		self.feedbackCode=Bridge.javaPanelManager.MSG_FEEDBACK_UNINSTALL_RUN
+		self.isProcessRunning=True
+		self.isProgressBarVisible=True
 		self.core.unInstallStack.unInstallProcess()
 
 	#def launchUnInstallProcess
@@ -400,21 +407,6 @@ class Bridge(QObject):
 
 	#def closeApplication
 
-	@Slot()
-	def forceClossing(self):
-
-		self.showCloseDialog=False
-		self.endProcess=True
-		self.closeGui=True
-
-	#def forceClossing
-
-	@Slot()
-	def cancelClossing(self):
-
-		self.showCloseDialog=False
-
-	#def cancelClossing
 	
 	on_currentStack=Signal()
 	currentStack=Property(int,_getCurrentStack,_setCurrentStack, notify=on_currentStack)
