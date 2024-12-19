@@ -25,6 +25,7 @@ except:
 	sys.exit(1)
 
 from lliurexjavapanel.Core import Core
+import lliurexjavapanel.IconProvider as IconProvider
 
 c=Core.get_core()
 
@@ -36,6 +37,7 @@ context=engine.rootContext()
 mainStackBridge=c.mainStack
 javaStackBridge=c.javaStack
 settingsStackBridge=c.settingsStack
+engine.addImageProvider("iconProvider",IconProvider.IconProvider())
 context.setContextProperty('mainStackBridge',mainStackBridge)
 context.setContextProperty('javaStackBridge',javaStackBridge)
 context.setContextProperty('settingsStackBridge',settingsStackBridge)

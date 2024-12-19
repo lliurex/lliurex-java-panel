@@ -3,7 +3,7 @@ import sys
 
 from . import JavaPanelManager
 from . import InstallStack
-from . import UnInstallStack
+from . import UninstallStack
 from . import SettingsStack
 from . import JavaStack
 from . import MainStack
