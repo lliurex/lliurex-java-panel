@@ -153,6 +153,7 @@ class JavaPanelManager:
 						self.javasInfo[tmpInfo["pkg"]]["isManaged"]=tmp["isManaged"]
 						self.javasInfo[tmpInfo["pkg"]]["banner"]=tmpInfo["banner"]
 
+		self.javasData=sorted(self.javasData,key=lambda k:int(k["pkg"].split("-")[1]),reverse=False)
 		self.getConfigurationOptions()
 
 	#def getSupportedJava	
