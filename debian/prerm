@@ -4,6 +4,10 @@ set -e
 #VARS
 SWING_FILE_OPENJDK8="/etc/java-8-openjdk/swing.properties"
 SWING_FILE_OPENJDK11="/etc/java-11-openjdk/swing.properties"
+SWING_FILE_OPENJDK17="/etc/java-17-openjdk/swing.properties"
+SWING_FILE_OPENJDK18="/etc/java-18-openjdk/swing.properties"
+SWING_FILE_OPENJDK19="/etc/java-19-openjdk/swing.properties"
+SWING_FILE_OPENJDK21="/etc/java-21-openjdk/swing.properties"
 SWING_FILE_LLIUREX="/usr/share/lliurex-java-panel/swing.properties"
 PACKAGE_NAME="lliurex-java-panel"
 
@@ -11,12 +15,32 @@ case $1 in
         remove|purge|abort-install|disappear)
                 if [ -f ${SWING_FILE_OPENJDK8}.diverted ] ; then
                         rm -f ${SWING_FILE_OPENJDK8}
-  					    dpkg-divert --package  ${PACKAGE_NAME} --rename --quiet --remove ${SWING_FILE_OPENJDK8}|| true
+  			dpkg-divert --package  ${PACKAGE_NAME} --rename --quiet --remove ${SWING_FILE_OPENJDK8}|| true
                 fi
 		
 		if [ -f ${SWING_FILE_OPENJDK11}.diverted ] ; then
                         rm -f ${SWING_FILE_OPENJDK11}
-  					    dpkg-divert --package  ${PACKAGE_NAME} --rename --quiet --remove ${SWING_FILE_OPENJDK11}| true
+  		        dpkg-divert --package  ${PACKAGE_NAME} --rename --quiet --remove ${SWING_FILE_OPENJDK11}| true
+                fi
+
+                if [ -f ${SWING_FILE_OPENJDK17}.diverted ] ; then
+                        rm -f ${SWING_FILE_OPENJDK17}
+                        dpkg-divert --package  ${PACKAGE_NAME} --rename --quiet --remove ${SWING_FILE_OPENJDK17}| true
+                fi
+
+                if [ -f ${SWING_FILE_OPENJDK18}.diverted ] ; then
+                        rm -f ${SWING_FILE_OPENJDK18}
+                        dpkg-divert --package  ${PACKAGE_NAME} --rename --quiet --remove ${SWING_FILE_OPENJDK18}| true
+                fi
+
+                if [ -f ${SWING_FILE_OPENJDK19}.diverted ] ; then
+                        rm -f ${SWING_FILE_OPENJDK19}
+                        dpkg-divert --package  ${PACKAGE_NAME} --rename --quiet --remove ${SWING_FILE_OPENJDK19}| true
+                fi
+
+                if [ -f ${SWING_FILE_OPENJDK21}.diverted ] ; then
+                        rm -f ${SWING_FILE_OPENJDK21}
+                        dpkg-divert --package  ${PACKAGE_NAME} --rename --quiet --remove ${SWING_FILE_OPENJDK21}| true
                 fi
                 
                 ;;
