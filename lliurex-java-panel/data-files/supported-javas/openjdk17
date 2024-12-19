@@ -1,5 +1,6 @@
 [JAVA]
 pkg=openjdk-17-jre
 name=OpenJDK JRE 17
-cmd=apt-get install -y openjdk-17-jre
+installCmd=apt-get install -y openjdk-17-jre
+removeCmd=apt-get remove -y openjdk-17-jre openjdk-17-jre-headless
 swing=/etc/java-17-openjdk/

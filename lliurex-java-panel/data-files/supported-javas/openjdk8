@@ -1,5 +1,6 @@
 [JAVA]
 pkg=openjdk-8-jre
 name=OpenJDK JRE 8
-cmd=apt-get install -y openjdk-8-jre
+installCmd=apt-get install -y openjdk-8-jre
+removeCmd=apt-get remove -y openjdk-8-jre openjdk-8-jre-headless
 swing=/etc/java-8-openjdk/

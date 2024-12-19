@@ -2,13 +2,53 @@
 
 import sys
 import os
-from PyQt5.QtWidgets import QApplication
-from lliurexjavapanel import Core
+from PySide6.QtWidgets import QApplication
+from PySide6.QtCore import QUrl
+from PySide6.QtGui import QIcon
+from PySide6.QtQml import QQmlApplicationEngine
 
+import gettext
+gettext.textdomain("lliurex-java-panel")
+_ = gettext.gettext
+
+try:
+	print("  [LliureX-Java-Panel]: Checking root")
+	f=open("/var/run/LliurexJavapanel.token","w")
+	f.close()
+	os.remove("/var/run/LliurexJavapanel.token")
+
+except:
+	print("  [LliureX-Java-Panel]: No administration privileges")
+	msg=_("You need administration privileges to run this application.")
+	cmd='kdialog --title "Lliurex-Java-Panel" --icon "lliurex-java-panel.svg" --sorry "%s"'%(msg)
+	os.system(cmd)
+	sys.exit(1)
+
+from lliurexjavapanel.Core import Core
+
+c=Core.get_core()
 
 app = QApplication(sys.argv)
-c=Core.Core.get_core()
-window =c.mainWindow
-#window.show()
-#window.load_gui()
-sys.exit(app.exec_()) 
+app.setDesktopFileName("lliurex-java-panel")
+engine=QQmlApplicationEngine()
+engine.clearComponentCache()
+context=engine.rootContext()
+mainStackBridge=c.mainStack
+javaStackBridge=c.javaStack
+settingsStackBridge=c.settingsStack
+context.setContextProperty('mainStackBridge',mainStackBridge)
+context.setContextProperty('javaStackBridge',javaStackBridge)
+context.setContextProperty('settingsStackBridge',settingsStackBridge)
+
+url = QUrl("/usr/lib/python3.12/dist-packages/lliurexjavapanel/rsrc/lliurex-java-panel.qml")
+
+engine.load(url)
+
+if not engine.rootObjects():
+	sys.exit(-1)
+
+engine.quit.connect(app.quit)
+ret=app.exec()
+del engine
+del app
+sys.exit(ret)

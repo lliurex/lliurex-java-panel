@@ -1,5 +1,6 @@
 [JAVA]
 pkg=openjdk-19-jre
 name=OpenJDK JRE 19
-cmd=apt-get install -y openjdk-19-jre
+installCmd=apt-get install -y openjdk-19-jre
+removeCmd=apt-get remove -y openjdk-19-jre openjdk-19-jre-headless
 swing=/etc/java-19-openjdk/

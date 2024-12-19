@@ -1,5 +1,6 @@
 [JAVA]
 pkg=openjdk-11-jre
 name=OpenJDK JRE 11
-cmd=apt-get install -y openjdk-11-jre
+installCmd=apt-get install -y openjdk-11-jre
+removeCmd=apt-get remove -y openjdk-11-jre openjdk-11-jre-headless
 swing=/etc/java-11-openjdk/

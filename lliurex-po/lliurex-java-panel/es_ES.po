@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-15 13:25+0200\n"
-"PO-Revision-Date: 2021-07-15 13:48+0200\n"
+"POT-Creation-Date: 2024-12-19 09:35+0100\n"
+"PO-Revision-Date: 2024-12-19 09:36+0100\n"
 "Last-Translator: lliurex <lliurex@gva.es>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -17,112 +17,164 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 3.4.2\n"
 
-#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:152
-#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:162
-#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:168
-#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:273
-msgid "No Java version(s) availables detected"
-msgstr "No se han detectado versiones de Java disponibles"
+#: ../lliurex-java-panel/lliurex-java-panel:22
+msgid "You need administration privileges to run this application."
+msgstr "Necesita permisos de administración para ejecutar esta aplicación."
 
-#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:165
-#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:175
-#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:181
-msgid "Installing selected Java version(s). Wait a moment..."
-msgstr "Instalando la(s) versión(es) de Java seleccionadas. Espere un momento..."
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/ApplicationOptions.qml:29
+msgid "Home"
+msgstr "Inicio"
 
-#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:182
-#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:192
-#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:198
-#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:320
-msgid "You must select a Java version to install"
-msgstr "Debe seleccionar una versión de Java para instalar"
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/ApplicationOptions.qml:41
+msgid "View details"
+msgstr "Ver detalles"
 
-#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:218
-#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:228
-#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:234
-#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:413
-msgid "Installing process has ending with errors"
-msgstr "El proceso de instalación ha finalizado con errores"
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/ApplicationOptions.qml:53
+msgid "Settings"
+msgstr "Configuración"
 
-#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:220
-#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:230
-#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:236
-#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:416
-msgid "Installing process has ending successfully"
-msgstr "El proceso de instalación ha finalizado correctamente"
-
-#: lliurex-java-panel/python3-lliurexjavapanel/ConfigurationBox.py:56
-msgid "Java Control Panel. Select one tu run it"
-msgstr "Java Control Panel. Seleccione uno para ejecutarlo"
-
-#: lliurex-java-panel/python3-lliurexjavapanel/ConfigurationBox.py:61
-msgid "Java Web Start. Alternative configured:"
-msgstr "Java Web Start. Alternativa configurada:"
-
-#: lliurex-java-panel/python3-lliurexjavapanel/ConfigurationBox.py:67
-msgid "Java Runtime Environment. Alternative configured:"
-msgstr "Java Runtime Environtment. Alternativa configurada:"
-
-#: lliurex-java-panel/python3-lliurexjavapanel/ConfigurationBox.py:73
-msgid "Firefox plugin. Alternative configured:"
-msgstr "Firefox plugin. Alternativa configurada:"
-
-#: lliurex-java-panel/python3-lliurexjavapanel/ConfigurationBox.py:206
-#: lliurex-java-panel/python3-lliurexjavapanel/ConfigurationBox.py:210
-msgid "Configuration changed successfully"
-msgstr "Configuración cambiada correctamente"
-
-#: lliurex-java-panel/python3-lliurexjavapanel/LoadingBox.py:28
-msgid "Checking system..."
-msgstr "Comprobando el sistema..."
-
-#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:108
-#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:109
-#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:198
-msgid "Installers"
-msgstr "Instaladores"
-
-#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:114
-#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:115
-#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:204
-msgid "Configuration Options"
-msgstr "Opciones de configuración"
-
-#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:125
-#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:126
-#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:217
-msgid "Install"
-msgstr "Instalar"
-
-#: lliurex-java-panel/python3-lliurexjavapanel/ConfigurationBox.py:140
-msgid "Click to select an option"
-msgstr "Haga clic para seleccionar una opción"
-
-#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:131
-#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:222
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/ApplicationOptions.qml:64
 msgid "Help"
 msgstr "Ayuda"
 
-#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:313
-msgid "1 of 5: Obtaining information about Java(s) to install..."
-msgstr "1 de 5: Obteniendo información sobre los Java a instalar..."
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/ApplicationOptions.qml:132
+msgid "Uninstall"
+msgstr "Desinstalar"
 
-#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:326
-msgid "2 of 5: Downloading packages..."
-msgstr "2 de 5: Descargando paquetes..."
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/ApplicationOptions.qml:182
+msgid "Install"
+msgstr "Instalar"
 
-#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:346
-#, python-format
-msgid "3 of 5: Unpacking packages: %s of %s packages"
-msgstr "3 de 5: Desempaquetando paquetes: %s de %s paquetes"
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/ApplicationOptions.qml:206
+msgid "Uninstall process"
+msgstr "Proceso de desinstalación"
 
-#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:348
-#, python-format
-msgid "4 of 5: Configuring packages: %s of %s packages"
-msgstr "4 de 5: Configurando paquetes: %s de %s paquetes"
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/ApplicationOptions.qml:207
+msgid "Do you want uninstall the selected Java versions?"
+msgstr "¿Desea desinstalar las versiones de Java seleccionadas?"
 
-#: lliurex-java-panel/python3-lliurexjavapanel/MainWindow.py:350
-msgid "5 of 5: Finishing the installation..."
-msgstr "5 de 5: Finalizando la instalación..."
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/ApplicationOptions.qml:210
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/ApplicationOptions.qml:265
+msgid "Installation process has ending with errors"
+msgstr "El proceso de instalación ha finalizado con errores"
+
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/ApplicationOptions.qml:268
+msgid "Unable to apply configuration option"
+msgstr "No es posible aplicar la opción de configuración"
+
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/ApplicationOptions.qml:271
+msgid "Internet connection not detected"
+msgstr "No se ha detectado conexión con Internet"
+
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/ApplicationOptions.qml:275
+msgid "Uninstallation process has ending with errors"
+msgstr "El proceso de desinstalación ha finalizado con errores"
+
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/ApplicationOptions.qml:278
+msgid "Installation process has ending successfully"
+msgstr "El proceso de instalación ha finalizado correctamente"
+
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/ApplicationOptions.qml:281
+msgid "Change apply successfully"
+msgstr "Configuración cambiada correctamente"
+
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/ApplicationOptions.qml:284
+msgid "Checking internet connection. Wait a moment..."
+msgstr "Comprobando conexión a Internet. Espere un momento..."
+
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/ApplicationOptions.qml:287
+msgid "Preparing installation. Wait a moment..."
+msgstr "Preparando instalación. Espere un momento..."
+
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/ApplicationOptions.qml:290
+msgid "Installing selected Java versions. Wait a moment..."
+msgstr "Instalando la(s) versión(es) de Java seleccionadas. Espere un momento..."
+
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/ApplicationOptions.qml:293
+msgid "Uninstalling selected Java versions. Wait a moment..."
+msgstr "Desinstalando la(s) versión(es) de Java seleccionadas. Espere un momento..."
+
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/ApplicationOptions.qml:296
+msgid "Uninstallation process has ending successfully"
+msgstr "El proceso de desinstalación ha finalizado correctamente"
+
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/CustomDialog.qml:71
+msgid "Accept"
+msgstr "Aceptar"
+
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/JavasList.qml:49
+msgid "Click to filter java by status"
+msgstr "Haga clic para filtrar las versiones de Java por estado"
+
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/JavasList.qml:59
+msgid "Show installed Java"
+msgstr "Mostrar Java instalados"
+
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/JavasList.qml:72
+msgid "Show uninstalled Java"
+msgstr "Mostrar  Java no instalados"
+
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/JavasList.qml:84
+msgid "Show Java with error"
+msgstr "Mostrar  Java con errores"
+
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/JavasList.qml:100
+msgid "Remove filter"
+msgstr "Elminar el filtro"
+
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/JavasList.qml:122
+msgid "Search..."
+msgstr "Buscar..."
+
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/JavasList.qml:183
+msgid "Java versions not available"
+msgstr "Versiones de Java no disponibles"
+
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/JavasList.qml:206
+msgid "Uncheck all"
+msgstr "Desmarcar todo"
+
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/JavasList.qml:208
+msgid "Check all"
+msgstr "Marcar todo"
+
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/JavasPanel.qml:11
+msgid "List of Java versions availables"
+msgstr "Lista de versiones de Java disponibles"
+
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/KonsolePanel.qml:12
+msgid "Uninstallation process details"
+msgstr "Detalles del proceso de desinstalación"
+
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/KonsolePanel.qml:14
+msgid "Installation process details"
+msgstr "Detalles del proceso de instalación"
+
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/ListDelegateConfigItem.qml:74
+msgid "Java Control Panel. Select one tu run it"
+msgstr "Java Control Panel. Seleccione uno para ejecutarlo"
+
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/ListDelegateConfigItem.qml:77
+msgid "Java Web Start. Alternative configured:"
+msgstr "Java Web Start. Alternativa configurada:"
+
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/ListDelegateConfigItem.qml:80
+msgid "Java Runtime Environment. Alternative configured:"
+msgstr "Java Runtime Environtment. Alternativa configurada:"
+
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/ListDelegateConfigItem.qml:83
+msgid "Firefox plugin. Alternative configured:"
+msgstr "Firefox plugin. Alternativa configurada:"
+
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/Loading.qml:39
+msgid "Loading information. Wait a moment..."
+msgstr "Cargando información. Espere un momento..."
+
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/SettingsPanel.qml:11
+msgid "Configuration options"
+msgstr "Opciones de configuración"
