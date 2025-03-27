@@ -66,10 +66,19 @@ class JavaPanelManager:
 		self.totalPackages=0
 		self.javaRegisterDir="/etc/lliurex-java-panel"
 		self.javaRegisterFile=os.path.join(self.javaRegisterDir,"managed_java.txt")
+		self.runPkexec=True
+		self._isRunPkexec()
 		self._clearCache()
 		self._createEnvirontment()
 		
 	#def __init__
+
+	def _isRunPkexec(self):
+
+		if 'PKEXEC_UID' not in os.environ:
+			self.runPkexec=False
+
+	#def _isRunPkexec
 	
 	def loadFile(self,path):
 
