@@ -82,9 +82,9 @@ PC.ItemDelegate{
 			id: resultImg
 			source:{
 				if (resultProcess==0){
-					"/usr/lib/python3.12/dist-packages/lliurexjavapanel/rsrc/ok.png"
+                    "/usr/share/icons/breeze/status/24/data-success.svg"
 				}else{
-					"/usr/lib/python3.12/dist-packages/lliurexjavapanel/rsrc/error.png"
+                    "/usr/share/icons/breeze/status/24/data-error.svg"
 				}
 			}
 			visible:{

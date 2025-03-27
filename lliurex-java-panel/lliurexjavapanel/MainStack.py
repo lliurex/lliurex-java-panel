@@ -50,6 +50,7 @@ class Bridge(QObject):
 		self._enableKonsole=False
 		self._launchedProcess=""
 		self._isProgressBarVisible=False
+		self._runPkexec=Bridge.javaPanelManager.runPkexec
 		self.moveToStack=""
 		self.waitMaxRetry=1
 		self.waitRetryCount=0
@@ -297,6 +298,12 @@ class Bridge(QObject):
 
 	#def _setCloseGui
 
+	def _getRunPkexec(self):
+
+		return self._runPkexec
+
+	#def _getRunPkexec
+
 	@Slot()
 	def getNewCommand(self):
 		
@@ -372,14 +379,9 @@ class Bridge(QObject):
 	@Slot()
 	def openHelp(self):
 
-		runPkexec=False
-
-		if 'PKEXEC_UID' in os.environ:
-			runPkexec=True
-
 		self.helpCmd='xdg-open https://wiki.edu.gva.es/lliurex/tiki-index.php?page=LliureX+Java+Panel'
 
-		if runPkexec:
+		if self._runPkexec:
 			user=pwd.getpwuid(int(os.environ["PKEXEC_UID"])).pw_name
 			self.helpCmd="su -c '%s' %s"%(self.helpCmd,user)
 		else:
@@ -455,6 +457,8 @@ class Bridge(QObject):
 
 	on_closeGui=Signal()
 	closeGui=Property(bool,_getCloseGui,_setCloseGui, notify=on_closeGui)
+
+	runPkexec=Property(bool,_getRunPkexec,constant=True)
 
 #class Bridge
 
