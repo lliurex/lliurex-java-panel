@@ -204,7 +204,6 @@ GridLayout{
     CustomDialog{
         id:uninstallDialog
         dialogIcon:"/usr/share/icons/breeze/status/64/dialog-warning.svg"
-        dialogTitle:"LliureX Java Panel"+" - "+i18nd("lliurex-java-panel","Uninstall process")
         dialogMsg:i18nd("lliurex-java-panel","Do you want uninstall the selected Java versions?")
         dialogWidth:450
         btnAcceptVisible:true

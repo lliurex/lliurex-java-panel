@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-19 09:35+0100\n"
-"PO-Revision-Date: 2024-12-19 13:53+0100\n"
+"POT-Creation-Date: 2025-11-27 12:56+0100\n"
+"PO-Revision-Date: 2025-11-27 12:56+0100\n"
 "Last-Translator: Angels <gimenez_angcam@gva.es>\n"
 "Language-Team: Valencian <http://weblate.lliurex.net/projects/lliurex-java-"
 "panel/lliurex-java-panel/ca@valencia/>\n"
@@ -44,13 +44,9 @@ msgstr "Ajuda"
 msgid "Uninstall"
 msgstr "Desinstal·la"
 
-#: ../lliurex-java-panel/lliurexjavapanel/rsrc/ApplicationOptions.qml:182
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/ApplicationOptions.qml:183
 msgid "Install"
 msgstr "Instal·la"
-
-#: ../lliurex-java-panel/lliurexjavapanel/rsrc/ApplicationOptions.qml:206
-msgid "Uninstall process"
-msgstr "Procés de desinstal·lació"
 
 #: ../lliurex-java-panel/lliurexjavapanel/rsrc/ApplicationOptions.qml:207
 msgid "Do you want uninstall the selected Java versions?"
@@ -108,7 +104,7 @@ msgstr ""
 msgid "Uninstallation process has ending successfully"
 msgstr "El procés de desinstal·lació ha finalitzat correctament"
 
-#: ../lliurex-java-panel/lliurexjavapanel/rsrc/CustomDialog.qml:71
+#: ../lliurex-java-panel/lliurexjavapanel/rsrc/CustomDialog.qml:57
 msgid "Accept"
 msgstr "Accepta"
 
@@ -183,3 +179,6 @@ msgstr "S'està carregant la informació. Espereu un moment..."
 #: ../lliurex-java-panel/lliurexjavapanel/rsrc/SettingsPanel.qml:11
 msgid "Configuration options"
 msgstr "Opcions de configuració"
+
+#~ msgid "Uninstall process"
+#~ msgstr "Procés de desinstal·lació"
